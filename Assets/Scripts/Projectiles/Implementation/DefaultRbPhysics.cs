@@ -1,0 +1,36 @@
+using BlueRacconGames.MeleeCombat;
+using System;
+using UnityEngine;
+
+namespace Projectiles.Implementation
+{
+    [Serializable]
+    public class DefaultRbPhysics : IProjectilePhysics
+    {
+        private Rigidbody2D rb;
+        private IProjectile projectile;
+        
+        public DefaultRbPhysics(IProjectile projectile, Rigidbody2D rb)
+        {
+            this.rb = rb;
+            Initialize(projectile);
+        }
+
+        public void Initialize(IProjectile projectile)
+        {
+            this.projectile = projectile;
+        }
+
+        public void UpdatePhysics()
+        {
+            rb.MovePosition(rb.transform.position + rb.transform.up * projectile.Speed * Time.fixedDeltaTime);
+        }
+
+        public void OnCollide(IDamagableTarget target)
+        {
+            if (target == null) return;
+            
+            projectile.OnHit(target);
+        }
+    }
+}
