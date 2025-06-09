@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323268e37b998904689f86ef1e1c4252, type: 3}
+  m_Name: SmallSlimeData
+  m_EditorClassIdentifier: 
+  <UnitSprite>k__BackingField: {fileID: -6443132477491542402, guid: 27e4bda7b25a355429299bc695db90d8, type: 3}
+  <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 0a1c398139ec083498deaacb9f37d80e, type: 2}
+  enemyDamagableDataSO: {fileID: 11400000, guid: d444541791ec90240af6b0396eff8ef9, type: 2}
