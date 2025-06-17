@@ -20,15 +20,5 @@ namespace BlueRacconGames.AI.Implementation
         {
             throw new NotImplementedException();
         }
-
-        public override void OnEndWonder()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnStartWonder()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace BlueRacconGames.AI.Implementation
 
         public StateShootAIMode(AIControllerBase aIController, ShootStateAIDataSO initializeData, ShootStateAIModeFactory factoryData) : base(aIController, initializeData, factoryData)
         { 
-            shootTickCountdown = initializeData.ShootTickCountdown;
+            shootTickCountdown = factoryData.ShootTickCountdown;
             projectileEmitterControllerBase = aIController.GetComponent<ProjectileEmitterControllerBase>();
 
             var damageable = aIController.GetComponent<IDamageable>();

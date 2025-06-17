@@ -17,14 +17,6 @@ namespace BlueRacconGames.AI.Implementation
         {
             return TryChangeAIMode(out modeFactory);
         }
-        public override void OnEndWonder()
-        {
-            Debug.Log("End wonder");
-        }
-        public override void OnStartWonder()
-        {
-            Debug.Log("Start wonder");
-        }
 
         protected override void InternalUpdate()
         {

@@ -42,8 +42,14 @@ namespace BlueRacconGames.AI.Implementation
             InternalOnDestory();
         }
         public abstract bool CanChangeMode(out IAIModeFactory modeFactory);
-        public abstract void OnStartWonder();
-        public abstract void OnEndWonder();
+        public virtual void OnStartWonder()
+        {
+
+        }
+        public virtual void OnEndWonder()
+        {
+
+        }
         public virtual void StartSimulate()
         {
             if (isSimulated) return;
