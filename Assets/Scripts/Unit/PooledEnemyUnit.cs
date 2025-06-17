@@ -4,10 +4,6 @@
     {
         private PooledEnemyUnitDataSO unitDataSO;
 
-        public override void ResetUnit()
-        {
-            damageable?.ResetDamagable();
-        }
         public override void SetUnitData(UnitDataSO unitDataSO)
         {
             base.SetUnitData(unitDataSO);
@@ -17,6 +13,8 @@
             damageable?.Launch(unitDataSO.DamagableDataSO);
 
             characterController.SetData(unitDataSO.CharacterControllerDataSO);
+
+            ResetUnit();
         }
     }
 }

@@ -11,8 +11,8 @@ namespace BlueRacconGames.Pool
     {
         private DiContainer container;
 
-        private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> partcilePrefabToPoolLut = new();
-        private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> partcileInstanceToPoolLut = new();
+        private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> itemPrefabToPoolLut = new();
+        private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> itemInstanceToPoolLut = new();
 
         [Inject]
         private void Inject(DiContainer container)
@@ -22,28 +22,28 @@ namespace BlueRacconGames.Pool
 
         public void Clear()
         {
-            partcilePrefabToPoolLut.Clear();
-            partcileInstanceToPoolLut.Clear();
+            itemPrefabToPoolLut.Clear();
+            itemInstanceToPoolLut.Clear();
         }
 
-        public T EmitItem<T>(PoolItemBase prefab, Vector3 startPosition) where T : class
+        public T EmitItem<T>(PoolItemBase prefab, Vector3 startPosition, Vector3 direction) where T : class
         {
             PoolItemBase newItem = GetItemFromPool(prefab);
-            newItem.Launch(this, startPosition);
+            newItem.Launch(this, startPosition, direction);
 
             return newItem.GetComponent<T>();
         }
 
         private PoolItemBase GetItemFromPool(PoolItemBase prefab)
         {
-            if (!partcilePrefabToPoolLut.TryGetValue(prefab, out ObjectPool<PoolItemBase> pool))
+            if (!itemPrefabToPoolLut.TryGetValue(prefab, out ObjectPool<PoolItemBase> pool))
             {
                 pool = new ObjectPool<PoolItemBase>(() => CreateItem(prefab), OnGetItem, OnReleaseItem);
-                partcilePrefabToPoolLut.Add(prefab, pool);
+                itemPrefabToPoolLut.Add(prefab, pool);
             }
 
             PoolItemBase newParticle = pool.Get();
-            partcileInstanceToPoolLut.TryAdd(newParticle, pool);
+            itemInstanceToPoolLut.TryAdd(newParticle, pool);
             return newParticle;
         }
 
@@ -60,7 +60,7 @@ namespace BlueRacconGames.Pool
         private void Item_OnExpireE(PoolItemBase item)
         {
             item.OnExpireE -= Item_OnExpireE;
-            partcileInstanceToPoolLut[item].Release(item);
+            itemInstanceToPoolLut[item].Release(item);
         }
 
         private PoolItemBase CreateItem(PoolItemBase item)

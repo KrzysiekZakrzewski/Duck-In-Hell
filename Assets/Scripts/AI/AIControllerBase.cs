@@ -11,36 +11,29 @@ namespace BlueRacconGames.AI
     {
         protected IAIMode aIMode;
 
-        private EnemyAIDataBaseSO aIDataSO;
+        private BaseAIDataSO aIDataSO;
         private WonderAIMode wonderAI;
 
         public Transform PlayerTransform { get; private set; }
+        public bool IsWondering => wonderAI.IsWondering;
 
         protected virtual void Update()
         {
-            if (aIMode == null || wonderAI.isWondering) return;
+            if (aIMode == null || wonderAI.IsWondering) return;
 
             aIMode.Update();
         }
         protected virtual void OnDestroy()
         {
+            wonderAI.OnStartWonderE -= OnStartWonder;
+            wonderAI.OnEndWonderE -= OnEndWonder;
+
             if (aIMode == null) return;
 
             aIMode.OnDestory();
         }
 
-        public void TryChangeAIMode()
-        {
-            if (wonderAI.isWondering) return;
-
-            wonderAI.SetupTimeTickSystem(OnStartWonder, OnEndWonder);
-        }
-        public void ForceChangeAIMode(IAIModeFactory modeFactory)
-        {
-            ChangeState(modeFactory);
-        }
-
-        public virtual void Initialize(EnemyAIDataBaseSO aIDataSO)
+        public virtual void Initialize(BaseAIDataSO aIDataSO)
         {
             this.aIDataSO = aIDataSO;
 
@@ -48,7 +41,20 @@ namespace BlueRacconGames.AI
 
             wonderAI = new WonderAIMode();
 
-            aIMode = aIDataSO.IdleAIModeOptions.CreateAIMode(this, aIDataSO);
+            wonderAI.OnStartWonderE += OnStartWonder;
+            wonderAI.OnEndWonderE += OnEndWonder;
+
+            aIMode = aIDataSO.InitializeAIModeData.CreateAIMode(this, aIDataSO);
+        }
+        public void TryChangeAIMode()
+        {
+            if (wonderAI.IsWondering) return;
+
+            wonderAI.InitializeWonder();
+        }
+        public void ForceChangeAIMode(IAIModeFactory modeFactory)
+        {
+            ChangeState(modeFactory);
         }
 
         protected virtual void OnStartWonder()
@@ -57,6 +63,8 @@ namespace BlueRacconGames.AI
         }
         protected virtual void OnEndWonder()
         {
+            aIMode.OnEndWonder();
+
             if (!aIMode.CanChangeMode(out var factory)) return;
 
             ChangeState(factory);
@@ -64,6 +72,8 @@ namespace BlueRacconGames.AI
 
         private void ChangeState(IAIModeFactory modeFactory)
         {
+            aIMode.OnDestory();
+
             aIMode = modeFactory.CreateAIMode(this, aIDataSO);
         }
     }

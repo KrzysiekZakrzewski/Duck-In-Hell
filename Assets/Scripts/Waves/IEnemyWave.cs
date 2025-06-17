@@ -19,7 +19,7 @@ namespace EnemyWaves
         event Action<IEnemyWave> OnUpdatedE;
         event Action<IEnemyWave> OnCompletedE;
 
-        void SetupWave(DefaultPooledEmitter defaultPooledEmitter, PooledEnemyUnit enemyUnitPrefab);
+        void SetupWave(DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab);
         void StartWave();
         void UpdateWave(IUnit unit);
         void CompleteWave();

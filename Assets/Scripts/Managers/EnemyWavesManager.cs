@@ -11,7 +11,7 @@ namespace EnemyWaves
     public class EnemyWavesManager : MonoBehaviour
     {
         [SerializeField] private EnemyWaveFactorySO testWave;
-        [SerializeField] private PooledEnemyUnit enemyUnitPrefab;
+        [SerializeField] private PooledUnitBase enemyUnitPrefab;
 
         private readonly Queue<EnemyWaveFactorySO> wavesQueue = new();
         private IEnemyWave currentWave;

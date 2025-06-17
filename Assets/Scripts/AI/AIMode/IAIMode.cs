@@ -8,7 +8,6 @@ namespace BlueRacconGames.AI
         AIControllerBase AIController {  get; }
         bool IsSimulated {  get; }
 
-        void Initialize(AIControllerBase aIController, EnemyAIDataBaseSO enemyAIDataBaseSO);
         void Update();
         void OnDestory();
         bool CanChangeMode(out IAIModeFactory modeFactory);

@@ -5,58 +5,49 @@ namespace BlueRacconGames.AI.Implementation
 {
     public class WonderAIMode
     {
-        private int tick = 0;
-        private int wonderTick = 10;
+        private const int BASE_WONDER_TICK_COUNTDOWN = 10;
+        private bool countdownEnable = false;
+        private int tickRemaning;
 
-        private event Action onStartWonderE;
-        private event Action onEndWonderE;
+        public event Action OnStartWonderE;
+        public event Action OnEndWonderE;
 
-        public bool isWondering = false;
+        public bool IsWondering { get; private set; } = false;
 
-        private void OnTick(object sender, OnTickEventArgs e)
+        public void InitializeWonder(int wonderTickCountdown = BASE_WONDER_TICK_COUNTDOWN)
         {
-            tick++;
-
-            if (tick < wonderTick) return;
-
-            EndWonder();
-        }
-
-        private void StartWonder()
-        {
-            isWondering = true;
-
-            onStartWonderE?.Invoke();
-        }
-
-        private void EndWonder()
-        {
-            onEndWonderE?.Invoke();
-
-            TimeTickSystem.OnTick -= OnTick;
-
-            tick = 0;
-
-            isWondering = false;
-        }
-
-        public void UnsubscribeEvent(Action eventFromUnsub, Action eventToUnsub)
-        {
-            eventFromUnsub -= eventToUnsub;
-            eventFromUnsub -= () => UnsubscribeEvent(eventFromUnsub, eventToUnsub);
-        }
-
-        public void SetupTimeTickSystem(Action onStartWonderE, Action onEndWonderE)
-        {
-            this.onStartWonderE += onStartWonderE;
-            this.onStartWonderE += () => UnsubscribeEvent(this.onStartWonderE, onStartWonderE);
-
-            this.onEndWonderE += onEndWonderE;
-            this.onEndWonderE += () => UnsubscribeEvent(this.onEndWonderE, onEndWonderE);
+            tickRemaning = wonderTickCountdown;
 
             TimeTickSystem.OnTick += OnTick;
 
             StartWonder();
+        }
+
+        private void OnTick(object sender, OnTickEventArgs e)
+        {
+            if(!countdownEnable || !IsWondering) return;
+
+            tickRemaning--;
+
+            if (tickRemaning > 0) return;
+
+            EndWonder();
+        }
+        private void StartWonder()
+        {
+            IsWondering = countdownEnable = true;
+
+            OnStartWonderE?.Invoke();
+        }
+        private void EndWonder()
+        {
+            countdownEnable = false;
+
+            TimeTickSystem.OnTick -= OnTick;
+
+            OnEndWonderE?.Invoke();
+
+            IsWondering = false;
         }
     }
 }

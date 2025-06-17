@@ -15,4 +15,4 @@ MonoBehaviour:
   <TotalEnemy>k__BackingField: 3
   <WaveEnemyUnitDatas>k__BackingField:
   - <PercentChance>k__BackingField: 1
-    <EnemyUnitDataSO>k__BackingField: {fileID: 11400000, guid: 6c0039603b830c043a9b40c57a9ba34d, type: 2}
+    <EnemyUnitDataSO>k__BackingField: {fileID: 11400000, guid: afd8f71937957f348a153df8a404cf06, type: 2}

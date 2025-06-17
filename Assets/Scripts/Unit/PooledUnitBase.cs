@@ -24,9 +24,9 @@ namespace Units.Implementation
         public IDamageable Damageable => damageable;
         public bool IsDoSomething => isDoSomething;
 
-        public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition)
+        public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction)
         {
-            base.Launch(sourceEmitter, startPosition);
+            base.Launch(sourceEmitter, startPosition, direction);
 
             unitCollider2D = GetComponent<Collider2D>();
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -38,8 +38,6 @@ namespace Units.Implementation
 
             TimeTickSystem.OnTick += OnTick;
             TimeTickSystem.OnBigTick += OnBigTick;
-
-            ResetUnit();
         }
         public virtual void ResetUnit()
         {

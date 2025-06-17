@@ -8,6 +8,6 @@ namespace BlueRacconGames.Pool
     {
         event Action<PoolItemBase> OnLaunchE;
         event Action<PoolItemBase> OnExpireE;
-        void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition);
+        void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction);
     }
 }

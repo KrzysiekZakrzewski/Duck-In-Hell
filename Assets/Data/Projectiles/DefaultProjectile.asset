@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a3330d17c5af54b90a5d0854cd3f4d, type: 3}
   m_Name: DefaultProjectile
   m_EditorClassIdentifier: 
-  <Speed>k__BackingField: 10
+  <Speed>k__BackingField: 0.2
   <ExpireTime>k__BackingField: 1
   <ExpireOnHit>k__BackingField: 1
   <HitTargetEffectFactories>k__BackingField:

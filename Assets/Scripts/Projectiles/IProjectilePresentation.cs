@@ -8,8 +8,6 @@ namespace Projectiles
     {
         event Action<IProjectilePresentation> OnPresentationEnd;
         void Initialize(IProjectile projectile);
-        void OnLaunch();
         void OnHit(IDamagableTarget target);
-        void OnExpire();
     }
 }

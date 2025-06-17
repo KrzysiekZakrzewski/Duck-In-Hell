@@ -33,14 +33,13 @@ namespace EnemyWaves.UI
 
         private void SubscribeWave(IEnemyWave enemyWave)
         {
-            enemyWave.OnSetupedE += EnemyRemainUpdate;
             enemyWave.OnUpdatedE += EnemyRemainUpdate;
             enemyWave.OnCompletedE += UnSubscribeWave;
+            EnemyRemainUpdate(enemyWave);
             waveNumberTxt.text = $"{WAVES_TEXT} {waveManager.CurrentWavesId}/{waveManager.TotalWaves}";
         }
         private void UnSubscribeWave(IEnemyWave enemyWave)
         {
-            enemyWave.OnSetupedE -= EnemyRemainUpdate;
             enemyWave.OnUpdatedE -= EnemyRemainUpdate;
             enemyWave.OnCompletedE -= UnSubscribeWave;
             enemyRemainTxt.text = $"{ENEMY_REMAIN_TEXT} \n -";

@@ -18,7 +18,7 @@ namespace BlueRacconGames.AI
         public bool IsStoped { get; private set; }
 
 
-        public override void Initialize(EnemyAIDataBaseSO aIDataSO)
+        public override void Initialize(BaseAIDataSO aIDataSO)
         {
             base.Initialize(aIDataSO);
 

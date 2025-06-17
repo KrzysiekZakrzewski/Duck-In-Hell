@@ -1,4 +1,5 @@
 using BlueRacconGames.MeleeCombat;
+using BlueRacconGames.Pool;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -8,17 +9,14 @@ using UnityEngine.Events;
 namespace Projectiles.Implementation
 {
     [Serializable]
-    public class DefaultProjectilePresentation : MonoBehaviour, IProjectilePresentation
+    public class DefaultProjectilePresentation : PoolItemBase, IProjectilePresentation
     {
-        [SerializeField] private UnityEvent onLaunch;
         [SerializeField] private UnityEvent onHit;
-        [SerializeField] private UnityEvent onExpire;
         [SerializeField] private float timeToEndPresentationAfterExpire = 5f;
         
         private ParentConstraint parentConstraint;
         private IProjectile projectile;
 
-        public GameObject GameObject => gameObject;
         public event Action<IProjectilePresentation> OnPresentationEnd;
 
         private void Awake()
@@ -33,7 +31,6 @@ namespace Projectiles.Implementation
             projectile.OnHitE += Projectile_OnHit;
             projectile.OnExpireE += Projectile_OnExpire;
         }
-
         public void OnLaunch()
         {
             gameObject.SetActive(true);
@@ -48,23 +45,21 @@ namespace Projectiles.Implementation
             
             parentConstraint.constraintActive = true;
             projectile.OnLaunchE -= Projectile_OnLaunch;
-            onLaunch.Invoke();
         }
-
         public void OnHit(IDamagableTarget target)
         {
             onHit.Invoke();
         }
 
-        public void OnExpire()
+        protected override void Expire()
         {
+            base.Expire();
             parentConstraint.RemoveSource(0);
             parentConstraint.constraintActive = false;
             StartCoroutine(EndPresentationAfterExpire());
             projectile.OnExpireE -= Projectile_OnExpire;
             projectile.OnHitE -= Projectile_OnHit;
             projectile.OnLaunchE -= Projectile_OnLaunch;
-            onExpire.Invoke();
         }
 
         private IEnumerator EndPresentationAfterExpire()
@@ -72,21 +67,18 @@ namespace Projectiles.Implementation
             yield return new WaitForSeconds(timeToEndPresentationAfterExpire);
             OnPresentationEnd?.Invoke(this);
             gameObject.SetActive(false);
-        }
-        
+        }        
         private void Projectile_OnLaunch(IProjectile projectile)
         {
             OnLaunch();
-        }
-        
+        }       
         private void Projectile_OnHit(IDamagableTarget target)
         {
             OnHit(target);
-        }
-        
+        }      
         private void Projectile_OnExpire(IProjectile projectile)
         {
-            OnExpire();
+            Expire();
         }
     }
 }

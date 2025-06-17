@@ -43,9 +43,9 @@ namespace BlueRacconGames.UI.Bars.Presentation
 
         public override void PlayUpdatePresentation(IStatBar statBar)
         {
-            float value = (float)statBar.CurrentValue / (float)statBar.MaxValue;
+            float value = CalculateValue(statBar.CurrentValue, statBar.MaxValue);
 
-            if(value <= 0)
+            if (value <= 0)
             {
                 ForceHidePresentationComplete();
                 return;
@@ -76,7 +76,7 @@ namespace BlueRacconGames.UI.Bars.Presentation
 
         public override void ForceUpdate(IStatBar statBar)
         {
-            fillAmountImage.fillAmount = statBar.CurrentValue / statBar.MaxValue;
+            fillAmountImage.fillAmount = CalculateValue(statBar.CurrentValue, statBar.MaxValue);
             OnUpdatePresentationComplete?.Invoke(this, statBar);
         }
 
@@ -98,6 +98,10 @@ namespace BlueRacconGames.UI.Bars.Presentation
         private void PrepareSequence()
         {
             sequence?.Kill();
+        }
+        private float CalculateValue(int currentValue, int maxValue)
+        {
+            return (float)currentValue / (float)maxValue;
         }
     }
 }

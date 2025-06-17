@@ -1,0 +1,58 @@
+﻿using BlueRacconGames.AI.Data;
+using BlueRacconGames.AI.Factory;
+using UnityEngine;
+
+namespace BlueRacconGames.AI.Implementation
+{
+    public class StateAIModeBase : AIModeBase
+    {
+        protected IAIModeFactory[] changeAIModeOptions;
+
+        public StateAIModeBase(AIControllerBase aIController, BaseStateAIDataSO initializeData, IAIModeFactory factoryData) : base(aIController, initializeData, factoryData)
+        {
+            var stateFactoryData = factoryData as StateAIModeFactoryBase;
+
+            changeAIModeOptions = stateFactoryData.ChangeAIModeOptions;
+        }
+
+        public override bool CanChangeMode(out IAIModeFactory modeFactory)
+        {
+            return TryChangeAIMode(out modeFactory);
+        }
+        public override void OnEndWonder()
+        {
+            Debug.Log("End wonder");
+        }
+        public override void OnStartWonder()
+        {
+            Debug.Log("Start wonder");
+        }
+
+        protected override void InternalUpdate()
+        {
+            base.InternalUpdate();
+
+            if (!TryChangeAIMode(out var modeFactory)) return;
+
+            AIController.TryChangeAIMode();
+        }
+        protected bool TryChangeAIMode(out IAIModeFactory modeFactory)
+        {
+            bool result = false;
+            modeFactory = null;
+
+            var distanceToPlayer = CalculateDistance(playerTransform.position);
+
+            for (int i = 0; i < changeAIModeOptions.Length; i++)
+            {
+                modeFactory = changeAIModeOptions[i];
+
+                result = modeFactory.ChangeValidator(distanceToPlayer);
+
+                if (result) break;
+            }
+
+            return result;
+        }
+    }
+}

@@ -5,7 +5,7 @@ namespace BlueRacconGames.AI
 {
     public class StateEnemyAIController : AIControllerBase
     {
-        [SerializeField] private IdleEnemyAIDataSO testEnemySO;
+        [SerializeField] private BaseStateAIDataSO testEnemySO;
 
         private void Awake()
         {

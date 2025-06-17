@@ -2,7 +2,6 @@ using BlueRacconGames;
 using BlueRacconGames.MeleeCombat;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Projectiles
 {
@@ -15,7 +14,6 @@ namespace Projectiles
         event Action<IProjectile> OnLaunchE;
         event Action<IDamagableTarget> OnHitE;
         event Action<IProjectile> OnExpireE;
-        void Launch(IProjectileEmitter sourceEmitter, Vector3 startPosition, Vector3 direction);
         void OnHit(IDamagableTarget target);
     }
 }

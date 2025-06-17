@@ -37,11 +37,9 @@ namespace BlueRacconGames.UI.Bars
 
         public virtual void Launch(int currentValue, int maxValue)
         {
-            ResetBar();
-
-            UpdateValue(currentValue, maxValue);
-
             Presentation.Launch(this);
+
+            UpdateBar(currentValue, maxValue);
         }
 
         public virtual void Show()

@@ -31,7 +31,7 @@ namespace EnemyWaves.Implementation
         public event Action<IEnemyWave> OnCompletedE;
         public event Action<IEnemyWave> OnUpdatedE;
 
-        public void SetupWave(DefaultPooledEmitter defaultPooledEmitter, PooledEnemyUnit enemyUnitPrefab)
+        public void SetupWave(DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab)
         {
             IsCompleted = false;
             IsStarted = false;
@@ -97,13 +97,13 @@ namespace EnemyWaves.Implementation
         {
             return enemyUnitsLUT.Count <= 0;
         }
-        private void SpawnEnemies(DefaultPooledEmitter defaultPooledEmitter, PooledEnemyUnit enemyUnitPrefab)
+        private void SpawnEnemies(DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab)
         {
             var screenBounds = GetScreenBounds();
 
             for (int i = 0; i < TotalEnemy; i++)
             {
-                var newEnemy = defaultPooledEmitter.EmitItem<PooledEnemyUnit>(enemyUnitPrefab, GetRandomPoint(screenBounds));
+                var newEnemy = defaultPooledEmitter.EmitItem<PooledUnitBase>(enemyUnitPrefab, GetRandomPoint(screenBounds), Vector3.zero);
 
                 newEnemy.SetUnitData(GetRandomEnemyData());
                 

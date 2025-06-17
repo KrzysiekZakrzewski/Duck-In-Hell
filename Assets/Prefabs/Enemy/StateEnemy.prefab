@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1477570709411115113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4311184502718791963}
+  m_Layer: 7
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4311184502718791963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477570709411115113}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1464395434265076208}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5041568066103649572
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,12 +152,13 @@ GameObject:
   - component: {fileID: 1464395434265076208}
   - component: {fileID: 3809210651940427152}
   - component: {fileID: 7441722338481680240}
-  - component: {fileID: 3065996343434820666}
+  - component: {fileID: 3617017966104457082}
   - component: {fileID: 4683470480050061654}
   - component: {fileID: 3021969492821491158}
   - component: {fileID: 2687041770948271247}
   - component: {fileID: 6575637699087988890}
   - component: {fileID: 6001886024969283372}
+  - component: {fileID: 4587922414721035287}
   m_Layer: 7
   m_Name: StateEnemy
   m_TagString: Untagged
@@ -149,6 +181,7 @@ Transform:
   m_Children:
   - {fileID: 6974639654750032787}
   - {fileID: 1154320762939748870}
+  - {fileID: 4311184502718791963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &3809210651940427152
@@ -214,7 +247,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3065996343434820666
+--- !u!114 &3617017966104457082
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,7 +256,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7970118798125702882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcaa829932bfedd48b9bb47cad51bfe8, type: 3}
+  m_Script: {fileID: 11500000, guid: 73692de7691f0cf46ae64aea766136f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unitHUD: {fileID: 2689917408610304447}
@@ -291,7 +324,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b836927bde97d443bef70b2dcbe0704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testEnemySO: {fileID: 0}
+  testEnemySO: {fileID: 11400000, guid: 97e9a4c1c620b2a4f8d59eba90691be7, type: 2}
+--- !u!114 &4587922414721035287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970118798125702882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4def401ccaaf4a409e3f539b2d83cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileSpawnPoint: {fileID: 4311184502718791963}
+  projectilePrefabGameObject: {fileID: 4549476248939091955, guid: 70f780f9187017a41bd530c3fcb1de56, type: 3}
+  projectilePresentationPrefabGameObject: {fileID: 4381175607383566500, guid: d3ffb9b6911b4b5418c61c67217aa64c, type: 3}
 --- !u!1001 &2918350609128426216
 PrefabInstance:
   m_ObjectHideFlags: 0

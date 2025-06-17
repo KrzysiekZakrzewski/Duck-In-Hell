@@ -147,7 +147,7 @@ namespace Damageable.Implementation
         {
             dead = true;
 
-            PooledEnemyUnit unit = gameObject.GetComponent<PooledEnemyUnit>();
+            PooledUnitBase unit = gameObject.GetComponent<PooledUnitBase>();
 
             OnDeadE?.Invoke(unit);
 
