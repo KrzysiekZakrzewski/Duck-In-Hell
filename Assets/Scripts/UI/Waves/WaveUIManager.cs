@@ -23,7 +23,7 @@ namespace EnemyWaves.UI
         private void Start()
         {
             enemyRemainTxt.text = $"{ENEMY_REMAIN_TEXT} \n -";
-            waveNumberTxt.text = $"{WAVES_TEXT} -/-";
+            waveNumberTxt.text = $"{WAVES_TEXT} -";
             waveManager.OnWaveSetupedE += SubscribeWave;
         }
         private void OnDisable()
@@ -36,7 +36,7 @@ namespace EnemyWaves.UI
             enemyWave.OnUpdatedE += EnemyRemainUpdate;
             enemyWave.OnCompletedE += UnSubscribeWave;
             EnemyRemainUpdate(enemyWave);
-            waveNumberTxt.text = $"{WAVES_TEXT} {waveManager.CurrentWavesId}/{waveManager.TotalWaves}";
+            waveNumberTxt.text = $"{WAVES_TEXT} {waveManager.CurrentWavesId}";
         }
         private void UnSubscribeWave(IEnemyWave enemyWave)
         {

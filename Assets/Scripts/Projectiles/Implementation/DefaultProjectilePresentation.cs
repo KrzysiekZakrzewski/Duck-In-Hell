@@ -11,7 +11,9 @@ namespace Projectiles.Implementation
     [Serializable]
     public class DefaultProjectilePresentation : PoolItemBase, IProjectilePresentation
     {
+        [SerializeField] private UnityEvent onLaunch;
         [SerializeField] private UnityEvent onHit;
+        [SerializeField] private UnityEvent onExpire;
         [SerializeField] private float timeToEndPresentationAfterExpire = 5f;
         
         private ParentConstraint parentConstraint;
@@ -34,26 +36,25 @@ namespace Projectiles.Implementation
         public void OnLaunch()
         {
             gameObject.SetActive(true);
-            transform.position = projectile.GameObject.transform.position;
-            transform.rotation = projectile.GameObject.transform.rotation;
-            
+            transform.SetPositionAndRotation(projectile.GameObject.transform.position, projectile.GameObject.transform.rotation);
             parentConstraint.AddSource(new ConstraintSource()
             {
                 sourceTransform = projectile.GameObject.transform,
                 weight = 1f
             });
-            
+            onLaunch?.Invoke();
             parentConstraint.constraintActive = true;
             projectile.OnLaunchE -= Projectile_OnLaunch;
         }
         public void OnHit(IDamagableTarget target)
         {
-            onHit.Invoke();
+            onHit?.Invoke();
         }
 
         protected override void Expire()
         {
             base.Expire();
+            onExpire?.Invoke();
             parentConstraint.RemoveSource(0);
             parentConstraint.constraintActive = false;
             StartCoroutine(EndPresentationAfterExpire());

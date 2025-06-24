@@ -11,7 +11,6 @@
             this.unitDataSO = unitDataSO as PooledEnemyUnitDataSO;
 
             damageable?.Launch(unitDataSO.DamagableDataSO);
-
             characterController.SetData(unitDataSO.CharacterControllerDataSO);
 
             ResetUnit();

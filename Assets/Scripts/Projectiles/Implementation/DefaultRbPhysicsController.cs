@@ -7,9 +7,9 @@ namespace Projectiles.Implementation
     {
         protected override IProjectilePhysicsFactory ProjectilePhysicsFactory => new DefaultRbPhysicsFactory(GetComponent<Rigidbody2D>());
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            IDamagableTarget target = other.GetComponent<IDamagableTarget>();
+            IDamagableTarget target = other.gameObject.GetComponent<IDamagableTarget>();
             physics.OnCollide(target);
         }
     }

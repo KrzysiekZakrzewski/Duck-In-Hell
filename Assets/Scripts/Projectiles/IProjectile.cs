@@ -2,11 +2,13 @@ using BlueRacconGames;
 using BlueRacconGames.MeleeCombat;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Projectiles
 {
     public interface IProjectile : IGameObject
     {
+        LayerMask TargetLayer { get; }
         float Speed { get; }
         float ExpireTime { get; }
         bool ExpireOnHit { get; }

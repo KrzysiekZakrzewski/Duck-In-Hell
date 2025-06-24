@@ -1,7 +1,10 @@
 using BlueRacconGames.Pool;
 using EnemyWaves.Implementation;
+using Game.Difficulty;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Timers;
 using Units.Implementation;
 using UnityEngine;
 using Zenject;
@@ -10,12 +13,14 @@ namespace EnemyWaves
 {
     public class EnemyWavesManager : MonoBehaviour
     {
-        [SerializeField] private EnemyWaveFactorySO testWave;
+        [SerializeField] private EnemyWavesContainerSO wavesContainer;
         [SerializeField] private PooledUnitBase enemyUnitPrefab;
+        [SerializeField] private BaseCountdownPresentation timerPresentation;
 
         private readonly Queue<EnemyWaveFactorySO> wavesQueue = new();
         private IEnemyWave currentWave;
         private DefaultPooledEmitter pooledEmitter;
+        private IDifficulty difficulty;
 
         public event Action<IEnemyWaveFactory> OnWaveAddedE;
         public event Action<IEnemyWave> OnWaveSetupedE;
@@ -30,6 +35,12 @@ namespace EnemyWaves
             this.pooledEmitter = pooledEmitter;
         }
 
+        public void Initialize(IDifficulty difficulty)
+        {
+            this.difficulty = difficulty;
+
+            StartCoroutine(PrepeareNextWaveSequnce());
+        }
         public void AddWaveToQueue(EnemyWaveFactorySO wave)
         {
             if (wavesQueue == null) return;
@@ -42,14 +53,15 @@ namespace EnemyWaves
         {
             if(wavesQueue.Count == 0) return;
 
+            CurrentWavesId++;
+
             var nextWaveData = wavesQueue.Dequeue();
 
             currentWave = nextWaveData.CreateEnemyWave();
-            currentWave.SetupWave(pooledEmitter, enemyUnitPrefab);
+            currentWave.SetupWave(CurrentWavesId, pooledEmitter, enemyUnitPrefab, difficulty, timerPresentation);
 
             OnWaveSetupedE?.Invoke(currentWave);
         }
-        [ContextMenu("Start wave")]
         public void StartWave()
         {
             if(currentWave == null) return;
@@ -57,16 +69,17 @@ namespace EnemyWaves
             currentWave.StartWave();
         }
 
-        #region Test Methods
-        [ContextMenu("Setup test Wave")]
-        private void SetupTestWave()
+        private IEnumerator PrepeareNextWaveSequnce()
         {
-            wavesQueue.Clear();
+            AddWaveToQueue(wavesContainer.GetNextWave(CurrentWavesId));
 
-            AddWaveToQueue(testWave);
+            yield return new WaitForSeconds(1f);
 
             SetupWave();
+
+            yield return new WaitForSeconds(2f);
+
+            StartWave();
         }
-        #endregion
     }
 }

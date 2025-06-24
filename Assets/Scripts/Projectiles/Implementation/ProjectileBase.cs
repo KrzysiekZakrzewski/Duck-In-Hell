@@ -12,6 +12,7 @@ namespace Projectiles.Implementation
         private readonly HashSet<IDamagableTarget> hitTargets = new HashSet<IDamagableTarget>();
         private float lastLaunchTime;
 
+        public abstract LayerMask TargetLayer {  get; }
         public abstract float Speed { get; }
         public abstract float ExpireTime { get; }
         public abstract bool ExpireOnHit { get; }
@@ -74,7 +75,7 @@ namespace Projectiles.Implementation
             
             foreach (IProjectileTargetEffect projectileTargetHitEffect in ProjectileTargetHitEffects)
             {
-                projectileTargetHitEffect.Execute(sourceEmitter, target);
+                projectileTargetHitEffect.Execute(this, target);
             }
         }
     }

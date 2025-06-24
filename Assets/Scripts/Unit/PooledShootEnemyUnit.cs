@@ -28,6 +28,8 @@ namespace Units.Implementation
 
             projectileEmitterController.Launch(projectilePoolEmitter);
 
+            aiController.Initialize(this.unitDataSO.AIDataSO);
+
             ResetUnit();
         }
         public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction)

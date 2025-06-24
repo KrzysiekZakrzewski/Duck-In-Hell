@@ -9,7 +9,7 @@ namespace Projectiles.Implementation
         
         private IProjectile projectile;
         protected IProjectilePhysics physics;
-        
+
         protected virtual void Awake()
         {
             projectile = GetComponent<IProjectile>();

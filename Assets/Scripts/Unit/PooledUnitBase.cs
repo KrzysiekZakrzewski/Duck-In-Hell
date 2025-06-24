@@ -1,4 +1,5 @@
-﻿using BlueRacconGames.Animation;
+﻿using BlueRacconGames.AI;
+using BlueRacconGames.Animation;
 using BlueRacconGames.Pool;
 using Damageable;
 using Game.CharacterController;
@@ -18,10 +19,12 @@ namespace Units.Implementation
         protected SpriteRenderer spriteRenderer;
         protected UnitAnimationControllerBase animationController;
         protected IDamageable damageable;
+        protected AIControllerBase aiController;
         protected bool isDoSomething;
         protected int doNothingTickDuration;
         protected int tick;
         public IDamageable Damageable => damageable;
+        public AIControllerBase AIController => aiController;
         public bool IsDoSomething => isDoSomething;
 
         public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction)
@@ -33,6 +36,8 @@ namespace Units.Implementation
             animationController = GetComponent<UnitAnimationControllerBase>();
             characterController = GetComponent<CharacterController2D>();
             damageable ??= GetComponent<IDamageable>();
+            aiController = GetComponent<AIControllerBase>();
+
             damageable.OnExpireE += ExpireInternal;
             damageable.OnTakeDamageE += unitHUD.HealthBar.UpdateBar;
 
@@ -87,6 +92,7 @@ namespace Units.Implementation
             damageable.OnTakeDamageE -= unitHUD.HealthBar.UpdateBar;
             TimeTickSystem.OnTick -= OnTick;
             TimeTickSystem.OnBigTick -= OnBigTick;
+            aiController.OnExpire();
 
             Expire();
         }

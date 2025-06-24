@@ -22,6 +22,14 @@ namespace BlueRacconGames.AI.Implementation
 
             StartWonder();
         }
+        public void ForceStop()
+        {
+            countdownEnable = false;
+
+            TimeTickSystem.OnTick -= OnTick;
+
+            IsWondering = false;
+        }
 
         private void OnTick(object sender, OnTickEventArgs e)
         {

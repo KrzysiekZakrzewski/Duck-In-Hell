@@ -6,7 +6,6 @@ namespace BlueRacconGames.AI
     public interface IAIMode
     {
         AIControllerBase AIController {  get; }
-        bool IsSimulated {  get; }
 
         void Update();
         void OnDestory();

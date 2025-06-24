@@ -6,6 +6,7 @@ namespace Projectiles.Implementation
     {
         [SerializeField] private DefaultProjectileDataSo initialData;
         
+        public override LayerMask TargetLayer => initialData.TargetLayer;
         public override float Speed => initialData.Speed;
         public override float ExpireTime => initialData.ExpireTime;
         public override bool ExpireOnHit => initialData.ExpireOnHit;

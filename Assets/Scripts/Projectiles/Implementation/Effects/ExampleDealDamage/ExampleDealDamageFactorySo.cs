@@ -9,7 +9,7 @@ namespace BasicImplementationSample.Scripts.Effects.ExampleDealDamage
     {
         public override IProjectileTargetEffect CreateEffect()
         {
-            return new ExampleDealDamageEffect();
+            return new DealDamageEffect();
         }
     }
 }

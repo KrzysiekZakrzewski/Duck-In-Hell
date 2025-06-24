@@ -10,6 +10,8 @@ namespace Units.Implementation
 {
     public abstract class UnitBase : MonoBehaviour, IUnit
     {
+        protected UnitHUD unitHud;
+
         protected Collider2D unitCollider2D;
         protected CharacterController2D characterController;
         protected SpriteRenderer spriteRenderer;
@@ -25,6 +27,8 @@ namespace Units.Implementation
 
         public bool IsDoSomething => isDoSomething;
 
+        public bool IsInitialized { get; protected set; }
+
         public virtual void Lauch()
         {
             unitCollider2D = GetComponent<Collider2D>();
@@ -32,6 +36,7 @@ namespace Units.Implementation
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             animationController = GetComponent<UnitAnimationControllerBase>();
             damageable ??= GetComponent<IDamageable>();
+            damageable.OnTakeDamageE += unitHud.HealthBar.UpdateBar;
 
             TimeTickSystem.OnTick += OnTick;
             TimeTickSystem.OnBigTick += OnBigTick;
@@ -56,7 +61,8 @@ namespace Units.Implementation
         private void ExpireInternal(IDamageable damageable)
         {
             damageable.OnExpireE -= ExpireInternal;
-           
+            damageable.OnTakeDamageE -= unitHud.HealthBar.UpdateBar;
+
             TimeTickSystem.OnTick -= OnTick;
             TimeTickSystem.OnBigTick -= OnBigTick;
         }

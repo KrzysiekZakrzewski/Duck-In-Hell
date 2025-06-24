@@ -11,13 +11,20 @@ namespace BlueRacconGames.MeleeCombat
     {
         private readonly HashSet<IDamagableTarget> hitTargets = new();
 
+        public List<ILaunchAttackEffect> LaunchAttackEffects { get; }
         public List<IMeleeWeaponTargetEffect> MeleeWeaponTargetHitEffects { get; }
 
         public event Action<IDamagableTarget> OnHitE;
 
         protected MeleeWeaponBase(MeleeWeaponBaseFactorySO initialData) : base(initialData)
         {
+            LaunchAttackEffects = new();
             MeleeWeaponTargetHitEffects = new();
+
+            foreach(ILaunchAttackEffectFactory launchAttackEffectFactory in initialData.LaunchAttackEffectFactory)
+            {
+                LaunchAttackEffects.Add(launchAttackEffectFactory.CreateEffect());
+            }
 
             foreach (IMeleeWeaponTargetEffectFactory meleeWeaponTargetEffectFactory in initialData.MeleeWeaponTargetEffectFactory)
             {
@@ -25,6 +32,10 @@ namespace BlueRacconGames.MeleeCombat
             }
         }
 
+        public void OnAttack(MeleeCombatControllerBase source)
+        {
+            OnAttackInternal(source);
+        }
         public void OnHit(MeleeCombatControllerBase source, IDamagableTarget target)
         {
             if (hitTargets.Contains(target))
@@ -33,12 +44,18 @@ namespace BlueRacconGames.MeleeCombat
             hitTargets.Add(target);
             OnHitInternal(source, target);
         }
-
         public void ResetWeapon()
         {
             hitTargets.Clear();
         }
 
+        private void OnAttackInternal(MeleeCombatControllerBase source)
+        {
+            foreach(ILaunchAttackEffect effect in LaunchAttackEffects)
+            {
+                effect.Execute(source);
+            }
+        }
         private void OnHitInternal(MeleeCombatControllerBase source, IDamagableTarget target)
         {
             OnHitE?.Invoke(target);

@@ -16,8 +16,10 @@ MonoBehaviour:
   <Name>k__BackingField: Pulse
   <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: -8463550002915553406, guid: 69e8c845e227cd8489dd8b0954a87278, type: 3}
+  <LaunchAttackEffectFactory>k__BackingField:
+  - {fileID: 11400000, guid: de8a6388e9b9ea741833f957c3169942, type: 2}
   <MeleeWeaponTargetEffectFactory>k__BackingField:
-  - {fileID: 11400000, guid: 2a8ffa548d5ecfd41b0081e58783d30f, type: 2}
+  - {fileID: 11400000, guid: 2d48121bfb0fde747a159133bf46fda2, type: 2}
   <ScaleMultiplayer>k__BackingField: 0.35
   <AnimationDuration>k__BackingField: 0.2
   <PulseDelay>k__BackingField: 0.5

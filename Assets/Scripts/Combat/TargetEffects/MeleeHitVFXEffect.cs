@@ -13,7 +13,7 @@ namespace BlueRacconGames.MeleeCombat
 
         public void Execute(MeleeCombatControllerBase source, IDamagableTarget target)
         {
-            source.SpawnHitEffect(vfxEffect);
+
         }
     }
 }

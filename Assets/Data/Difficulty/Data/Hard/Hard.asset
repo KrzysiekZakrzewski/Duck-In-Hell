@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fec3c6fd0e7fd6418611d8ac5df7870, type: 3}
+  m_Name: Hard
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Hard
+  <BaseDifficultyData>k__BackingField: {fileID: 11400000, guid: ce6a2d1de7e879b45a597cc475ae9094, type: 2}
+  <EnemyAmountMultiplier>k__BackingField: 2.5
+  <ScoreMultiplier>k__BackingField: 2.5
+  <RewardsMultiplier>k__BackingField: 2.5

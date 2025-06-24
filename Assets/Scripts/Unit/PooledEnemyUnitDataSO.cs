@@ -1,4 +1,5 @@
-﻿using Damageable;
+﻿using BlueRacconGames.AI.Data;
+using Damageable;
 using Damageable.Implementation;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Units.Implementation
     public class PooledEnemyUnitDataSO : UnitDataSO
     {
         [SerializeField] private PooledEnemyDamagableDataSO enemyDamagableDataSO;
-
+        [field: SerializeField] public BaseAIDataSO AIDataSO { get; private set; }
         public override IDamagableDataSO DamagableDataSO => enemyDamagableDataSO;
     }
 }

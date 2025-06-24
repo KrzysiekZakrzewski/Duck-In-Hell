@@ -9,36 +9,25 @@ namespace BlueRacconGames.AI.Implementation
     public abstract class AIModeBase : IAIMode
     {
         private readonly AIControllerBase aIController;
-        private bool isSimulated;
 
-        protected float simulationDistance;
         protected Transform playerTransform;
 
         public AIControllerBase AIController => aIController;
-        public bool IsSimulated => isSimulated;
 
         public AIModeBase(AIControllerBase aiController, BaseAIDataSO initializeData, IAIModeFactory factoryData)
         {
             this.aIController = aiController;
             playerTransform = aIController.PlayerTransform;
-
-            simulationDistance = initializeData.SimulationDistance;
-
-            TimeTickSystem.OnTick += OnTickSimulateChecker;
         }
 
         public void Update()
         {
-            if(!isSimulated) return;
+            if(!aIController.IsSimulating) return;
 
             InternalUpdate();
         }
         public void OnDestory()
         {
-            StopSimulate();
-
-            TimeTickSystem.OnTick -= OnTickSimulateChecker;
-
             InternalOnDestory();
         }
         public abstract bool CanChangeMode(out IAIModeFactory modeFactory);
@@ -52,15 +41,11 @@ namespace BlueRacconGames.AI.Implementation
         }
         public virtual void StartSimulate()
         {
-            if (isSimulated) return;
 
-            isSimulated = true;
         }
         public virtual void StopSimulate()
         {
-            if (!isSimulated) return;
 
-            isSimulated = false;
         }
 
         protected float CalculateDistance(Vector2 destination)
@@ -80,21 +65,6 @@ namespace BlueRacconGames.AI.Implementation
         protected virtual void InternalOnDestory()
         {
 
-        }
-
-        private void OnTickSimulateChecker(object sender, OnTickEventArgs e)
-        {
-            var inSimulateDistance = CalculateDistance(playerTransform.position) < simulationDistance;
-
-            if(inSimulateDistance == isSimulated) return;
-
-            if (inSimulateDistance)
-            {
-                StartSimulate();
-                return;
-            }
-
-            StopSimulate();
         }
     }
 }

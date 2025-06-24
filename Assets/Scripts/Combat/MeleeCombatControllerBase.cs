@@ -1,6 +1,8 @@
 using BlueRacconGames.Animation;
+using BlueRacconGames.Pool;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace BlueRacconGames.MeleeCombat
 {
@@ -11,12 +13,23 @@ namespace BlueRacconGames.MeleeCombat
         [SerializeField] private float attackRange = 50f;
         [SerializeField] private Color debugGizmosColor = Color.yellow;
 
+        protected DefaultPooledEmitter pooledEmitter;
         protected UnitAnimationControllerBase animationController;
         protected List<GameObject> targetsGM = new();
         protected IMeleeWeapon weapon;
         protected bool canAttack = true;
 
         private Vector2 lastHitPoint;
+
+        public Vector3 AttackPosition => attackPoint.position;
+
+        public DefaultPooledEmitter PooledEmitter => pooledEmitter;
+
+        [Inject]
+        private void Inject(DefaultPooledEmitter pooledEmitter)
+        {
+            this.pooledEmitter = pooledEmitter;
+        }
 
         protected virtual void Awake()
         {
@@ -27,6 +40,8 @@ namespace BlueRacconGames.MeleeCombat
         {
             if (!CanAttack())
                 return;
+
+            weapon.OnAttack(this);
 
             DamageDetected();
         }
@@ -54,10 +69,6 @@ namespace BlueRacconGames.MeleeCombat
         public virtual void Dizzy(float dizzyTime)
         {
 
-        }
-        public void SpawnHitEffect(ParticleSystem vfx)
-        {
-            Instantiate(vfx, lastHitPoint, Quaternion.identity, null);
         }
 
         protected virtual bool CanAttack() => weapon != null && canAttack;

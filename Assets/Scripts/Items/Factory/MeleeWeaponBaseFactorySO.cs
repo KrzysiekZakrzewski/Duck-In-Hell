@@ -6,8 +6,8 @@ namespace Game.Item.Factory.Implementation
 {
     public abstract class MeleeWeaponBaseFactorySO : ItemFactorySO
     {
-        [field: SerializeField]
-        public List<MeleeWeaponTargetEffectFactorySO> MeleeWeaponTargetEffectFactory {  get; set; }
+        [field: SerializeField] public List<LaunchAttackEffectFactorySO> LaunchAttackEffectFactory { get; set; }
+        [field: SerializeField] public List<MeleeWeaponTargetEffectFactorySO> MeleeWeaponTargetEffectFactory {  get; set; }
         public abstract override IItemRuntimeLogic CreateItem();
     }
 }

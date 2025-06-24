@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae863be438c5714a8b556b495695202, type: 3}
+  m_Name: EnemyWavesContainerSO
+  m_EditorClassIdentifier: 
+  enemyWavesContainerDatas:
+  - StartRangeWaveId: 1
+    EndRangeWaveId: 5
+    DefaultEnemyWaveDataSO: {fileID: 11400000, guid: f223b69965a3ec74eb0131bf50db8478, type: 2}
+  - StartRangeWaveId: 6
+    EndRangeWaveId: 8
+    DefaultEnemyWaveDataSO: {fileID: 11400000, guid: f223b69965a3ec74eb0131bf50db8478, type: 2}
+  DefaultEnemyWave: {fileID: 11400000, guid: f223b69965a3ec74eb0131bf50db8478, type: 2}

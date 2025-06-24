@@ -87,7 +87,7 @@ namespace Damageable.Implementation
             characterController.SetCanMove(false);
             isImmune = true;
             animationController.GetHitAnimation();
-            Knockback(0.1f);
+
             //yield return new WaitUntil(() => animationController.GetBoolParameter("DamageDetect"));
             yield return new WaitForSeconds(0.5f);
             //yield return new WaitWhile(() => animationController.GetBoolParameter("DamageDetect"));
@@ -108,15 +108,6 @@ namespace Damageable.Implementation
             }
 
             OnDead();
-        }
-        protected virtual void Knockback(float force)
-        {
-            characterController.SetCanMove(false);
-
-            if (rb == null) return;
-
-            rb.linearVelocity = Vector2.zero;
-            rb.AddForceX((transform.localScale.x * force) * -1, ForceMode2D.Impulse);
         }
         protected virtual void HealInternal(int healValue)
         {

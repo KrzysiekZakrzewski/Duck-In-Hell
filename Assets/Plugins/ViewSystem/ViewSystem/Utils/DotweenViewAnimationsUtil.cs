@@ -98,5 +98,22 @@ namespace ViewSystem.Utils
             sequence.Insert(0, fadeTween);
             return sequence;
         }
+
+        public static Sequence ScaleIn(CanvasGroup group, Vector3 scaleTarget, Ease ease = DEFAULT_EASE, float duration = DEFAULT_DURATION)
+        {
+            Sequence sequence = DOTween.Sequence();
+            group.transform.localScale = Vector3.zero;
+            Tween scaleTween = group.transform.DOScale(scaleTarget, duration).SetEase(ease);
+            sequence.Insert(0, scaleTween);
+            return sequence;
+        }
+        public static Sequence ScaleOut(CanvasGroup group, Vector3 startScale, Ease ease = DEFAULT_EASE, float duration = DEFAULT_DURATION)
+        {
+            Sequence sequence = DOTween.Sequence();
+            group.transform.localScale = startScale;
+            Tween scaleTween = group.transform.DOScale(Vector3.zero, duration).SetEase(ease);
+            sequence.Insert(0, scaleTween);
+            return sequence;
+        }
     }
 }
