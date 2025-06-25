@@ -9,9 +9,7 @@ namespace BlueRacconGames.UI.Bars.Presentation
         public abstract event Action<IStatBarPresentation> OnShowPresentationComplete;
         public abstract event Action<IStatBarPresentation, IStatBar> OnUpdatePresentationComplete;
         public abstract event Action<IStatBarPresentation> OnHidePresentationComplete;
-        public abstract event Action<IStatBarPresentation> OnLaunchComplete;
 
-        public abstract void Launch(IStatBar statBar);
         public abstract void PlayShowPresentation(IStatBar statBar);
         public abstract void PlayUpdatePresentation(IStatBar statBar);
         public abstract void PlayHidePresentation(IStatBar statBar);

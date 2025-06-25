@@ -16,3 +16,4 @@ MonoBehaviour:
   <RunSpeedBase>k__BackingField: 50
   <MaxSpeedBase>k__BackingField: 5
   <BaseSpriteState>k__BackingField: 1
+  <UnitPhysicsData>k__BackingField: {fileID: 11400000, guid: 04293883790185d4abb028a67995a29b, type: 2}

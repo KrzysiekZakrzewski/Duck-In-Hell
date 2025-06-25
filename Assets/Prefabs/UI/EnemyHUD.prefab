@@ -169,6 +169,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 8284549768249283983, guid: c990417f93493fa4798316b681e421ec, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.498
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

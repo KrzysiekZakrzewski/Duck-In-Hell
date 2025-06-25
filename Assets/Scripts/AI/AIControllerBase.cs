@@ -31,8 +31,11 @@ namespace BlueRacconGames.AI
         }
         protected virtual void OnDestroy()
         {
-            wonderAI.OnStartWonderE -= OnStartWonder;
-            wonderAI.OnEndWonderE -= OnEndWonder;
+            if (wonderAI != null) 
+            {
+                wonderAI.OnStartWonderE -= OnStartWonder;
+                wonderAI.OnEndWonderE -= OnEndWonder;
+            }
 
             if (aIMode == null) return;
 

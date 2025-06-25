@@ -19,7 +19,7 @@ namespace EnemyWaves
 
         private readonly Queue<EnemyWaveFactorySO> wavesQueue = new();
         private IEnemyWave currentWave;
-        private DefaultPooledEmitter pooledEmitter;
+        private UnitPoolEmitter unitSpawner;
         private IDifficulty difficulty;
 
         public event Action<IEnemyWaveFactory> OnWaveAddedE;
@@ -30,16 +30,16 @@ namespace EnemyWaves
         public int EndedWavesCount { get; private set; }
 
         [Inject]
-        private void Inject(DefaultPooledEmitter pooledEmitter)
+        private void Inject(UnitPoolEmitter unitSpawner)
         {
-            this.pooledEmitter = pooledEmitter;
+            this.unitSpawner = unitSpawner;
         }
 
-        public void Initialize(IDifficulty difficulty)
+        public void InitializeGameMode(IDifficulty difficulty)
         {
             this.difficulty = difficulty;
 
-            StartCoroutine(PrepeareNextWaveSequnce());
+            PrepeareNextWave();
         }
         public void AddWaveToQueue(EnemyWaveFactorySO wave)
         {
@@ -58,9 +58,8 @@ namespace EnemyWaves
             var nextWaveData = wavesQueue.Dequeue();
 
             currentWave = nextWaveData.CreateEnemyWave();
-            currentWave.SetupWave(CurrentWavesId, pooledEmitter, enemyUnitPrefab, difficulty, timerPresentation);
-
-            OnWaveSetupedE?.Invoke(currentWave);
+            currentWave.OnSetupedE += OnWaveSetupedE;
+            currentWave.SetupWave(CurrentWavesId, unitSpawner, enemyUnitPrefab, difficulty, timerPresentation);
         }
         public void StartWave()
         {
@@ -68,18 +67,23 @@ namespace EnemyWaves
 
             currentWave.StartWave();
         }
-
-        private IEnumerator PrepeareNextWaveSequnce()
+        public void PrepeareNextWave()
         {
-            AddWaveToQueue(wavesContainer.GetNextWave(CurrentWavesId));
+            StartCoroutine(PrepeareAutoNextWaveSequence());
+        }
 
-            yield return new WaitForSeconds(1f);
+        private IEnumerator PrepeareAutoNextWaveSequence()
+        {
+            yield return new WaitForSeconds(2f);
+
+            AddWaveToQueue(wavesContainer.GetNextWave(CurrentWavesId));
 
             SetupWave();
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitUntil(NextWaveIsReady);
 
             StartWave();
         }
+        private bool NextWaveIsReady() => currentWave != null && currentWave.IsReady;
     }
 }

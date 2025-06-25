@@ -17,6 +17,5 @@ namespace BlueRacconGames.UI.Bars
         void UpdateBar(int currentValue, int maxValue);
         void ForceUpdateBar(int currentValue, int maxValue);
         void Hide();
-        void ResetBar();
     }
 }

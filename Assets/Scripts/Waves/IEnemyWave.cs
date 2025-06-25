@@ -13,6 +13,7 @@ namespace EnemyWaves
         WaveEnemyUnitData[] WaveEnemyUnitDatas {  get; }
         int TotalEnemy {  get; }
         int EnemyRemain {  get; }
+        bool IsReady { get; }
         bool IsStarted { get; }
         bool IsCompleted {  get; }
 
@@ -21,7 +22,7 @@ namespace EnemyWaves
         event Action<IEnemyWave> OnUpdatedE;
         event Action<IEnemyWave> OnCompletedE;
 
-        void SetupWave(int waveId, DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation);
+        void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation);
         void StartWave();
         void UpdateWave(IUnit unit);
         void CompleteWave();

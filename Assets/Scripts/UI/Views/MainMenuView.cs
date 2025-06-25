@@ -1,9 +1,8 @@
 using ViewSystem;
 using ViewSystem.Implementation;
 using UnityEngine;
-using Zenject;
 using Game.Managers;
-using Unity.VisualScripting;
+using BlueRacconGames.UI;
 
 namespace Game.View
 {

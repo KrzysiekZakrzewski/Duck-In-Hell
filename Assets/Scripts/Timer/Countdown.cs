@@ -61,6 +61,8 @@ namespace Timers
         private void CountdownFinished()
         {
             OnCountdownE?.Invoke();
+            OnCountdownUpdatedE = null;
+            OnCountdownE = null;
             presentation.PlayHidePresentation(this);
         }
     }

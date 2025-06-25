@@ -1,79 +1,59 @@
-using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class UIButtonBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+namespace BlueRacconGames.UI
 {
-    [SerializeField] private Image buttonImage;
-    [SerializeField] private Color normalColor = Color.white;
-    [SerializeField] private Color highlightedColor = new(0.9f,0.9f,0.9f);
-    [SerializeField] private Color disabledColor = new (0.7843137f, 0.7843137f, 0.7843137f, 0.5019608f);
-    [SerializeField] private bool clickAnimation = true;
-
-    protected float duration = 0.15f;
-    protected Vector3 baseScale;
-    protected bool isHighlighted;
-    protected bool isInteractable = true;
-    protected float scaleFactor = 0.8f;
-
-    public event Action OnClickE;
-    public event Action<bool> OnEnterE;
-    public event Action<bool> OnExitE;
-
-    public bool IsInteractable => isInteractable;
-
-    private void Awake()
+    public class UIButtonBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
     {
-        baseScale = transform.localScale;
-    }
+        [SerializeField] private UIButtonPresentationController presentation;
 
-    public void SetInteractable(bool value)
-    {
-        isInteractable = value;
+        public event Action OnClickE;
+        public event Action<bool> OnEnterE;
+        public event Action<bool> OnExitE;
 
-        Color targetColor = isInteractable ? normalColor : disabledColor;
-        buttonImage.DOColor(targetColor, duration);
-    }
+        public bool IsInteractable { get; private set; }
 
+        public void SetInteractable(bool value)
+        {
+            IsInteractable = value;
 
-    public virtual void OnPointerEnter(PointerEventData eventData)
-    {
-        isHighlighted = true;
+            presentation.InteractableVisualize(value);
+        }
 
-        OnEnterE?.Invoke(isInteractable);
+        public virtual void OnPointerEnter(PointerEventData eventData)
+        {
+            presentation.OnEnterPresentation(IsInteractable);
 
-        Color targetColor = isInteractable ? highlightedColor : disabledColor;
-        buttonImage.DOColor(targetColor, duration);
-    }
+            OnEnterE?.Invoke(IsInteractable);
+        }
+        public virtual void OnPointerExit(PointerEventData eventData)
+        {
+            OnExitE?.Invoke(IsInteractable);
 
-    public virtual void OnPointerExit(PointerEventData eventData)
-    {
-        isHighlighted = false;
+            presentation.OnExitPresentation(IsInteractable);
+        }
+        public virtual void OnPointerClick(PointerEventData eventData)
+        {
+            if(!IsInteractable) return;
 
-        OnExitE?.Invoke(isInteractable);
+            presentation.OnClickPresentation();
+            OnClickE?.Invoke();
+        }
+        public virtual void OnPointerDown(PointerEventData eventData)
+        {
+            presentation.OnDownPresentation();
+        }
+        public virtual void OnPointerUp(PointerEventData eventData)
+        {
+            presentation.OnUpPresentation();
+        }
 
-        Color targetColor = isInteractable ? normalColor : disabledColor;
-        buttonImage.DOColor(targetColor, duration);
-    }
-
-    public virtual void OnPointerClick(PointerEventData eventData)
-    {
-        OnClickE?.Invoke();
-    }
-
-    public virtual void OnPointerDown(PointerEventData eventData)
-    {
-        if (!clickAnimation) return;
-
-        transform.DOScale(baseScale * scaleFactor, duration).SetEase(Ease.OutBack);
-    }
-
-    public virtual void OnPointerUp(PointerEventData eventData)
-    {
-        if (!clickAnimation) return;
-
-        transform.DOScale(baseScale, duration).SetEase(Ease.OutBack);
+        public virtual void ResetButton()
+        {
+            OnClickE = null;
+            OnEnterE = null;
+            OnExitE = null;
+        }
     }
 }

@@ -25,76 +25,58 @@ namespace BlueRacconGames.UI.Bars
         {
             Presentation.OnShowPresentationComplete += Presentation_OnShowPresentationComplete;
             Presentation.OnHidePresentationComplete += Presentation_OnHidePresentationComplete;
-            Presentation.OnLaunchComplete += Presentation_OnLaunchPresentationComplete;
         }
 
         protected virtual void OnDestroy()
         {
             Presentation.OnShowPresentationComplete -= Presentation_OnShowPresentationComplete;
             Presentation.OnHidePresentationComplete -= Presentation_OnHidePresentationComplete;
-            Presentation.OnLaunchComplete -= Presentation_OnLaunchPresentationComplete;
         }
 
         public virtual void Launch(int currentValue, int maxValue)
         {
-            Presentation.Launch(this);
+            ForceUpdateBar(currentValue, maxValue);
 
-            UpdateBar(currentValue, maxValue);
+            Show();
         }
 
         public virtual void Show()
         {
+            gameObject.SetActive(true);
+
             Presentation.PlayShowPresentation(this);
         }
-
         public void UpdateBar(int currentValue, int maxValue)
         {
             UpdateValue(currentValue, maxValue);
 
             Presentation.PlayUpdatePresentation(this);
         }
-
         public void ForceUpdateBar(int currentValue, int maxValue)
         {
             UpdateValue(currentValue, maxValue);
 
             Presentation.ForceUpdate(this);
         }
-
         public virtual void Hide()
         {
             Presentation.PlayHidePresentation(this);
         }
-
         public virtual void OnShowed()
         {
 
         }
-
         public virtual void OnHided()
         {
 
         }
 
-        public void ResetBar()
-        {
-            UpdateBar(0, 0);
-
-            Presentation.ResetPresentation(this);
-        }
-
         protected virtual void Presentation_OnShowPresentationComplete(IStatBarPresentation presentation)
         {
         }
-
         protected virtual void Presentation_OnHidePresentationComplete(IStatBarPresentation presentation)
         {
             gameObject.SetActive(false);
-        }
-
-        protected virtual void Presentation_OnLaunchPresentationComplete(IStatBarPresentation presentation)
-        {
-            ForceUpdateBar(currentValue, maxValue);
         }
 
         private void UpdateValue(int currentValue, int maxValue)

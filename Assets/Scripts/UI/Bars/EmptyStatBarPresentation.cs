@@ -7,12 +7,6 @@ namespace BlueRacconGames.UI.Bars.Presentation
         public override event Action<IStatBarPresentation> OnShowPresentationComplete;
         public override event Action<IStatBarPresentation, IStatBar> OnUpdatePresentationComplete;
         public override event Action<IStatBarPresentation> OnHidePresentationComplete;
-        public override event Action<IStatBarPresentation> OnLaunchComplete;
-
-        public override void Launch(IStatBar statBar)
-        {
-
-        }
 
         public override void PlayShowPresentation(IStatBar statBar)
         {

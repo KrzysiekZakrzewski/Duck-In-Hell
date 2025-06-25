@@ -38,6 +38,9 @@ namespace Game.CharacterController
             maxSpeed = characterControllerDataSO.MaxSpeedBase;
             baseSpriteState = characterControllerDataSO.BaseSpriteState;
 
+            rb.mass = characterControllerDataSO.UnitPhysicsData.Mass;
+            rb.sharedMaterial = characterControllerDataSO.UnitPhysicsData.PhysicsMaterial;
+
             if (baseSpriteState == BaseSpriteState.Right) return;
 
             Flip(false);

@@ -1,15 +1,14 @@
 using ViewSystem.Implementation;
 using UnityEngine;
 using TMPro;
+using BlueRacconGames.UI;
 
 namespace Game.View
 {
     public class CreditsView : BasicView
     {
-        [SerializeField]
-        private UIButtonBase backButton;
-        [SerializeField]
-        private TextMeshProUGUI version;
+        [SerializeField] private UIButtonBase backButton;
+        [SerializeField] private TextMeshProUGUI version;
 
         public override bool Absolute => false;
 

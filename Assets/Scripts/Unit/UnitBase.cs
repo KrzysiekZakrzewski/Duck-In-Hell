@@ -21,6 +21,7 @@ namespace Units.Implementation
         protected bool isDoSomething;
         protected int doNothingTickDuration = 20;
         protected int tick;
+        protected ParticlePoolItem launchVFX;
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => damageable;
@@ -47,9 +48,9 @@ namespace Units.Implementation
         {
             damageable?.ResetDamagable();
         }
-        public virtual void SetUnitData(UnitDataSO unitDataSO)
+        public virtual void SetUnitData(UnitDataSO initializeData)
         {
-            spriteRenderer.sprite = unitDataSO.UnitSprite;
+            spriteRenderer.sprite = initializeData.UnitSprite;
 
             MatchColliderToSprite();
         }

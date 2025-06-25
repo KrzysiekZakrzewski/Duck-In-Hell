@@ -18,7 +18,7 @@ namespace EnemyWaves.Implementation
         private readonly WaveEnemyUnitData[] initialData;
         private readonly float spawnDelayDuration = 0.1f;
         private int totalEnemy;
-        private Countdown timer;
+        private Countdown countdown;
         private bool enemySpawned = false;
 
         protected readonly float countdownTime = 3;
@@ -29,6 +29,7 @@ namespace EnemyWaves.Implementation
         public WaveEnemyUnitData[] WaveEnemyUnitDatas => initialData;
 
         public int EnemyRemain => enemyUnitsLUT.Count;
+        public bool IsReady {  get; private set; }
         public bool IsStarted { get; private set; }
         public bool IsCompleted { get; private set; }
 
@@ -40,18 +41,20 @@ namespace EnemyWaves.Implementation
 
         public EnemyWaveBase(WaveEnemyUnitData[] initialData)
         {
+            IsReady = false;
+
             this.initialData = initialData;
         }
 
-        public void SetupWave(int waveId, DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation)
+        public void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation)
         {
-            CorutineSystem.StartSequnce(SetupWaveSequnce(waveId, defaultPooledEmitter, enemyUnitPrefab, difficulty, timerPresentation));
+            CorutineSystem.StartSequnce(SetupWaveSequnce(waveId, unitSpawner, enemyUnitPrefab, difficulty, timerPresentation));
         }
         public void StartWave()
         {
             if (IsCompleted || IsStarted) return;
 
-            timer.StartCountdown(countdownTime, 1);
+            countdown.StartCountdown(countdownTime, 1);
         }
         public void UpdateWave(IUnit unit)
         {
@@ -77,13 +80,14 @@ namespace EnemyWaves.Implementation
 
             OnCompletedE?.Invoke(this);
 
+            ResetEvent();
+
             Debug.Log("Wave Completed");
         }
 
         protected virtual void OnCountdownFinished()
         {
-            timer.OnCountdownE -= OnCountdownFinished;
-            timer = null;
+            countdown = null;
 
             OnOffEnemies(true);
 
@@ -103,18 +107,28 @@ namespace EnemyWaves.Implementation
             enemyUnit.AIController.ForceStartStopSimulate(value);
         }
 
+        private void ResetEvent()
+        {
+            OnSetupedE = null;
+            OnStartedE = null;
+            OnEndedE = null;
+            OnCompletedE = null;
+            OnUpdatedE = null;
+        }
         private bool CheckIsCompleted()
         {
             return enemyUnitsLUT.Count <= 0;
         }
-        private IEnumerator SpawnEnemies(DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab)
+        private IEnumerator SpawnEnemies(UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab)
         {
             var screenBounds = GetScreenBounds();
 
             for (int i = 0; i < TotalEnemy; i++)
             {
-                var newEnemy = defaultPooledEmitter.EmitItem<PooledUnitBase>(enemyUnitPrefab, GetRandomPoint(screenBounds), Vector3.zero);
-                newEnemy.SetUnitData(GetRandomEnemyData()); 
+                var enemyData = GetRandomEnemyData();
+
+                var newEnemy = unitSpawner.SpawnUnit(enemyUnitPrefab, enemyData.LaunchVFX, GetRandomPoint(screenBounds), Vector3.zero);
+                newEnemy.SetUnitData(enemyData); 
                 newEnemy.Damageable.OnDeadE += UpdateWave;
                 OnOffEnemy(newEnemy, false);
 
@@ -168,7 +182,7 @@ namespace EnemyWaves.Implementation
 
             return null;
         }
-        private IEnumerator SetupWaveSequnce(int waveId, DefaultPooledEmitter defaultPooledEmitter, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation)
+        private IEnumerator SetupWaveSequnce(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation)
         {
             IsCompleted = false;
             IsStarted = false;
@@ -176,16 +190,16 @@ namespace EnemyWaves.Implementation
 
             totalEnemy = difficulty.CalculateTotalEnemyAmount(waveId % 10);
 
-            CorutineSystem.StartSequnce(SpawnEnemies(defaultPooledEmitter, enemyUnitPrefab));
+            CorutineSystem.StartSequnce(SpawnEnemies(unitSpawner, enemyUnitPrefab));
 
             yield return new WaitUntil(() => enemySpawned);
 
-            yield return new WaitForSeconds(1f);
-
-            timer = new Countdown(timerPresentation);
-            timer.OnCountdownE += OnCountdownFinished;
+            countdown = new Countdown(timerPresentation);
+            countdown.OnCountdownE += OnCountdownFinished;
 
             OnSetupedE?.Invoke(this);
+
+            IsReady = true;
 
             Debug.Log("Wave Setuped");
         }

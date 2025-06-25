@@ -1,3 +1,4 @@
+using BlueRacconGames.UI;
 using Saves;
 using Settings;
 using UnityEngine;
@@ -9,14 +10,10 @@ namespace Game.View
 {
     public class SettingsView : BasicView
     {
-        [SerializeField]
-        private UIToogle musicButton;
-        [SerializeField]
-        private UIToogle SFXButton;
-        [SerializeField]
-        private UIToogle vibrationButton;
-        [SerializeField]
-        private UIButtonBase backButton;
+        [SerializeField] private UIToogle musicButton;
+        [SerializeField] private UIToogle SFXButton;
+        [SerializeField] private UIToogle vibrationButton;
+        [SerializeField] private UIButtonBase backButton;
 
         private SettingsManager settingsManager;
 

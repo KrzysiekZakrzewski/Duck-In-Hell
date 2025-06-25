@@ -1,3 +1,4 @@
+using BlueRacconGames.Cards;
 using BlueRacconGames.Pool;
 using EnemyWaves;
 using Game.Managers;
@@ -12,17 +13,23 @@ namespace Game.Installer
     {
         [SerializeField] private DefaultPooledEmitter pooledEmitterBase;
         [SerializeField] private ProjectilePoolEmitter projectilePoolEmitter;
+        [SerializeField] private UnitPoolEmitter unitSpawner;
         [SerializeField] private EnemyWavesManager enemyWavesManager;
         [SerializeField] private GameHud gameHud;
         [SerializeField] private SelectCardManager selectCardManager;
+        [SerializeField] private CardsInventory cardsInventory;
+        [SerializeField] private GrantCardManager grantsCardManager;
 
         public override void InstallBindings()
         {
             Container.BindInstance(pooledEmitterBase).AsSingle();
             Container.BindInstance(projectilePoolEmitter).AsSingle();
+            Container.BindInstance(unitSpawner).AsSingle();
             Container.BindInstance(enemyWavesManager).AsSingle();
             Container.BindInstance(gameHud).AsSingle();
             Container.BindInstance(selectCardManager).AsSingle();
+            Container.BindInstance(cardsInventory).AsSingle();
+            Container.BindInstance(grantsCardManager).AsSingle();
 
             TimeTickSystem.Create();
         }

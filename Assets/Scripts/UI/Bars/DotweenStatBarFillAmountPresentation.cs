@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 using ViewSystem.Utils;
@@ -23,12 +24,6 @@ namespace BlueRacconGames.UI.Bars.Presentation
         public override event Action<IStatBarPresentation> OnShowPresentationComplete;
         public override event Action<IStatBarPresentation, IStatBar> OnUpdatePresentationComplete;
         public override event Action<IStatBarPresentation> OnHidePresentationComplete;
-        public override event Action<IStatBarPresentation> OnLaunchComplete;
-
-        public override void Launch(IStatBar statBar)
-        {
-
-        }
 
         public override void PlayShowPresentation(IStatBar statBar)
         {
@@ -40,7 +35,6 @@ namespace BlueRacconGames.UI.Bars.Presentation
             };
             sequence.SetUpdate(true);
         }
-
         public override void PlayUpdatePresentation(IStatBar statBar)
         {
             float value = CalculateValue(statBar.CurrentValue, statBar.MaxValue);
@@ -56,7 +50,6 @@ namespace BlueRacconGames.UI.Bars.Presentation
                 OnUpdatePresentationComplete?.Invoke(this, statBar);
             });
         }
-
         public override void PlayHidePresentation(IStatBar statBar)
         {
             PrepareSequence();
@@ -67,19 +60,16 @@ namespace BlueRacconGames.UI.Bars.Presentation
             };
             sequence.SetUpdate(true);
         }
-
         public override void ForceHidePresentationComplete()
         {
             sequence?.Kill();
             OnHidePresentationComplete?.Invoke(this);
         }
-
         public override void ForceUpdate(IStatBar statBar)
         {
             fillAmountImage.fillAmount = CalculateValue(statBar.CurrentValue, statBar.MaxValue);
             OnUpdatePresentationComplete?.Invoke(this, statBar);
         }
-
         public override void ResetPresentation(IStatBar statBar)
         {
             fillAmountImage.fillAmount = 0f;
@@ -89,7 +79,6 @@ namespace BlueRacconGames.UI.Bars.Presentation
         {
             return DotweenViewAnimationUtil.FadeIn(canvasGroup, ease, tweenDuration);
         }
-
         protected virtual Sequence GetHideSequence(IStatBar statBar)
         {
             return DotweenViewAnimationUtil.FadeOut(canvasGroup, ease, tweenDuration);
@@ -99,9 +88,6 @@ namespace BlueRacconGames.UI.Bars.Presentation
         {
             sequence?.Kill();
         }
-        private float CalculateValue(int currentValue, int maxValue)
-        {
-            return (float)currentValue / (float)maxValue;
-        }
+        private float CalculateValue(int currentValue, int maxValue) => (float)currentValue / (float)maxValue;
     }
 }

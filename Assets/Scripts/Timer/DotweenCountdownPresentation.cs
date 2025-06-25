@@ -49,7 +49,7 @@ namespace Timers
         }
         public override void PlayHidePresentation(Countdown timer)
         {
-            timer.OnCountdownUpdatedE -= PlayUpdatePresentaion;
+            OnShowPresentationComplete = null;
             ShowFinishMsg();
             PrepareSequence();
             sequence = GetHideSequence(timer);
