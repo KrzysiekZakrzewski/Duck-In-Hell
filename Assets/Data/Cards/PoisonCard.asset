@@ -10,9 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
-  m_Name: PasivePoisonEffect
+  m_Name: PoisonCard
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Poison
   <Description>k__BackingField: Bleee
   <Icon>k__BackingField: {fileID: -1017156321652079111, guid: ede656ffb443bd64fafd9a1df10e9dc4, type: 3}
   <BasePercentChance>k__BackingField: 0.8
+  cardEffect:
+    rid: 4469733065951019168
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469733065951019168
+      type: {class: PoisonCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        level: 1
+        tickDuration: 15
+        tickLoopDuration: 5
+        damageAmount: 1

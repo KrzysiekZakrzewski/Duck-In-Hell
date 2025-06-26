@@ -14,16 +14,18 @@ namespace BlueRacconGames.UI
         [SerializeField] private TextMeshProUGUI levelTxt;
         [SerializeField] private Image icon;
 
-        public void SetupPanel(SelectCardManager selectCardManager, CardFactorySO cardData)
+        public void SetupPanel(SelectCardManager selectCardManager, SelectCardData cardData)
         {
             ResetButton();
 
-            nameTxt.text = cardData.Name;
-            descriptionTxt.text = cardData.Description;
-            icon.sprite = cardData.Icon;
-            levelTxt.text = "1";
+            var cardFactory = cardData.CardFactory;
 
-            OnClickE += () => selectCardManager.OnSelectCard(cardData);
+            nameTxt.text = cardFactory.Name;
+            descriptionTxt.text = cardFactory.Description;
+            icon.sprite = cardFactory.Icon;
+            levelTxt.text = cardData.InInventoryLvl.ToString();
+
+            OnClickE += () => selectCardManager.OnSelectCard(cardFactory);
 
             SetInteractable(true);
         }

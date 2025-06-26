@@ -23,23 +23,31 @@ namespace BlueRacconGames.Cards
         }
         public CardFactorySO RandomizeCardData(List<CardFactorySO> excludedCards)
         {
-            var randomizePool = cardsPool;
+            var randomizePool = new HashSet<CardFactorySO>(cardsPool);
 
             randomizePool.ExceptWith(excludedCards);
 
-            float roll = Random.value;
-            float cumulative = 0f;
+            float totalChance = 0f;
 
-            foreach (CardFactorySO cardData in cardsPool)
+            foreach (CardFactorySO cardData in randomizePool)
             {
-                cumulative += cardData.BasePercentChance;
+                totalChance += cardData.BasePercentChance;
+            }
 
-                if (roll > cumulative) continue;
+            float randomValue = Random.Range(0, totalChance);
+
+            float cumulativeChance = 0f;
+
+            foreach (CardFactorySO cardData in randomizePool)
+            {
+                cumulativeChance += cardData.BasePercentChance;
+
+                if (randomValue > cumulativeChance) continue;
 
                 return cardData;
             }
 
-            return randomizePool.ToList()[0];
+            return randomizePool.ToList()[randomizePool.Count - 1];
         }
     }
 }

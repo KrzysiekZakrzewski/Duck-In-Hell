@@ -9,14 +9,14 @@ namespace Game.Managers
 {
     public class SelectCardManager : MonoBehaviour
     {
-        private int cardsToDrawAmount = 3;
+        private readonly int cardsToDrawAmount = 3;
 
         private EnemyWavesManager enemyWavesManager;
         private GrantCardManager grantCardManager;
         private CardsInventory cardsInventory;
 
         public event Action OnCardSetupedE;
-        public event Action<CardFactorySO[]> OnCardsDrawnE;
+        public event Action<SelectCardData[]> OnCardsDrawnE;
         public event Action OnCardSelectedE;
 
         [Inject]
@@ -50,9 +50,7 @@ namespace Game.Managers
         }    
         private void SetupCards(IEnemyWave wave)
         {
-            var cards = GetCards();
-
-            OnCardsDrawnE?.Invoke(cards.ToArray());
+            OnCardsDrawnE?.Invoke(CreateCardDatas());
 
             OnCardSetupedE?.Invoke();
             Debug.Log("Select SetupCards");
@@ -73,5 +71,29 @@ namespace Game.Managers
 
             return drawnCards;
         }
+        private SelectCardData[] CreateCardDatas()
+        {
+            var cards = GetCards();
+
+            SelectCardData[] datas = new SelectCardData[cards.Count];
+
+            for (int i = 0; i < cards.Count; i++)
+            {
+                datas[i] = new()
+                {
+                    CardFactory = cards[i],
+                    InInventoryExist = cardsInventory.IsCardExist(cards[i], out int level),
+                    InInventoryLvl = level
+                };
+            }
+
+            return datas;
+        }
+    }
+    public struct SelectCardData
+    {
+        public CardFactorySO CardFactory;
+        public bool InInventoryExist;
+        public int InInventoryLvl;
     }
 }

@@ -7,7 +7,7 @@ namespace BlueRacconGames.Cards
         int CardLevel { get; }
         event Action<int> OnLevelUpE;
 
-        void Execute();
+        void Execute(CardsController cardsController);
         int LevelUp();
     }
 }

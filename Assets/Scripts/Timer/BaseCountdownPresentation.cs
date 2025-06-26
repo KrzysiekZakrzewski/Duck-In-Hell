@@ -13,7 +13,7 @@ namespace Timers
         public abstract void ForceHidePresentationComplete();
         public abstract void ForceUpdatePresentaionComplete();
         public abstract void PlayHidePresentation(Countdown timer);
-        public abstract void PlayShowPresentation(Countdown timer);
+        public abstract void PlayShowPresentation(Countdown timer, float remaningTime);
         public abstract void PlayUpdatePresentaion(float remaningTime);
     }
 }

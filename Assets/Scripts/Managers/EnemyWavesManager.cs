@@ -74,8 +74,6 @@ namespace EnemyWaves
 
         private IEnumerator PrepeareAutoNextWaveSequence()
         {
-            yield return new WaitForSeconds(2f);
-
             AddWaveToQueue(wavesContainer.GetNextWave(CurrentWavesId));
 
             SetupWave();
@@ -85,5 +83,15 @@ namespace EnemyWaves
             StartWave();
         }
         private bool NextWaveIsReady() => currentWave != null && currentWave.IsReady;
+
+        #region DebugMethods
+        [ContextMenu("Kill them all!")]
+        public void DebugKillAllEnemies()
+        {
+            if(currentWave == null) return;
+
+            currentWave.CompleteWave();
+        }
+        #endregion
     }
 }

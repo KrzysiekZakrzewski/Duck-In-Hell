@@ -10,9 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
-  m_Name: PasiveBurnEffect
+  m_Name: FireCard
   m_EditorClassIdentifier: 
   <Name>k__BackingField: KFC
   <Description>k__BackingField: Hmm... Tasty!
   <Icon>k__BackingField: {fileID: -9149479768589459216, guid: 56ec527f9303c064682768c9f6be16c9, type: 3}
   <BasePercentChance>k__BackingField: 0.9
+  cardEffect:
+    rid: 4469733065951019169
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469733065951019169
+      type: {class: BurnCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        level: 0
+        tickDuration: 0
+        tickLoopDuration: 0
+        damageAmount: 0

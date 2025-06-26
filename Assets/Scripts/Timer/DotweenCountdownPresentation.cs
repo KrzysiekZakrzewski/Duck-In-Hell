@@ -25,9 +25,10 @@ namespace Timers
             canvasGroup.alpha = 0f;
         }
 
-        public override void PlayShowPresentation(Countdown timer)
+        public override void PlayShowPresentation(Countdown timer, float remaningTime)
         {
             timer.OnCountdownUpdatedE += PlayUpdatePresentaion;
+            ChangeTxtValue(remaningTime.ToString());
 
             PrepareSequence();
             sequence = GetShowSequence(timer);
@@ -50,7 +51,7 @@ namespace Timers
         public override void PlayHidePresentation(Countdown timer)
         {
             OnShowPresentationComplete = null;
-            ShowFinishMsg();
+            ChangeTxtValue(finishMsg);
             PrepareSequence();
             sequence = GetHideSequence(timer);
             sequence.onComplete += () =>
@@ -83,12 +84,12 @@ namespace Timers
         }
         protected virtual Sequence GetUpdateSequence(string msg)
         {
-            countdownTxt.text = msg;
+            ChangeTxtValue(msg);
             return DotweenViewAnimationUtil.ScaleIn(canvasGroup, Vector3.one, ease, tweenDuration);
         }
-        protected virtual void ShowFinishMsg()
+        protected virtual void ChangeTxtValue(string msg)
         {
-            countdownTxt.text = finishMsg;
+            countdownTxt.text = msg;
         }
 
         private void PrepareSequence()

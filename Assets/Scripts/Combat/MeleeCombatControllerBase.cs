@@ -1,4 +1,5 @@
 using BlueRacconGames.Animation;
+using BlueRacconGames.Cards;
 using BlueRacconGames.Pool;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace BlueRacconGames.MeleeCombat
         [SerializeField] private LayerMask hitLayer;
         [SerializeField] private float attackRange = 50f;
         [SerializeField] private Color debugGizmosColor = Color.yellow;
+        [SerializeField] private CardsController cardsController;
 
         protected DefaultPooledEmitter pooledEmitter;
         protected UnitAnimationControllerBase animationController;
@@ -62,6 +64,8 @@ namespace BlueRacconGames.MeleeCombat
                 if (!hit.TryGetComponent<IDamagableTarget>(out var target))
                     continue;
 
+                cardsController.ExecutePassiveHitEffects(target);
+                Debug.Log("Y");
                 weapon.OnHit(this, target);
                 lastHitPoint = hit.transform.position;
             }

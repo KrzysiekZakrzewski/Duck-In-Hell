@@ -10,9 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
-  m_Name: PasiveElectricEffect
+  m_Name: ElectricCard
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Electric
   <Description>k__BackingField: Bzzz
   <Icon>k__BackingField: {fileID: -6521766790421277069, guid: ede656ffb443bd64fafd9a1df10e9dc4, type: 3}
   <BasePercentChance>k__BackingField: 0.85
+  cardEffect:
+    rid: 4469733065951019172
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469733065951019172
+      type: {class: ElectricCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        level: 0
+        tickDuration: 0
+        tickLoopDuration: 0
+        damageAmount: 0

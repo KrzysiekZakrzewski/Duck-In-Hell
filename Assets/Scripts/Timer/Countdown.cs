@@ -27,7 +27,7 @@ namespace Timers
             this.remainingTime = remainingTime;
             this.countdownSpeed = countdownSpeed;
 
-            presentation.PlayShowPresentation(this);
+            presentation.PlayShowPresentation(this, remainingTime);
         }
 
         private IEnumerator CountdownCorutine()

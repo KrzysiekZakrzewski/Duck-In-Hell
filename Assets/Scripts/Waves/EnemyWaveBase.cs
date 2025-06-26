@@ -82,6 +82,8 @@ namespace EnemyWaves.Implementation
 
             ResetEvent();
 
+            ClearEnemies();
+
             Debug.Log("Wave Completed");
         }
 
@@ -202,6 +204,15 @@ namespace EnemyWaves.Implementation
             IsReady = true;
 
             Debug.Log("Wave Setuped");
+        }
+        private void ClearEnemies()
+        {
+            if (enemyUnitsLUT.Count <= 0) return;
+
+            foreach (var unit in enemyUnitsLUT)
+            {
+                unit.Damageable.TakeDamage(99999999);
+            }
         }
     }
 }

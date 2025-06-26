@@ -14,10 +14,7 @@ namespace BlueRacconGames.Cards
             cardLevel = 1;
         }
 
-        public void Execute()
-        {
-
-        }
+        public abstract void Execute(CardsController cardsController);
 
         public int LevelUp()
         {

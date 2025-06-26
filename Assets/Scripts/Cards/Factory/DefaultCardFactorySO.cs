@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlueRacconGames.Cards.Effects;
+using UnityEngine;
 
 namespace BlueRacconGames.Cards
 {
@@ -8,7 +9,7 @@ namespace BlueRacconGames.Cards
     {
         public override ICard CreateCard()
         {
-            return new DefaultCard();
+            return new DefaultCard(cardEffect);
         }
     }
 }

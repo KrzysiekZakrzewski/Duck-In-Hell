@@ -5,7 +5,9 @@ namespace BlueRacconGames.Cards
 {
     public class CardsInventory : MonoBehaviour
     {
-        private Dictionary<ICardFactory, ICard> cardDeclarationToRuntimeLogicLut = new();
+        [SerializeField] private CardsController cardsController;
+
+        private readonly Dictionary<ICardFactory, ICard> cardDeclarationToRuntimeLogicLut = new();
 
         public void AddCard(ICardFactory cardData)
         {
@@ -15,9 +17,18 @@ namespace BlueRacconGames.Cards
                 return;
             }
             
-            var questRuntime = cardData.CreateCard();
+            var card = cardData.CreateCard();
 
-            cardDeclarationToRuntimeLogicLut.Add(cardData, questRuntime);
+            cardDeclarationToRuntimeLogicLut.Add(cardData, card);
+            card.Execute(cardsController);
+        }
+        public bool IsCardExist(CardFactorySO cardData, out int cardLevel)
+        {
+            var isExist = cardDeclarationToRuntimeLogicLut.TryGetValue(cardData, out var card);
+
+            cardLevel = isExist ? card.CardLevel : 1;
+
+            return isExist;
         }
 
         private void OnHaveCard(ICardFactory cardData)

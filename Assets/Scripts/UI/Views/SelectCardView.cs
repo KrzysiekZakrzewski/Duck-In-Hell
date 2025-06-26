@@ -32,7 +32,7 @@ namespace Game.View
             selectCardManager.OnCardsDrawnE -= SetupCardPanels;
         }
 
-        private void SetupCardPanels(CardFactorySO[] drawnCards)
+        private void SetupCardPanels(SelectCardData[] drawnCards)
         {
             for (int i = 0; i < rewardsPanels.Length; i++)
             {
