@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <UnitSprite>k__BackingField: {fileID: 2161211097934087789, guid: 4e592040163ec91468466dbc2cc95d41, type: 3}
   <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 360d1f916e2b86d49b5907262853b47e, type: 2}
-  <UnitHUD>k__BackingField: {fileID: 0}
+  <LaunchVFX>k__BackingField: {fileID: 0}
+  <NoPlayAnimation>k__BackingField: {fileID: 11400000, guid: 13a8488230d5b114eae03f72bf7bd722, type: 2}
   playerDamagableDataSO: {fileID: 11400000, guid: 9a417d357377a764588dc209b6cacbe9, type: 2}

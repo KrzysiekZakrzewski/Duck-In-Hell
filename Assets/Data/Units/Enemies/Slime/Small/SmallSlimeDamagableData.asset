@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 10
   <ExpireOnDead>k__BackingField: 1
+  <GetHitAnimation>k__BackingField: {fileID: 11400000, guid: ba0e2e8b2326300418e6d7ef7eb204c8, type: 2}
   <ExpireParticle>k__BackingField: {fileID: 0}

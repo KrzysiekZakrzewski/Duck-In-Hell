@@ -1,7 +1,9 @@
 ﻿using BlueRacconGames.Cards.Effects;
 using BlueRacconGames.MeleeCombat;
+using BlueRacconGames.Pool;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace BlueRacconGames.Cards
 {
@@ -9,21 +11,27 @@ namespace BlueRacconGames.Cards
     {
         private List<PassiveHitCardEffect> passiveHitCardEffects = new ();
 
+        private DefaultPooledEmitter poolEmiter;
+
+        [Inject]
+        private void Inject(DefaultPooledEmitter poolEmiter)
+        {
+            this.poolEmiter = poolEmiter;
+        }
+
         public void AddPassiveHitEffect(PassiveHitCardEffect passiveHitEffect)
         {
             if(passiveHitCardEffects.Contains(passiveHitEffect))
                 passiveHitCardEffects.Remove(passiveHitEffect);
                 
             passiveHitCardEffects.Add(passiveHitEffect);
-
-            Debug.Log(passiveHitCardEffects.Count);
         }
         public void ExecutePassiveHitEffects(IDamagableTarget target)
         {
             if(passiveHitCardEffects.Count <= 0) return;
-            Debug.Log("ExecutePassiveHitEffects");
+
             foreach (var effect in passiveHitCardEffects)
-                effect.Execute(target);
+                effect.Execute(target, poolEmiter);
         }
     }
 }

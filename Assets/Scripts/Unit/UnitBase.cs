@@ -12,6 +12,7 @@ namespace Units.Implementation
     {
         protected UnitHUD unitHud;
 
+        protected UnitDataSO initializeData;
         protected Collider2D unitCollider2D;
         protected CharacterController2D characterController;
         protected SpriteRenderer spriteRenderer;
@@ -50,6 +51,8 @@ namespace Units.Implementation
         }
         public virtual void SetUnitData(UnitDataSO initializeData)
         {
+            this.initializeData = initializeData;
+
             spriteRenderer.sprite = initializeData.UnitSprite;
 
             MatchColliderToSprite();
@@ -91,7 +94,7 @@ namespace Units.Implementation
         }
         private void SleepUnitInteraction()
         {
-            animationController.DoNothingAnimation();
+            animationController.PlayAnimation(initializeData.NoPlayAnimation);
 
             unitSleepInteraction = true;
         }

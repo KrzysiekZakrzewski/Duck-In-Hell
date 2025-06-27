@@ -3,6 +3,7 @@ using UnityEngine;
 using Game.CharacterController.Data;
 using Game.HUD;
 using BlueRacconGames.Pool;
+using BlueRacconGames.Animation;
 
 namespace Units.Implementation
 {
@@ -11,6 +12,7 @@ namespace Units.Implementation
         [field: SerializeField] public Sprite UnitSprite { get; private set; }
         [field: SerializeField] public CharacterControllerDataSO CharacterControllerDataSO { get; private set; }
         [field: SerializeField] public ParticlePoolItem LaunchVFX { get; private set; }
+        [field: SerializeField] public AnimationDataSO NoPlayAnimation { get; private set; }
         //[field: SerializeField] public UnitHUD UnitHUD { get; private set; }
         public abstract IDamagableDataSO DamagableDataSO { get; }
     }

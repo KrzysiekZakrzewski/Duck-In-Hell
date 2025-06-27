@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxHealth>k__BackingField: 10
   <ExpireOnDead>k__BackingField: 0
+  <GetHitAnimation>k__BackingField: {fileID: 11400000, guid: 09fea0fe84800fb418146f0a74ac53a5, type: 2}
   <DamagableLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 0

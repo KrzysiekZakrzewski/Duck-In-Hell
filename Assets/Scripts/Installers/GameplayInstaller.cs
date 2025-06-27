@@ -19,6 +19,7 @@ namespace Game.Installer
         [SerializeField] private SelectCardManager selectCardManager;
         [SerializeField] private CardsInventory cardsInventory;
         [SerializeField] private GrantCardManager grantsCardManager;
+        [SerializeField] private CardsController cardsController;
 
         public override void InstallBindings()
         {
@@ -30,6 +31,7 @@ namespace Game.Installer
             Container.BindInstance(selectCardManager).AsSingle();
             Container.BindInstance(cardsInventory).AsSingle();
             Container.BindInstance(grantsCardManager).AsSingle();
+            Container.BindInstance(cardsController).AsSingle();
 
             TimeTickSystem.Create();
         }

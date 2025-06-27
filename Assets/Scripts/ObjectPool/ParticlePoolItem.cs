@@ -14,8 +14,12 @@ namespace BlueRacconGames.Pool
             var main = system.main;
             main.stopAction = ParticleSystemStopAction.Callback;
         }
-
         private void OnParticleSystemStopped()
+        {
+            Expire();
+        }
+
+        public void ForceExpire()
         {
             Expire();
         }

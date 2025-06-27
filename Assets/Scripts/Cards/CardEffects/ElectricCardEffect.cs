@@ -1,12 +1,6 @@
-﻿using BlueRacconGames.MeleeCombat;
-
-namespace BlueRacconGames.Cards.Effects
+﻿namespace BlueRacconGames.Cards.Effects
 {
-    public class ElectricCardEffect : PassiveHitCardEffect
+    public class ElectricCardEffect : PassiveHitLoopCardEffect
     {
-        public override void Execute(IDamagableTarget target)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

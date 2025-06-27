@@ -15,5 +15,6 @@ MonoBehaviour:
   <UnitSprite>k__BackingField: {fileID: -6443132477491542402, guid: 27e4bda7b25a355429299bc695db90d8, type: 3}
   <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 0a1c398139ec083498deaacb9f37d80e, type: 2}
   <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
+  <NoPlayAnimation>k__BackingField: {fileID: 0}
   enemyDamagableDataSO: {fileID: 11400000, guid: d444541791ec90240af6b0396eff8ef9, type: 2}
   <AIDataSO>k__BackingField: {fileID: 11400000, guid: 97e9a4c1c620b2a4f8d59eba90691be7, type: 2}

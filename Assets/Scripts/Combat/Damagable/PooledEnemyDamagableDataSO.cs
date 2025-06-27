@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BlueRacconGames.Animation;
+using UnityEngine;
 
 namespace Damageable.Implementation
 {
@@ -8,6 +9,7 @@ namespace Damageable.Implementation
     {
         [field: SerializeField] public int MaxHealth { get; private set; }
         [field: SerializeField] public bool ExpireOnDead { get; private set; }
+        [field: SerializeField] public AnimationDataSO GetHitAnimation { get; private set; }
         [field: SerializeField] public ParticleSystem ExpireParticle { get; private set; }
     }
 }

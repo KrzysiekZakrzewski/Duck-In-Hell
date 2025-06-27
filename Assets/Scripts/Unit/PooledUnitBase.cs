@@ -12,8 +12,9 @@ namespace Units.Implementation
     public abstract class PooledUnitBase : PoolItemBase, IUnit
     {
         [SerializeField] protected UnitHUD unitHUD;
-
         [SerializeField] protected Vector2 hudPositionOffset;
+
+        protected UnitDataSO initializeData;
         protected Collider2D unitCollider2D;
         protected CharacterController2D characterController;
         protected SpriteRenderer spriteRenderer;
@@ -51,6 +52,7 @@ namespace Units.Implementation
         }
         public virtual void SetUnitData(UnitDataSO unitDataSO)
         {
+            this.initializeData = unitDataSO;
             spriteRenderer.sprite = unitDataSO.UnitSprite;
 
             MatchColliderToSprite();
@@ -98,7 +100,9 @@ namespace Units.Implementation
         }
         private void UnitDoNothing()
         {
-            animationController.DoNothingAnimation();
+            if(initializeData.NoPlayAnimation == null) return;
+
+            animationController.PlayAnimation(initializeData.NoPlayAnimation);
         }
         private bool CheckUnitDoSomething()
         {

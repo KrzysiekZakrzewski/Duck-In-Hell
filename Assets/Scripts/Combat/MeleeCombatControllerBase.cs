@@ -9,28 +9,29 @@ namespace BlueRacconGames.MeleeCombat
 {
     public abstract class MeleeCombatControllerBase : MonoBehaviour
     {
+        [SerializeField] protected bool canUseCardsEffect;
         [SerializeField] protected Transform attackPoint;
         [SerializeField] private LayerMask hitLayer;
         [SerializeField] private float attackRange = 50f;
         [SerializeField] private Color debugGizmosColor = Color.yellow;
-        [SerializeField] private CardsController cardsController;
 
+        protected CardsController cardController;
         protected DefaultPooledEmitter pooledEmitter;
         protected UnitAnimationControllerBase animationController;
         protected List<GameObject> targetsGM = new();
         protected IMeleeWeapon weapon;
         protected bool canAttack = true;
 
-        private Vector2 lastHitPoint;
-
         public Vector3 AttackPosition => attackPoint.position;
 
         public DefaultPooledEmitter PooledEmitter => pooledEmitter;
+        public CardsController CardController => cardController;
 
         [Inject]
-        private void Inject(DefaultPooledEmitter pooledEmitter)
+        private void Inject(DefaultPooledEmitter pooledEmitter, CardsController cardsController)
         {
             this.pooledEmitter = pooledEmitter;
+            this.cardController = canUseCardsEffect ? cardsController : null;
         }
 
         protected virtual void Awake()
@@ -64,10 +65,7 @@ namespace BlueRacconGames.MeleeCombat
                 if (!hit.TryGetComponent<IDamagableTarget>(out var target))
                     continue;
 
-                cardsController.ExecutePassiveHitEffects(target);
-                Debug.Log("Y");
                 weapon.OnHit(this, target);
-                lastHitPoint = hit.transform.position;
             }
         }
         public virtual void Dizzy(float dizzyTime)

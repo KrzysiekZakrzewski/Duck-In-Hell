@@ -109,7 +109,7 @@ Material:
     - _DistortionLerp: 0
     - _Dst: 10
     - _DstBlend: 0
-    - _ErosionSmoothness: 1.72
+    - _ErosionSmoothness: 2.84
     - _FlatColor: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -153,3 +153,4 @@ Material:
     - _UVP: {r: 0, g: 0, b: 0, a: 0}
     - _UVS: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1

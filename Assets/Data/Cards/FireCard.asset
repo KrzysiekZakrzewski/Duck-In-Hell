@@ -24,7 +24,8 @@ MonoBehaviour:
     - rid: 4469733065951019169
       type: {class: BurnCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
       data:
-        level: 0
-        tickDuration: 0
-        tickLoopDuration: 0
-        damageAmount: 0
+        level: 1
+        tickDuration: 20
+        tickLoopDuration: 5
+        damageAmount: 1
+        passiveVFX: {fileID: 4634697096214524726, guid: dae0863cb051e7b478f3744d0d9d71a6, type: 3}

@@ -12,6 +12,7 @@ namespace Damageable.Implementation
     [RequireComponent(typeof(IDamagableTarget))]
     public abstract class DamageableBase : MonoBehaviour, IDamageable
     {
+        protected AnimationDataSO getHitAnimation;
         protected int maxHealth;
         protected bool expired;
         protected bool isImmune;
@@ -44,6 +45,7 @@ namespace Damageable.Implementation
         public virtual void Launch(IDamagableDataSO damagableDataSO)
         {
             maxHealth = damagableDataSO.MaxHealth;
+            getHitAnimation = damagableDataSO.GetHitAnimation;
             ResetDamagable();
         }
         public void OnDead()
@@ -86,11 +88,10 @@ namespace Damageable.Implementation
         {
             characterController.SetCanMove(false);
             isImmune = true;
-            animationController.GetHitAnimation();
+            animationController.PlayAnimation(getHitAnimation);
 
-            //yield return new WaitUntil(() => animationController.GetBoolParameter("DamageDetect"));
-            yield return new WaitForSeconds(0.5f);
-            //yield return new WaitWhile(() => animationController.GetBoolParameter("DamageDetect"));
+            yield return new WaitUntil(IsGetHitAnimationPlaying);
+            yield return new WaitWhile(IsGetHitAnimationPlaying);
 
             characterController.SetCanMove(true);
             isImmune = false;
@@ -153,6 +154,10 @@ namespace Damageable.Implementation
             OnExpireInternal();
 
             OnExpireE?.Invoke(this);
+        }
+        protected bool IsGetHitAnimationPlaying()
+        {
+            return animationController.IsAnimationPlayingOnLayer(getHitAnimation);
         }
 
         public virtual void SetImmune(bool value)

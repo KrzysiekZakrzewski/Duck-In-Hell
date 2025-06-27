@@ -1205,7 +1205,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1366890091}
-  transitionDuration: 0.1
 --- !u!114 &585633512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1242,13 +1241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddda69c8573d5343bdd31924c1ca0f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canUseCardsEffect: 1
   attackPoint: {fileID: 585633505}
   hitLayer:
     serializedVersion: 2
     m_Bits: 128
   attackRange: 0.083
   debugGizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  cardsController: {fileID: 1161034887}
   basePulseTouchWeapon: {fileID: 11400000, guid: 0b40a35685a6a0346b64b36629f9d221, type: 2}
 --- !u!114 &585633516
 MonoBehaviour:
@@ -1794,6 +1793,7 @@ MonoBehaviour:
   selectCardManager: {fileID: 1612767541}
   cardsInventory: {fileID: 1717609553}
   grantsCardManager: {fileID: 308311981}
+  cardsController: {fileID: 1161034887}
 --- !u!4 &984818716
 Transform:
   m_ObjectHideFlags: 0
