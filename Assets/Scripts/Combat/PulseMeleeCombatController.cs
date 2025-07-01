@@ -1,6 +1,7 @@
 using BlueRacconGames.MeleeCombat.Implementation;
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 namespace BlueRacconGames.MeleeCombat
 {

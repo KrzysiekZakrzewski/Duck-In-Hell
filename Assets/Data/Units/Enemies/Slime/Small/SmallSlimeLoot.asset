@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087c1f20eb9ce47439b420a3c8cf2cd1, type: 3}
+  m_Name: SmallSlimeLoot
+  m_EditorClassIdentifier: 
+  <ItemPrefab>k__BackingField: {fileID: 875003526506949114, guid: daeca4eada8a7604e81770d7b7609b18, type: 3}
+  <PercentLootChance>k__BackingField: 0.1
+  <DropItems>k__BackingField:
+  - lootAmountType: 0
+    baseLootAmount: 1
+    minLootAmount: 0
+    maxLootAmount: 0
+    <PercentChanceToDrop>k__BackingField: 0.25
+    <ItemFactorySO>k__BackingField: {fileID: 11400000, guid: 522e4416c1fd6c74d8e9786a7dcee89e, type: 2}

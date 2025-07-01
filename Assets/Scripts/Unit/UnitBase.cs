@@ -5,6 +5,7 @@ using Game.CharacterController;
 using Game.HUD;
 using TimeTickSystems;
 using UnityEngine;
+using Zenject;
 
 namespace Units.Implementation
 {
@@ -26,12 +27,17 @@ namespace Units.Implementation
 
         public GameObject GameObject => gameObject;
         public IDamageable Damageable => damageable;
-
         public bool IsDoSomething => isDoSomething;
-
         public bool IsInitialized { get; protected set; }
+        public DefaultPooledEmitter DefaultPooledEmitter { get; protected set; }
 
-        public virtual void Lauch()
+        [Inject]
+        private void Inject(DefaultPooledEmitter pooledEmitter)
+        {
+            DefaultPooledEmitter = pooledEmitter;
+        }
+
+        public virtual void Launch()
         {
             unitCollider2D = GetComponent<Collider2D>();
             characterController = GetComponent<CharacterController2D>();
@@ -60,6 +66,22 @@ namespace Units.Implementation
         public void WakeUpInteraction()
         {
             unitSleepInteraction = false;
+        }
+        public Vector2 GetOnSpritePosition(PositionOnSprite position)
+        {
+            if (spriteRenderer == null) return Vector2.zero;
+
+            var centerPosition = spriteRenderer.bounds.center;
+
+            switch (position)
+            {
+                case PositionOnSprite.Middle:
+                    return centerPosition;
+                case PositionOnSprite.Bottom:
+                    return new Vector2(centerPosition.x, transform.position.y - (spriteRenderer.bounds.size.y / 2f));
+                default:
+                    return centerPosition;
+            }
         }
 
         private void ExpireInternal(IDamageable damageable)

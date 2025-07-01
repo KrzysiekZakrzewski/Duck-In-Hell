@@ -2,6 +2,6 @@
 {
     public interface IItemFactory
     {
-        IItemRuntimeLogic CreateItem();
+        IItem CreateItem();
     }
 }

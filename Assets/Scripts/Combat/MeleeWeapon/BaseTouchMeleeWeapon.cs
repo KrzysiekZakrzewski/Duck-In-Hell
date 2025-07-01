@@ -1,4 +1,5 @@
 using BlueRacconGames.MeleeCombat.Implementation;
+using Units;
 
 namespace BlueRacconGames.MeleeCombat
 {
@@ -6,6 +7,11 @@ namespace BlueRacconGames.MeleeCombat
     {
         public BaseTouchMeleeWeapon(BaseTouchMeleeWeaponFactorySO initialData) : base(initialData)
         {
+        }
+
+        protected override bool UseInternal(IUnit source)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

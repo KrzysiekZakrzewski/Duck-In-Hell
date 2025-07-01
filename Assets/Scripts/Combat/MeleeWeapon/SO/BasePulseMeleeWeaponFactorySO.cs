@@ -13,7 +13,7 @@ namespace BlueRacconGames.MeleeCombat.Implementation
         [field: SerializeField] public float PulseSequenceDelay { get; private set; } = 2f;
         [field: SerializeField] public int PulseAmountPerAction { get; private set; } = 1;
 
-        public override IItemRuntimeLogic CreateItem()
+        public override IItem CreateItem()
         {
             return new BasePulseMeleeWeapon(this);
         }

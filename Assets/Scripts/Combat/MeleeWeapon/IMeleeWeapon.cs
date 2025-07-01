@@ -7,7 +7,7 @@ namespace BlueRacconGames.MeleeCombat
     public interface IMeleeWeapon
     {
         List<ILaunchAttackEffect> LaunchAttackEffects { get; }
-        List<IMeleeWeaponTargetEffect> MeleeWeaponTargetHitEffects { get; }
+        List<IMeleeTargetEffect> MeleeWeaponTargetHitEffects { get; }
         event Action<IDamagableTarget> OnHitE;
 
         void OnAttack(MeleeCombatControllerBase source);

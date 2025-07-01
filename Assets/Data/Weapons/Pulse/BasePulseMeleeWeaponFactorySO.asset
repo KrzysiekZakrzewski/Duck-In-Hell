@@ -21,8 +21,9 @@ MonoBehaviour:
   <MeleeWeaponTargetEffectFactory>k__BackingField:
   - {fileID: 11400000, guid: 2d48121bfb0fde747a159133bf46fda2, type: 2}
   - {fileID: 11400000, guid: 434be44fcee42c74e94882cd90376464, type: 2}
+  - {fileID: 11400000, guid: 1a5ff252135ccc948abc4580126926dd, type: 2}
   <ScaleMultiplayer>k__BackingField: 0.35
   <AnimationDuration>k__BackingField: 0.2
-  <PulseDelay>k__BackingField: 0.5
-  <PulseSequenceDelay>k__BackingField: 1
+  <PulseDelay>k__BackingField: 0.2
+  <PulseSequenceDelay>k__BackingField: 0.5
   <PulseAmountPerAction>k__BackingField: 2

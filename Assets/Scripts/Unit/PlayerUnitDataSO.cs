@@ -9,6 +9,6 @@ namespace Units.Implementation
     {
         [field: SerializeField] private PlayerDamagableDataSO playerDamagableDataSO;
 
-        public override IDamagableDataSO DamagableDataSO => playerDamagableDataSO;
+        public override DamagableDataSO DamagableDataSO => playerDamagableDataSO;
     }
 }

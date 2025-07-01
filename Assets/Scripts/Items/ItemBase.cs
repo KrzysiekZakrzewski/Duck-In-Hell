@@ -1,14 +1,17 @@
 ﻿using Game.Item.Factory;
+using Units;
 using UnityEngine;
 
 namespace Game.Item
 {
-    public abstract class ItemBase : IItemRuntimeLogic
+    public abstract class ItemBase : IItem
     {
-        protected int id;
-        protected string name;
-        protected string description;
-        protected Sprite icon;
+        protected ItemFactorySO initialData;
+
+        private int id;
+        private string name;
+        private string description;
+        private Sprite icon;
 
         public int Id => id;
         public string Name => name;
@@ -25,12 +28,15 @@ namespace Game.Item
 
         public bool CanUse()
         {
-            throw new System.NotImplementedException();
+            return true;
+        }
+        public bool Use(IUnit source)
+        {
+            if(CanUse()) return false;
+
+            return UseInternal(source);
         }
 
-        public bool Use()
-        {
-            throw new System.NotImplementedException();
-        }
+        protected abstract bool UseInternal(IUnit source);
     }
 }

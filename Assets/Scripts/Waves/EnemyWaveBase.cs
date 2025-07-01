@@ -103,7 +103,7 @@ namespace EnemyWaves.Implementation
         }
         protected virtual void OnOffEnemy(IUnit unit, bool value)
         {
-            unit.Damageable.SetImmune(!value);
+            unit.Damageable.SetDamagableOn(value);
             var enemyUnit = unit as PooledUnitBase;
 
             enemyUnit.AIController.ForceStartStopSimulate(value);
@@ -211,7 +211,7 @@ namespace EnemyWaves.Implementation
 
             foreach (var unit in enemyUnitsLUT)
             {
-                unit.Damageable.TakeDamage(99999999);
+                unit.Damageable.TakeDamage(99999999, out var isFatalDamage);
             }
         }
     }

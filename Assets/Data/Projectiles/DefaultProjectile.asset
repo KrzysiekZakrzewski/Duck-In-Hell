@@ -15,7 +15,7 @@ MonoBehaviour:
   <TargetLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 264
-  <Speed>k__BackingField: 0.6
+  <Speed>k__BackingField: 0.3
   <ExpireTime>k__BackingField: 2
   <ExpireOnHit>k__BackingField: 1
   <HitTargetEffectFactories>k__BackingField:

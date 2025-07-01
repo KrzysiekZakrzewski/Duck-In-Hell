@@ -10,28 +10,11 @@ namespace Damageable.Implementation
 {
     public class PooledEnemyDamagable : DamageableBase
     {
-        private PooledEnemyDamagableDataSO initialData;
-        public override bool ExpireOnDead => initialData.ExpireOnDead;
-
-        public override void Launch(IDamagableDataSO damagableDataSO)
+        public override void Launch(DamagableDataSO initialData)
         {
-            initialData = damagableDataSO as PooledEnemyDamagableDataSO;
+            base.initialData = initialData as PooledEnemyDamagableDataSO;
 
-            base.Launch(damagableDataSO);
-        }
-        protected override void OnExpireInternal()
-        {
-            if (expired) return;
-
-            expired = true;
-
-            SpawnDeathEffect();
-        }
-        private void SpawnDeathEffect()
-        {
-            if (initialData.ExpireParticle == null) return;
-
-            Instantiate(initialData.ExpireParticle, transform.position, Quaternion.identity, null);
+            base.Launch(initialData);
         }
     }
 }

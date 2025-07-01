@@ -6,6 +6,7 @@ using Game.CharacterController;
 using Game.HUD;
 using TimeTickSystems;
 using UnityEngine;
+using Zenject;
 
 namespace Units.Implementation
 {
@@ -27,6 +28,14 @@ namespace Units.Implementation
         public IDamageable Damageable => damageable;
         public AIControllerBase AIController => aiController;
         public bool IsDoSomething => isDoSomething;
+
+        public DefaultPooledEmitter DefaultPooledEmitter {  get; private set; }
+
+        [Inject]
+        private void Inject(DefaultPooledEmitter pooledEmitter)
+        {
+            DefaultPooledEmitter = pooledEmitter;
+        }
 
         public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction)
         {
@@ -60,6 +69,22 @@ namespace Units.Implementation
         public void WakeUpInteraction()
         {
 
+        }
+        public Vector2 GetOnSpritePosition(PositionOnSprite position)
+        {
+            if (spriteRenderer == null) return Vector2.zero;
+
+            var centerPosition = spriteRenderer.bounds.center;
+
+            switch (position)
+            {
+                case PositionOnSprite.Middle:
+                    return centerPosition;
+                case PositionOnSprite.Bottom:
+                    return new Vector2(centerPosition.x, transform.position.y - (spriteRenderer.bounds.size.y / 2f));
+                default:
+                    return centerPosition;
+            }
         }
 
         private void MatchColliderToSprite()

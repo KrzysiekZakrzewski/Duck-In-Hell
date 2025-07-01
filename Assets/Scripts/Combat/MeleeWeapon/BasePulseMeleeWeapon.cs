@@ -1,6 +1,7 @@
 using BlueRacconGames.MeleeCombat.Implementation;
 using DG.Tweening;
 using System;
+using Units;
 using UnityEngine;
 
 namespace BlueRacconGames.MeleeCombat
@@ -32,6 +33,11 @@ namespace BlueRacconGames.MeleeCombat
             attackSequnce.SetLoops(-1, LoopType.Restart);
 
             return attackSequnce;
+        }
+
+        protected override bool UseInternal(IUnit source)
+        {
+            throw new NotImplementedException();
         }
 
         private Sequence SetupPulseAttackSequnce(Transform attackPoint, Action completedPulseCallback, Action resetCallback)

@@ -21,7 +21,8 @@ namespace BlueRacconGames.Pool
 
         public void ForceExpire()
         {
-            Expire();
+            system = GetComponent<ParticleSystem>();
+            system.Stop();
         }
     }
 }

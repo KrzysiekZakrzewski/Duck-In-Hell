@@ -7,7 +7,7 @@ namespace BlueRacconGames.MeleeCombat.Implementation
     [CreateAssetMenu(fileName = nameof(BaseTouchMeleeWeaponFactorySO), menuName = nameof(MeleeCombat) + "/" + nameof(Implementation) + "/" + nameof(BaseTouchMeleeWeaponFactorySO))]
     public class BaseTouchMeleeWeaponFactorySO : MeleeWeaponBaseFactorySO
     {
-        public override IItemRuntimeLogic CreateItem()
+        public override IItem CreateItem()
         {
             return new BaseTouchMeleeWeapon(this);
         }

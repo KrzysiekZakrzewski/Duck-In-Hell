@@ -16,7 +16,7 @@ namespace Units.Implementation
 
         private void Awake()
         {
-            Lauch();
+            Launch();
 
             SetUnitData(playerDataSO);
         }

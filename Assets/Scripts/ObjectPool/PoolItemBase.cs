@@ -27,10 +27,12 @@ namespace BlueRacconGames.Pool
         {
             expired = false;
         }
+
         protected virtual void Expire()
         {
             if (expired) return;
 
+            transform.SetParent(sourceEmitter.GameObject.transform);
             gameObject.SetActive(false);
             expired = true;
             OnExpireE?.Invoke(this);

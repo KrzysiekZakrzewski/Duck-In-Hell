@@ -14,6 +14,6 @@ namespace Units.Implementation
         [field: SerializeField] public ParticlePoolItem LaunchVFX { get; private set; }
         [field: SerializeField] public AnimationDataSO NoPlayAnimation { get; private set; }
         //[field: SerializeField] public UnitHUD UnitHUD { get; private set; }
-        public abstract IDamagableDataSO DamagableDataSO { get; }
+        public abstract DamagableDataSO DamagableDataSO { get; }
     }
 }

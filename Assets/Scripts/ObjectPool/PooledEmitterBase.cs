@@ -14,6 +14,8 @@ namespace BlueRacconGames.Pool
         private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> itemPrefabToPoolLut = new();
         private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> itemInstanceToPoolLut = new();
 
+        public GameObject GameObject => gameObject;
+
         [Inject]
         private void Inject(DiContainer container)
         {

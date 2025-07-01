@@ -5,15 +5,11 @@ namespace Damageable.Implementation
 {
     public class PlayerDamagable : DamageableBase
     {
-        private PlayerDamagableDataSO damagableData;
-
-        public override bool ExpireOnDead => damagableData.ExpireOnDead;
-
-        public override void Launch(IDamagableDataSO damagableDataSO)
+        public override void Launch(DamagableDataSO initialData)
         {
-            damagableData = damagableDataSO as PlayerDamagableDataSO;
+            this.initialData = initialData as PlayerDamagableDataSO;
 
-            base.Launch(damagableDataSO);
+            base.Launch(initialData);
 
             //healthBar.Launch(CurrentHealth, MaxHealth);
         }
@@ -25,13 +21,13 @@ namespace Damageable.Implementation
             //healthBar.UpdateBar(CurrentHealth, MaxHealth);
         }
 
-        protected override void TakeDamageInternal(int damageValue)
+        protected override void TakeDamageInternal(int damageValue, out bool isFatalDamage, DamageMode damageMode)
         {
-            base.TakeDamageInternal(damageValue);
+            base.TakeDamageInternal(damageValue, out isFatalDamage, damageMode);
 
             //healthBar.UpdateBar(CurrentHealth, MaxHealth);
 
-            StartCoroutine(GetHitSequence());
+            StartCoroutine(ProcessDamage());
         }
 
         protected override void IncreaseHealtInternal(int increaseValue)
@@ -39,13 +35,6 @@ namespace Damageable.Implementation
             base.IncreaseHealtInternal(increaseValue);
 
             //healthBar.UpdateBar(CurrentHealth, MaxHealth);
-        }
-
-        protected override void OnExpireInternal()
-        {
-            if (expired) return;
-
-            expired = true;
         }
     }
 }

@@ -25,6 +25,8 @@ MonoBehaviour:
       type: {class: PoisonCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
       data:
         level: 1
+        damageAmount: 1
         tickDuration: 15
         tickLoopDuration: 5
-        damageAmount: 1
+        passiveVFX: {fileID: -6780778176129583164, guid: 37c919fe675a08d4aa01bf0a8e67fb67, type: 3}
+        vfxPosition: 0

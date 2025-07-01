@@ -12,7 +12,7 @@ namespace BlueRacconGames.MeleeCombat
         private readonly HashSet<IDamagableTarget> hitTargets = new();
 
         public List<ILaunchAttackEffect> LaunchAttackEffects { get; }
-        public List<IMeleeWeaponTargetEffect> MeleeWeaponTargetHitEffects { get; }
+        public List<IMeleeTargetEffect> MeleeWeaponTargetHitEffects { get; }
 
         public event Action<IDamagableTarget> OnHitE;
 
@@ -26,7 +26,7 @@ namespace BlueRacconGames.MeleeCombat
                 LaunchAttackEffects.Add(launchAttackEffectFactory.CreateEffect());
             }
 
-            foreach (IMeleeWeaponTargetEffectFactory meleeWeaponTargetEffectFactory in initialData.MeleeWeaponTargetEffectFactory)
+            foreach (IMeleeTargetEffectFactory meleeWeaponTargetEffectFactory in initialData.MeleeWeaponTargetEffectFactory)
             {
                 MeleeWeaponTargetHitEffects.Add(meleeWeaponTargetEffectFactory.CreateEffect());
             }
@@ -60,7 +60,7 @@ namespace BlueRacconGames.MeleeCombat
         {
             OnHitE?.Invoke(target);
 
-            foreach (IMeleeWeaponTargetEffect meleeWeaponTargetHitEffect in MeleeWeaponTargetHitEffects)
+            foreach (IMeleeTargetEffect meleeWeaponTargetHitEffect in MeleeWeaponTargetHitEffects)
             {
                 meleeWeaponTargetHitEffect.Execute(source, target);
             }

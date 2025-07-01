@@ -24,7 +24,9 @@ MonoBehaviour:
     - rid: 4469733065951019172
       type: {class: ElectricCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
       data:
-        level: 0
-        tickDuration: 0
-        tickLoopDuration: 0
-        damageAmount: 0
+        level: 1
+        damageAmount: 1
+        tickDuration: 15
+        tickLoopDuration: 5
+        passiveVFX: {fileID: 0}
+        vfxPosition: 0

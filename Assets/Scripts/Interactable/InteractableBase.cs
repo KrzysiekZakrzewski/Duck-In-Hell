@@ -1,10 +1,13 @@
+using BlueRacconGames.Pool;
 using System;
 using UnityEngine;
 
 namespace Interactable
 {
-    public abstract class InteractableBase : MonoBehaviour, IInteractable
+    public abstract class InteractableBase : PoolItemBase, IInteractable
     {
+        [SerializeField] protected SpriteRenderer spriteRenderer;
+        [SerializeField] protected Collider2D collider2D;
         [SerializeField] protected bool autoInteractable;
         [SerializeField, HideIf(nameof(autoInteractable), true)] protected string interactionPrompt;
         [SerializeField, HideIf(nameof(autoInteractable), true)] private Transform promptPosition;
@@ -44,6 +47,30 @@ namespace Interactable
         protected virtual void LeaveInteractInternal(InteractorControllerBase interactor)
         {
             OnLeaveInteractableE?.Invoke(this);
+        }
+        protected void MatchColliderToSprite()
+        {
+            if (collider2D == null || spriteRenderer == null) return;
+
+            float spriteWidth = spriteRenderer.sprite.bounds.size.x;
+            float spriteHeight = spriteRenderer.sprite.bounds.size.y;
+
+            switch (collider2D)
+            {
+                case CircleCollider2D:
+                    float diameter = Mathf.Min(spriteWidth, spriteHeight);
+                    float radius = diameter / 2f;
+
+                    CircleCollider2D circleCollider2D = collider2D as CircleCollider2D;
+                    circleCollider2D.radius = radius;
+                    break;
+                case BoxCollider2D:
+                    BoxCollider2D boxCollider2D = collider2D as BoxCollider2D;
+                    boxCollider2D.size = new Vector2(spriteWidth, spriteHeight);
+                    break;
+            }
+
+            collider2D.isTrigger = true;
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Units.Implementation
     {
         [SerializeField] private PooledEnemyDamagableDataSO enemyDamagableDataSO;
         [field: SerializeField] public BaseAIDataSO AIDataSO { get; private set; }
-        public override IDamagableDataSO DamagableDataSO => enemyDamagableDataSO;
+        public override DamagableDataSO DamagableDataSO => enemyDamagableDataSO;
     }
 }
