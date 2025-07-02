@@ -16,7 +16,7 @@ namespace BlueRacconGames.MeleeCombat
         {
             IDamageable damageable = target.GameObject.GetComponent<IDamageable>();
 
-            damageable?.TakeDamage(damageValue, out var isFatalDamage);
+            damageable?.TakeDamage(damageValue);
         }
     }
 }

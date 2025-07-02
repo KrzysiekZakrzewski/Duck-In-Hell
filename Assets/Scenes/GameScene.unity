@@ -896,7 +896,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionPoint: {fileID: 161270159}
-  radius: 0.08
+  radius: 0.38
   interactableLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackRange: 0.17
+  attackRange: 1
   debugGizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   basePulseTouchWeapon: {fileID: 11400000, guid: 0b40a35685a6a0346b64b36629f9d221, type: 2}
 --- !u!114 &585633516
@@ -1262,6 +1262,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDataSO: {fileID: 11400000, guid: 18d9baa6305392f42821b724ce188303, type: 2}
+--- !u!1001 &613692371
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 508571680616752908, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 62e04513504448948a8f8a4e511f6743, type: 2}
+    - target: {fileID: 620129353789016114, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_Name
+      value: VillageMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[7].m_Data
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[9].m_Data
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[11].m_Data
+      value: 
+      objectReference: {fileID: -1316724817, guid: 3ceb658caeaaaae4699a8aa24ea8cbcb, type: 3}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[12].m_Data
+      value: 
+      objectReference: {fileID: -1525026377, guid: 3ceb658caeaaaae4699a8aa24ea8cbcb, type: 3}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[7].m_RefCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[9].m_RefCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[11].m_RefCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[12].m_RefCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_Tiles.Array.data[21].second.m_TileSpriteIndex
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2145745319643263090, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_Tiles.Array.data[42].second.m_TileSpriteIndex
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038349608841798079, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
 --- !u!1 &630014741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,7 +2932,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 34
-    OrthographicSize: 1
+    OrthographicSize: 7
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3550,3 +3651,4 @@ SceneRoots:
   - {fileID: 1760142782}
   - {fileID: 546233361}
   - {fileID: 664722924}
+  - {fileID: 613692371}

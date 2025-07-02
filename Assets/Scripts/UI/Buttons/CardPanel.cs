@@ -1,6 +1,4 @@
-using BlueRacconGames.Cards;
 using Game.Managers;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

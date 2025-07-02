@@ -3,6 +3,7 @@ using BlueRacconGames.Pool;
 using Damageable;
 using Game.CharacterController;
 using Game.HUD;
+using System.Collections.Generic;
 using TimeTickSystems;
 using UnityEngine;
 using Zenject;
@@ -11,6 +12,8 @@ namespace Units.Implementation
 {
     public abstract class UnitBase : MonoBehaviour, IUnit
     {
+        private List<PoolItemBase> childPooledItem = new();
+
         protected UnitHUD unitHud;
 
         protected UnitDataSO initializeData;
@@ -83,7 +86,26 @@ namespace Units.Implementation
                     return centerPosition;
             }
         }
+        public void PushPoolItem(PoolItemBase poolItem)
+        {
+            if (childPooledItem.Contains(poolItem)) return;
 
+            childPooledItem.Add(poolItem);
+        }
+        public void PopPoolItem(PoolItemBase poolItem)
+        {
+            if (!childPooledItem.Contains(poolItem)) return;
+
+            childPooledItem.Remove(poolItem);
+        }
+
+        private void ExpireChildPoolItem()
+        {
+            foreach (PoolItemBase poolItem in childPooledItem)
+                poolItem.ForceExpire();
+
+            childPooledItem.Clear();
+        }
         private void ExpireInternal(IDamageable damageable)
         {
             damageable.OnExpireE -= ExpireInternal;

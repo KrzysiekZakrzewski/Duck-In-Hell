@@ -4,6 +4,7 @@ using BlueRacconGames.Pool;
 using Damageable;
 using Game.CharacterController;
 using Game.HUD;
+using System.Collections.Generic;
 using TimeTickSystems;
 using UnityEngine;
 using Zenject;
@@ -14,6 +15,8 @@ namespace Units.Implementation
     {
         [SerializeField] protected UnitHUD unitHUD;
         [SerializeField] protected Vector2 hudPositionOffset;
+
+        private List<PoolItemBase> childPooledItem = new();
 
         protected UnitDataSO initializeData;
         protected Collider2D unitCollider2D;
@@ -48,7 +51,7 @@ namespace Units.Implementation
             damageable ??= GetComponent<IDamageable>();
             aiController = GetComponent<AIControllerBase>();
 
-            damageable.OnExpireE += ExpireInternal;
+            damageable.OnExpireE += (IDamageable damageable) => Expire();
             damageable.OnTakeDamageE += unitHUD.HealthBar.UpdateBar;
 
             TimeTickSystem.OnTick += OnTick;
@@ -86,7 +89,38 @@ namespace Units.Implementation
                     return centerPosition;
             }
         }
+        public void PushPoolItem(PoolItemBase poolItem)
+        {
+            if(childPooledItem.Contains(poolItem)) return;
 
+            childPooledItem.Add(poolItem);
+        }
+        public void PopPoolItem(PoolItemBase poolItem)
+        {
+            if (!childPooledItem.Contains(poolItem)) return;
+
+            childPooledItem.Remove(poolItem);
+        }
+
+        protected override void ExpireInternal()
+        {
+            base.ExpireInternal();
+
+            damageable.OnExpireE -= (IDamageable damageable) => Expire();
+            damageable.OnTakeDamageE -= unitHUD.HealthBar.UpdateBar;
+            TimeTickSystem.OnTick -= OnTick;
+            TimeTickSystem.OnBigTick -= OnBigTick;
+            aiController.OnExpire();
+            ExpireChildPoolItem();
+        }
+
+        private void ExpireChildPoolItem()
+        {
+            foreach (PoolItemBase poolItem in childPooledItem)
+                poolItem.ForceExpire();
+
+            childPooledItem.Clear();
+        }
         private void MatchColliderToSprite()
         {
             if (unitCollider2D == null || spriteRenderer == null) return;
@@ -112,16 +146,6 @@ namespace Units.Implementation
             Vector3 hudPosition = new(hudPositionOffset.x, spriteHeight / 2 + hudPositionOffset.y, transform.position.z);
 
             unitHUD.transform.localPosition = hudPosition;
-        }
-        private void ExpireInternal(IDamageable damageable)
-        {
-            damageable.OnExpireE -= ExpireInternal;
-            damageable.OnTakeDamageE -= unitHUD.HealthBar.UpdateBar;
-            TimeTickSystem.OnTick -= OnTick;
-            TimeTickSystem.OnBigTick -= OnBigTick;
-            aiController.OnExpire();
-
-            Expire();
         }
         private void UnitDoNothing()
         {

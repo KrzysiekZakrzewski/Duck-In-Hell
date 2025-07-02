@@ -21,9 +21,9 @@ namespace Damageable.Implementation
             //healthBar.UpdateBar(CurrentHealth, MaxHealth);
         }
 
-        protected override void TakeDamageInternal(int damageValue, out bool isFatalDamage, DamageMode damageMode)
+        protected override void TakeDamageInternal(int damageValue, DamageMode damageMode)
         {
-            base.TakeDamageInternal(damageValue, out isFatalDamage, damageMode);
+            base.TakeDamageInternal(damageValue, damageMode);
 
             //healthBar.UpdateBar(CurrentHealth, MaxHealth);
 

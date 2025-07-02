@@ -65,14 +65,12 @@ namespace Damageable.Implementation
 
             OnDeadInternal();
         }
-        public void TakeDamage(int damageValue, out bool fatalDamage, DamageMode damageMode = DamageMode.Normal)
+        public void TakeDamage(int damageValue, DamageMode damageMode = DamageMode.Normal)
         {
-            fatalDamage = false;
-
             if (!CanBeDamage(damageMode))
                 return;
 
-            TakeDamageInternal(damageValue, out fatalDamage, damageMode);
+            TakeDamageInternal(damageValue, damageMode);
         }
         public void Heal(int healValue)
         {
@@ -112,16 +110,14 @@ namespace Damageable.Implementation
 
             isImmue = false;
         }
-        protected virtual void TakeDamageInternal(int damageValue, out bool fatalDamage, DamageMode damageMode = DamageMode.Normal)
+        protected virtual void TakeDamageInternal(int damageValue, DamageMode damageMode = DamageMode.Normal)
         {
-            fatalDamage = false;
             currentHealth -= damageValue;
 
             OnTakeDamageE?.Invoke(currentHealth, maxHealth);
 
             if(currentHealth <= 0)
             {
-                fatalDamage = true;
                 OnDead();
                 return;
             }

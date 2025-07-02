@@ -12,7 +12,7 @@ namespace BasicImplementationSample.Scripts.Effects.ExampleDealDamage
         {
             IDamageable damageable = target.GameObject.GetComponent<IDamageable>();
 
-            damageable.TakeDamage(1, out var isFatalDamage);//TO DO value set
+            damageable.TakeDamage(1);//TO DO value set
 
             Debug.Log($"Damage dealt to {target.GameObject.name}");
         }

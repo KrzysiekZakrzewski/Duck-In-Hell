@@ -15,6 +15,8 @@ namespace Units
         void ResetUnit();
         void WakeUpInteraction();
         Vector2 GetOnSpritePosition(PositionOnSprite position);
+        void PushPoolItem(PoolItemBase poolItem);
+        void PopPoolItem(PoolItemBase poolItem);
     }
 
     public enum PositionOnSprite

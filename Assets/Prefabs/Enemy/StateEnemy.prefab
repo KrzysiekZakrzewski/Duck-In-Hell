@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitHUD: {fileID: 2689917408610304447}
-  hudPositionOffset: {x: 0, y: 0.03}
+  hudPositionOffset: {x: 0, y: 0.05}
 --- !u!114 &4683470480050061654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8978238832394251949}
-  transitionDuration: 0.1
 --- !u!114 &2687041770948271247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +377,18 @@ PrefabInstance:
     - target: {fileID: 4072636100081137902, guid: 62c20bbcff6cb9942a4c6d4748bad3f1, type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072636100081137902, guid: 62c20bbcff6cb9942a4c6d4748bad3f1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072636100081137902, guid: 62c20bbcff6cb9942a4c6d4748bad3f1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072636100081137902, guid: 62c20bbcff6cb9942a4c6d4748bad3f1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.005
       objectReference: {fileID: 0}
     - target: {fileID: 4072636100081137902, guid: 62c20bbcff6cb9942a4c6d4748bad3f1, type: 3}
       propertyPath: m_LocalPosition.x

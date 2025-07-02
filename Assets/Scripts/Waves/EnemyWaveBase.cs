@@ -211,7 +211,7 @@ namespace EnemyWaves.Implementation
 
             foreach (var unit in enemyUnitsLUT)
             {
-                unit.Damageable.TakeDamage(99999999, out var isFatalDamage);
+                unit.Damageable.TakeDamage(99999999);
             }
         }
     }

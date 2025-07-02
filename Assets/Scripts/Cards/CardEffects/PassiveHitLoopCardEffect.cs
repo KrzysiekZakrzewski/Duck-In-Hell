@@ -28,23 +28,27 @@ namespace BlueRacconGames.Cards.Effects
         public override void Execute(IDamagableTarget target, DefaultPooledEmitter pooledEmitter)
         {
             if (targets.ContainsKey(target)) return;
+    
+            if(!target.GameObject.TryGetComponent<IUnit>(out var unit)) return;
 
-            var damagable = target.GameObject.GetComponent<IDamageable>();
+            var damageable = unit.Damageable;
 
-            if (damagable == null || !damagable.DamagableIsOn) return;
+            if (damageable == null || !damageable.DamagableIsOn || damageable.IsDead) return;
 
-            var vfxPosition = target.GameObject.GetComponent<IUnit>().GetOnSpritePosition(this.vfxPosition);
+            var vfxPosition = unit.GetOnSpritePosition(this.vfxPosition);
             var particleEffect = pooledEmitter.EmitItem<ParticlePoolItem>(passiveVFX, vfxPosition, Vector3.zero);
 
-            particleEffect.transform.SetParent(target.GameObject.transform);
+            unit.PushPoolItem(particleEffect);
 
             TargetData targetData = new()
             {
                 DamagableTarget = target,
-                Damageable = damagable,
+                Unit = unit,
                 StartTick = tick,
                 VFX = particleEffect
             };
+
+            unit.Damageable.OnExpireE += (IDamageable damagable) => OnEffectEnded(targetData);
 
             if (targets.Count == 0)
                 TimeTickSystem.OnTick += OnTick;
@@ -55,23 +59,38 @@ namespace BlueRacconGames.Cards.Effects
         protected void OnEffectEnded(TargetData target)
         {
             target.VFX.ForceExpire();
+            target.Unit.PopPoolItem(target.VFX);
             targetsToRemove.Add(target.DamagableTarget);
         }
 
         private void OnTick(object sender, OnTickEventArgs e)
         {
+            Debug.Log("Czy Tick?");
+
             if (targets.Count <= 0) return;
 
-            foreach(var targetToRemove in targetsToRemove)
-            {
-                targets.Remove(targetToRemove);
+            Debug.Log("Czy Tick2?");
 
-                if (targets.Count <= 0)
-                {
-                    TimeTickSystem.OnTick -= OnTick;
-                    return;
-                }
+            foreach (var targetToRemove in targetsToRemove)
+            {
+                if(!targets.TryGetValue(targetToRemove, out TargetData targetData)) continue;
+
+                var damagable = targetData.Unit.Damageable;
+
+                damagable.OnExpireE -= (IDamageable damagable) => OnEffectEnded(targetData);
+
+                targets.Remove(targetToRemove);
             }
+
+            targetsToRemove.Clear();
+
+            if (targets.Count <= 0)
+            {
+                TimeTickSystem.OnTick -= OnTick;
+                return;
+            }
+
+            Debug.Log("Czy Tick3?");
 
             foreach (var target in targets.Values)
             {
@@ -85,11 +104,12 @@ namespace BlueRacconGames.Cards.Effects
 
                 if (tickDifference % tickLoopDuration != 0) continue;
 
-                target.Damageable.TakeDamage(damageAmount, out bool isFatalDamage);
-                
-                if(isFatalDamage)
-                    OnEffectEnded(target);           
+                var damagable = target.Unit.Damageable;
+
+                damagable.TakeDamage(damageAmount);     
             }
+
+            Debug.Log("Czy Tick4?");
 
             tick++;
         }
@@ -97,7 +117,7 @@ namespace BlueRacconGames.Cards.Effects
         protected struct TargetData
         {
             public IDamagableTarget DamagableTarget;
-            public IDamageable Damageable;
+            public IUnit Unit;
             public int StartTick;
             public ParticlePoolItem VFX;
         }

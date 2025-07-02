@@ -18,10 +18,14 @@ namespace BlueRacconGames.MeleeCombat
 
         public void Execute(MeleeCombatControllerBase source, IDamagableTarget target)
         {
-            var vfxPosition = target.GameObject.GetComponent<IUnit>().GetOnSpritePosition(this.vfxPosition);
+            var unit = target.GameObject.GetComponent<IUnit>();
+
+            var vfxPosition = unit.GetOnSpritePosition(this.vfxPosition);
             var particleEffect = source.PooledEmitter.EmitItem<ParticlePoolItem>(vfxEffect, vfxPosition, Vector3.zero);
 
-            particleEffect.transform.SetParent(target.GameObject.transform);
+            particleEffect.OnExpireE += unit.PopPoolItem;
+
+            unit.PushPoolItem(particleEffect);
         }
     }
 }

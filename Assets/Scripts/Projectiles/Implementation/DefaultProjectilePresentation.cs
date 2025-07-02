@@ -29,9 +29,9 @@ namespace Projectiles.Implementation
         public void Initialize(IProjectile projectile)
         {
             this.projectile = projectile;
-            projectile.OnLaunchE += Projectile_OnLaunch;
-            projectile.OnHitE += Projectile_OnHit;
-            projectile.OnExpireE += Projectile_OnExpire;
+            projectile.OnExpireE += (IProjectile projectile) => Expire();
+            projectile.OnHitE += OnHit;
+            projectile.OnLaunchE += (IProjectile projectile) => OnLaunch();
         }
         public void OnLaunch()
         {
@@ -44,23 +44,24 @@ namespace Projectiles.Implementation
             });
             onLaunch?.Invoke();
             parentConstraint.constraintActive = true;
-            projectile.OnLaunchE -= Projectile_OnLaunch;
+            projectile.OnLaunchE -= (IProjectile projectile) => OnLaunch();
         }
         public void OnHit(IDamagableTarget target)
         {
             onHit?.Invoke();
         }
 
-        protected override void Expire()
+        protected override void ExpireInternal()
         {
-            base.Expire();
+            base.ExpireInternal();
+
             onExpire?.Invoke();
             parentConstraint.RemoveSource(0);
             parentConstraint.constraintActive = false;
             StartCoroutine(EndPresentationAfterExpire());
-            projectile.OnExpireE -= Projectile_OnExpire;
-            projectile.OnHitE -= Projectile_OnHit;
-            projectile.OnLaunchE -= Projectile_OnLaunch;
+            projectile.OnExpireE -= (IProjectile projectile) => Expire();
+            projectile.OnHitE -= OnHit;
+            projectile.OnLaunchE -= (IProjectile projectile) => OnLaunch();
         }
 
         private IEnumerator EndPresentationAfterExpire()
@@ -69,17 +70,5 @@ namespace Projectiles.Implementation
             OnPresentationEnd?.Invoke(this);
             gameObject.SetActive(false);
         }        
-        private void Projectile_OnLaunch(IProjectile projectile)
-        {
-            OnLaunch();
-        }       
-        private void Projectile_OnHit(IDamagableTarget target)
-        {
-            OnHit(target);
-        }      
-        private void Projectile_OnExpire(IProjectile projectile)
-        {
-            Expire();
-        }
     }
 }

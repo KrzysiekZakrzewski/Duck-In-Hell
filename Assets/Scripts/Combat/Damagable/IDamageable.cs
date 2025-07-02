@@ -18,7 +18,7 @@ namespace Damageable
         event Action<IDamageable> OnExpireE;
 
         void Launch(DamagableDataSO damagableDataSO);
-        void TakeDamage(int damageValue, out bool isFatalDamage, DamageMode damageMode = DamageMode.Normal);
+        void TakeDamage(int damageValue, DamageMode damageMode = DamageMode.Normal);
         void Heal(int healValue);
         void IncreaseHealt(int increaseValue);
         void DecreaseHealt(int decreaseValue);

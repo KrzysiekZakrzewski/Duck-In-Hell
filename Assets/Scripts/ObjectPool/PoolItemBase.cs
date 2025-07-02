@@ -25,17 +25,28 @@ namespace BlueRacconGames.Pool
         }
         public virtual void ResetItem()
         {
-            expired = false;
+            expired = false; 
+        }
+        public virtual void ForceExpire()
+        {
+            Expire();
         }
 
-        protected virtual void Expire()
+        protected void Expire()
         {
             if (expired) return;
 
+            expired = true;
+
             transform.SetParent(sourceEmitter.GameObject.transform);
             gameObject.SetActive(false);
-            expired = true;
             OnExpireE?.Invoke(this);
+
+            ExpireInternal();
+        }
+        protected virtual void ExpireInternal()
+        {
+
         }
         protected virtual Quaternion CalculateRotation(float angle)
         {

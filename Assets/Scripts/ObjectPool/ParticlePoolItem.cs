@@ -1,3 +1,4 @@
+using Units;
 using UnityEngine;
 using Zenject;
 
@@ -19,10 +20,12 @@ namespace BlueRacconGames.Pool
             Expire();
         }
 
-        public void ForceExpire()
+        public override void ForceExpire()
         {
             system = GetComponent<ParticleSystem>();
             system.Stop();
+            Expire();
+            Debug.Log("ExpireForce");
         }
     }
 }
