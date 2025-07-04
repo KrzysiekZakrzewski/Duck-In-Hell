@@ -69,7 +69,14 @@ namespace Game.CharacterController
                 Flip();
             
         }
-        public void SetCanMove(bool canMove) => CanMove = canMove;
+        public void SetCanMove(bool canMove, bool forceStopForces)
+        {
+            CanMove = canMove;
+
+            if (!forceStopForces) return;
+
+            rb.linearVelocity = Vector2.zero;
+        }
         public bool IsMoving => rb.linearVelocity != Vector2.zero;
 
         private void ControlDirection(Vector2 newDirection)

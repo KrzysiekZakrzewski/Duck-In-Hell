@@ -100,13 +100,13 @@ namespace Damageable.Implementation
 
         protected virtual IEnumerator ProcessDamage()
         {
-            characterController.SetCanMove(false);
+            characterController.SetCanMove(false, false);
             animationController.PlayAnimation(initialData.GetHitAnimation);
 
             yield return new WaitUntil(IsGetHitAnimationPlaying);
             yield return new WaitWhile(IsGetHitAnimationPlaying);
 
-            characterController.SetCanMove(true);
+            characterController.SetCanMove(true, false);
 
             isImmue = false;
         }
@@ -191,6 +191,12 @@ namespace Damageable.Implementation
                 default:
                     return !isImmue;
             }
+        }
+
+        [ContextMenu("OnDamageable")]
+        private void OnDamageable()
+        {
+            damagableIsOn = true;
         }
     }
 }

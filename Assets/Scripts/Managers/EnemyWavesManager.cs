@@ -1,6 +1,8 @@
 using BlueRacconGames.Pool;
 using EnemyWaves.Implementation;
 using Game.Difficulty;
+using Game.Managers;
+using Game.Map;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +22,8 @@ namespace EnemyWaves
         private readonly Queue<EnemyWaveFactorySO> wavesQueue = new();
         private IEnemyWave currentWave;
         private UnitPoolEmitter unitSpawner;
+        private MapManager mapManager;
+        private PlayerManager playerManager;
         private IDifficulty difficulty;
 
         public event Action<IEnemyWaveFactory> OnWaveAddedE;
@@ -30,9 +34,11 @@ namespace EnemyWaves
         public int EndedWavesCount { get; private set; }
 
         [Inject]
-        private void Inject(UnitPoolEmitter unitSpawner)
+        private void Inject(UnitPoolEmitter unitSpawner, MapManager mapManager, PlayerManager playerManager)
         {
             this.unitSpawner = unitSpawner;
+            this.mapManager = mapManager;
+            this.playerManager = playerManager;
         }
 
         public void InitializeGameMode(IDifficulty difficulty)
@@ -57,9 +63,13 @@ namespace EnemyWaves
 
             var nextWaveData = wavesQueue.Dequeue();
 
+            Vector2 mapBounds = mapManager.GetMapBounds();
+
             currentWave = nextWaveData.CreateEnemyWave();
             currentWave.OnSetupedE += OnWaveSetupedE;
-            currentWave.SetupWave(CurrentWavesId, unitSpawner, enemyUnitPrefab, difficulty, timerPresentation);
+            currentWave.OnStartedE += (IEnemyWave enemyWave) => playerManager.OnOffPlayerMoveable(true); 
+            currentWave.OnCompletedE += (IEnemyWave enemyWave) => playerManager.OnOffPlayerMoveable(false); 
+            currentWave.SetupWave(CurrentWavesId, unitSpawner, enemyUnitPrefab, mapBounds, difficulty, timerPresentation);
         }
         public void StartWave()
         {

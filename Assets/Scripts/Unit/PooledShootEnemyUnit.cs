@@ -1,13 +1,13 @@
 using BlueRacconGames.Pool;
+using Game.HUD;
 using Projectiles.Implementation;
 using UnityEngine;
 using Zenject;
 
 namespace Units.Implementation
 {
-    public class PooledShootEnemyUnit : PooledUnitBase
+    public class PooledShootEnemyUnit : PooledEnemyUnit
     {
-        private PooledShootEnemyUnitDataSO unitDataSO;
         private ProjectilePoolEmitter projectilePoolEmitter;
         private DefaultProjectileEmitterController projectileEmitterController;
 
@@ -20,17 +20,11 @@ namespace Units.Implementation
         {
             base.SetUnitData(unitDataSO);
 
-            this.unitDataSO = unitDataSO as PooledShootEnemyUnitDataSO;
-
-            damageable?.Launch(unitDataSO.DamagableDataSO);
-
-            characterController.SetData(unitDataSO.CharacterControllerDataSO);
+            var shootUnitDataSO = unitDataSO as PooledShootEnemyUnitDataSO;
 
             projectileEmitterController.Launch(projectilePoolEmitter);
 
-            aiController.Initialize(this.unitDataSO.AIDataSO);
-
-            ResetUnit();
+            aiController.Initialize(shootUnitDataSO.AIDataSO);
         }
         public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction)
         {

@@ -1,35 +1,18 @@
-using Game.View;
-using UnityEngine;
-using Zenject;
+using BlueRacconGames.MeleeCombat;
+using Game.HUD;
 
 namespace Units.Implementation
 {
-    public class PlayerUnit : UnitBase
+    public class PlayerUnit : PooledUnitBase
     {
-        [SerializeField] private PlayerUnitDataSO playerDataSO;
+        private MeleeCombatControllerBase meleeCombatController;
 
-        [Inject]
-        private void Inject(GameHud gameHud)
+        public void SetupPlayerUnit(PlayerUnitDataSO playerUnitDataSO, PlayerHUD playerHUD, MeleeCombatControllerBase meleeCombatController)
         {
-            unitHud = gameHud.PlayerHUD;
-        }
+            unitHUD = playerHUD;
+            this.meleeCombatController = meleeCombatController;
 
-        private void Awake()
-        {
-            Launch();
-
-            SetUnitData(playerDataSO);
-        }
-
-        public override void SetUnitData(UnitDataSO unitDataSO)
-        {
-            base.SetUnitData(unitDataSO);
-
-            this.playerDataSO = unitDataSO as PlayerUnitDataSO;
-
-            damageable?.Launch(unitDataSO.DamagableDataSO);
-
-            characterController.SetData(unitDataSO.CharacterControllerDataSO);
+            SetUnitData(playerUnitDataSO);
         }
     }
 }

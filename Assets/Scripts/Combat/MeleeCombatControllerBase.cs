@@ -25,20 +25,13 @@ namespace BlueRacconGames.MeleeCombat
         public Vector3 AttackPosition => attackPoint.position;
 
         public DefaultPooledEmitter PooledEmitter => pooledEmitter;
-        public CardsController CardController => cardController;
 
-        [Inject]
-        private void Inject(DefaultPooledEmitter pooledEmitter, CardsController cardsController)
-        {
-            this.pooledEmitter = pooledEmitter;
-            this.cardController = canUseCardsEffect ? cardsController : null;
-        }
-
-        protected virtual void Awake()
+        public virtual void Initialize(DefaultPooledEmitter pooledEmitter, CardsController cardController)
         {
             animationController = GetComponent<UnitAnimationControllerBase>();
+            this.pooledEmitter = pooledEmitter;
+            this.cardController = cardController;
         }
-
         public virtual void Attack()
         {
             if (!CanAttack())
@@ -72,6 +65,13 @@ namespace BlueRacconGames.MeleeCombat
         {
 
         }
+        public void ExecuteCards(IDamagableTarget target)
+        {
+            if(!CanExecuteCards()) return;
+
+            cardController.ExecutePassiveHitEffects(target);
+        }
+        public bool CanExecuteCards() => cardController != null;
 
         protected virtual bool CanAttack() => weapon != null && canAttack;
         protected void ResetTargets()

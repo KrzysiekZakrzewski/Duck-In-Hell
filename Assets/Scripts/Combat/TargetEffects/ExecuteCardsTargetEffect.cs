@@ -4,11 +4,7 @@
     {
         public void Execute(MeleeCombatControllerBase source, IDamagableTarget target)
         {
-            if(!CanExecuteEffects(source)) return;
-
-            source.CardController.ExecutePassiveHitEffects(target);
+            source.ExecuteCards(target);
         }
-
-        protected bool CanExecuteEffects(MeleeCombatControllerBase source) => source.CardController != null;
     }
 }

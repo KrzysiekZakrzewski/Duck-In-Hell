@@ -1,5 +1,4 @@
-﻿using BlueRacconGames.AI;
-using BlueRacconGames.Animation;
+﻿using BlueRacconGames.Animation;
 using BlueRacconGames.Pool;
 using Damageable;
 using Game.CharacterController;
@@ -13,10 +12,12 @@ namespace Units.Implementation
 {
     public abstract class PooledUnitBase : PoolItemBase, IUnit
     {
-        [SerializeField] protected UnitHUD unitHUD;
-        [SerializeField] protected Vector2 hudPositionOffset;
+        [SerializeField] protected bool useOtherHUD;
 
-        private List<PoolItemBase> childPooledItem = new();
+        [SerializeField, HideIf(nameof(useOtherHUD), true)] protected UnitHUD unitHUD;
+        [SerializeField, HideIf(nameof(useOtherHUD), true)] protected Vector2 hudPositionOffset;
+
+        private readonly List<PoolItemBase> childPooledItem = new();
 
         protected UnitDataSO initializeData;
         protected Collider2D unitCollider2D;
@@ -24,13 +25,10 @@ namespace Units.Implementation
         protected SpriteRenderer spriteRenderer;
         protected UnitAnimationControllerBase animationController;
         protected IDamageable damageable;
-        protected AIControllerBase aiController;
         protected bool isDoSomething;
-        protected int doNothingTickDuration;
+        protected bool isLazzy;
         protected int tick;
         public IDamageable Damageable => damageable;
-        public AIControllerBase AIController => aiController;
-        public bool IsDoSomething => isDoSomething;
 
         public DefaultPooledEmitter DefaultPooledEmitter {  get; private set; }
 
@@ -49,25 +47,30 @@ namespace Units.Implementation
             animationController = GetComponent<UnitAnimationControllerBase>();
             characterController = GetComponent<CharacterController2D>();
             damageable ??= GetComponent<IDamageable>();
-            aiController = GetComponent<AIControllerBase>();
-
-            damageable.OnExpireE += (IDamageable damageable) => Expire();
-            damageable.OnTakeDamageE += unitHUD.HealthBar.UpdateBar;
 
             TimeTickSystem.OnTick += OnTick;
             TimeTickSystem.OnBigTick += OnBigTick;
-        }
-        public virtual void ResetUnit()
-        {
-            damageable?.ResetDamagable();
-            unitHUD.HealthBar.Launch(damageable.CurrentHealth, damageable.MaxHealth);
         }
         public virtual void SetUnitData(UnitDataSO unitDataSO)
         {
             this.initializeData = unitDataSO;
             spriteRenderer.sprite = unitDataSO.UnitSprite;
 
+            damageable?.Launch(unitDataSO.DamagableDataSO);
+            damageable.OnExpireE += (IDamageable damageable) => Expire();
+            damageable.OnTakeDamageE += unitHUD.HealthBar.UpdateBar;
+
+            characterController.SetData(unitDataSO.CharacterControllerDataSO);
+
+            ResetUnit();
+
             MatchColliderToSprite();
+        }
+        public virtual void ResetUnit()
+        {
+            damageable?.ResetDamagable();
+
+            unitHUD.HealthBar.Launch(damageable.CurrentHealth, damageable.MaxHealth);
         }
         public void WakeUpInteraction()
         {
@@ -101,6 +104,30 @@ namespace Units.Implementation
 
             childPooledItem.Remove(poolItem);
         }
+        public void OnOffUnit(bool value, StopUnitType stopType = StopUnitType.Movement)
+        {
+            switch (stopType)
+            {
+                case StopUnitType.Movement:
+                    characterController.SetCanMove(value, false);
+                    break;
+                case StopUnitType.MovementWithForces:
+                    characterController.SetCanMove(value, true);
+                    break;
+                case StopUnitType.Damage:
+                    damageable.SetDamagableOn(value);
+                    break;
+                case StopUnitType.Attack:
+                    
+                    break;
+                case StopUnitType.Full:
+                    characterController.SetCanMove(value, true);
+                    damageable.SetDamagableOn(value);
+                    break;
+                default:
+                    break;
+            }
+        }
 
         protected override void ExpireInternal()
         {
@@ -108,9 +135,9 @@ namespace Units.Implementation
 
             damageable.OnExpireE -= (IDamageable damageable) => Expire();
             damageable.OnTakeDamageE -= unitHUD.HealthBar.UpdateBar;
+
             TimeTickSystem.OnTick -= OnTick;
             TimeTickSystem.OnBigTick -= OnBigTick;
-            aiController.OnExpire();
             ExpireChildPoolItem();
         }
 
@@ -143,6 +170,8 @@ namespace Units.Implementation
                     break;
             }
 
+            if (useOtherHUD) return;
+
             Vector3 hudPosition = new(hudPositionOffset.x, spriteHeight / 2 + hudPositionOffset.y, transform.position.z);
 
             unitHUD.transform.localPosition = hudPosition;
@@ -150,6 +179,8 @@ namespace Units.Implementation
         private void UnitDoNothing()
         {
             if(initializeData.NoPlayAnimation == null) return;
+
+            isLazzy = true;
 
             animationController.PlayAnimation(initializeData.NoPlayAnimation);
         }
@@ -159,17 +190,29 @@ namespace Units.Implementation
         }
         private void OnTick(object sender, OnTickEventArgs e)
         {
-            if (isDoSomething) return;
+            if (isDoSomething || isLazzy) return;
 
             tick++;
 
-            if (tick < doNothingTickDuration) return;
+            if (tick < initializeData.DoNothingTickDuration) return;
 
             UnitDoNothing();
         }
         private void OnBigTick(object sender, OnTickEventArgs e)
         {
             isDoSomething = CheckUnitDoSomething();
+
+            if (!isDoSomething) return;
+
+            isLazzy = false;
         }
+    }
+    public enum StopUnitType
+    {
+        Movement,
+        MovementWithForces,
+        Damage,
+        Attack,
+        Full
     }
 }

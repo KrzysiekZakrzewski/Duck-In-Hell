@@ -9,7 +9,6 @@ namespace Units
     public interface IUnit : IGameObject
     {
         DefaultPooledEmitter DefaultPooledEmitter { get; }
-        bool IsDoSomething { get; }
         public IDamageable Damageable { get; }
         void SetUnitData(UnitDataSO unitDataSO);
         void ResetUnit();

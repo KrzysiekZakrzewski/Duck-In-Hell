@@ -2,6 +2,7 @@ using BlueRacconGames.Cards;
 using BlueRacconGames.Pool;
 using EnemyWaves;
 using Game.Managers;
+using Game.Map;
 using Game.View;
 using TimeTickSystems;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Game.Installer
         [SerializeField] private CardsInventory cardsInventory;
         [SerializeField] private GrantCardManager grantsCardManager;
         [SerializeField] private CardsController cardsController;
+        [SerializeField] private MapManager mapManager;
+        [SerializeField] private PlayerManager playerManager;
 
         public override void InstallBindings()
         {
@@ -32,6 +35,8 @@ namespace Game.Installer
             Container.BindInstance(cardsInventory).AsSingle();
             Container.BindInstance(grantsCardManager).AsSingle();
             Container.BindInstance(cardsController).AsSingle();
+            Container.BindInstance(mapManager).AsSingle();
+            Container.BindInstance(playerManager).AsSingle();
 
             TimeTickSystem.Create();
         }

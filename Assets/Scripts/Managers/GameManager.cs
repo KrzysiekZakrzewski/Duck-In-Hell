@@ -15,7 +15,7 @@ namespace Game.Managers
         private IDifficulty difficulty;
 
         [Inject]
-        private void Inject(EnemyWavesManager wavesManager, SelectCardManager selectCardManager)
+        private void Inject(EnemyWavesManager wavesManager, SelectCardManager selectCardManager, PlayerManager playerManager)
         {
             this.wavesManager = wavesManager;
             this.selectCardManager = selectCardManager;

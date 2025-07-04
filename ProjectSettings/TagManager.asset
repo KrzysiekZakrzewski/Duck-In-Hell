@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: MapBackground
+    uniqueID: 2179675717
+    locked: 0
+  - name: MapDetails
+    uniqueID: 1627400739
+    locked: 0
   - name: BackgroundVFX
     uniqueID: 3471276689
     locked: 0
@@ -49,6 +55,9 @@ TagManager:
     locked: 0
   - name: Items
     uniqueID: 3720447633
+    locked: 0
+  - name: Projectiles
+    uniqueID: 3768199993
     locked: 0
   - name: Enemy
     uniqueID: 3303934353

@@ -46,9 +46,9 @@ namespace EnemyWaves.Implementation
             this.initialData = initialData;
         }
 
-        public void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation)
+        public void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds, IDifficulty difficulty, ICountdownPresentation timerPresentation)
         {
-            CorutineSystem.StartSequnce(SetupWaveSequnce(waveId, unitSpawner, enemyUnitPrefab, difficulty, timerPresentation));
+            CorutineSystem.StartSequnce(SetupWaveSequnce(waveId, unitSpawner, enemyUnitPrefab, bounds, difficulty, timerPresentation));
         }
         public void StartWave()
         {
@@ -104,7 +104,7 @@ namespace EnemyWaves.Implementation
         protected virtual void OnOffEnemy(IUnit unit, bool value)
         {
             unit.Damageable.SetDamagableOn(value);
-            var enemyUnit = unit as PooledUnitBase;
+            var enemyUnit = unit as PooledEnemyUnit;
 
             enemyUnit.AIController.ForceStartStopSimulate(value);
         }
@@ -121,15 +121,13 @@ namespace EnemyWaves.Implementation
         {
             return enemyUnitsLUT.Count <= 0;
         }
-        private IEnumerator SpawnEnemies(UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab)
+        private IEnumerator SpawnEnemies(UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds)
         {
-            var screenBounds = GetScreenBounds();
-
             for (int i = 0; i < TotalEnemy; i++)
             {
                 var enemyData = GetRandomEnemyData();
 
-                var newEnemy = unitSpawner.SpawnUnit(enemyUnitPrefab, enemyData.LaunchVFX, GetRandomPoint(screenBounds), Vector3.zero);
+                var newEnemy = unitSpawner.SpawnUnit(enemyUnitPrefab, enemyData.LaunchVFX, GetRandomPoint(bounds), Vector3.zero);
                 newEnemy.SetUnitData(enemyData); 
                 newEnemy.Damageable.OnDeadE += UpdateWave;
                 OnOffEnemy(newEnemy, false);
@@ -143,11 +141,11 @@ namespace EnemyWaves.Implementation
 
             enemySpawned = true;
         }
-        private Vector2 GetRandomPoint(Vector2 screenBounds)
+        private Vector2 GetRandomPoint(Vector2 bounds)
         {
             return new Vector2(
-                Random.Range(-screenBounds.x, screenBounds.x),
-                Random.Range(-screenBounds.y, screenBounds.y)
+                Random.Range(-bounds.x, bounds.x),
+                Random.Range(-bounds.y, bounds.y)
             );
         }
         private Vector2 GetScreenBounds()
@@ -184,7 +182,7 @@ namespace EnemyWaves.Implementation
 
             return null;
         }
-        private IEnumerator SetupWaveSequnce(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, IDifficulty difficulty, ICountdownPresentation timerPresentation)
+        private IEnumerator SetupWaveSequnce(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds, IDifficulty difficulty, ICountdownPresentation timerPresentation)
         {
             IsCompleted = false;
             IsStarted = false;
@@ -192,7 +190,7 @@ namespace EnemyWaves.Implementation
 
             totalEnemy = difficulty.CalculateTotalEnemyAmount(waveId % 10);
 
-            CorutineSystem.StartSequnce(SpawnEnemies(unitSpawner, enemyUnitPrefab));
+            CorutineSystem.StartSequnce(SpawnEnemies(unitSpawner, enemyUnitPrefab, bounds));
 
             yield return new WaitUntil(() => enemySpawned);
 

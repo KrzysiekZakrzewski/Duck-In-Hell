@@ -1,19 +1,27 @@
-﻿namespace Units.Implementation
+﻿using BlueRacconGames.AI;
+using BlueRacconGames.Pool;
+using Game.HUD;
+using UnityEngine;
+
+namespace Units.Implementation
 {
     public class PooledEnemyUnit : PooledUnitBase
     {
-        private PooledEnemyUnitDataSO unitDataSO;
+        protected AIControllerBase aiController;
 
-        public override void SetUnitData(UnitDataSO unitDataSO)
+        public AIControllerBase AIController => aiController;
+
+        public override void Launch(IPoolItemEmitter sourceEmitter, Vector3 startPosition, Vector3 direction)
         {
-            base.SetUnitData(unitDataSO);
+            aiController = GetComponent<AIControllerBase>();
 
-            this.unitDataSO = unitDataSO as PooledEnemyUnitDataSO;
+            base.Launch(sourceEmitter, startPosition, direction);
+        }
 
-            damageable?.Launch(unitDataSO.DamagableDataSO);
-            characterController.SetData(unitDataSO.CharacterControllerDataSO);
-
-            ResetUnit();
+        protected override void ExpireInternal()
+        {
+            base.ExpireInternal();
+            aiController.OnExpire();
         }
     }
 }

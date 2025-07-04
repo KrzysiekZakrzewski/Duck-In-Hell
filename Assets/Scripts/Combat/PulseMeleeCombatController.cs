@@ -1,7 +1,8 @@
+using BlueRacconGames.Cards;
 using BlueRacconGames.MeleeCombat.Implementation;
+using BlueRacconGames.Pool;
 using DG.Tweening;
 using UnityEngine;
-using Zenject;
 
 namespace BlueRacconGames.MeleeCombat
 {
@@ -11,17 +12,12 @@ namespace BlueRacconGames.MeleeCombat
 
         private Sequence scaleSequence;
 
-        protected override void Awake()
+        public override void Initialize(DefaultPooledEmitter pooledEmitter, CardsController cardController)
         {
-            base.Awake();
+            base.Initialize(pooledEmitter, cardController);
 
             weapon = basePulseTouchWeapon.CreateWeapon();
 
-            Initialize();
-        }
-
-        public void Initialize()
-        {
             BasePulseMeleeWeapon pulseWeapon = weapon as BasePulseMeleeWeapon;
 
             scaleSequence = pulseWeapon.SetupAttackSequence(attackPoint, Attack, ResetTargets);

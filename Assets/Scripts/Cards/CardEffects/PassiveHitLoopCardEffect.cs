@@ -48,7 +48,7 @@ namespace BlueRacconGames.Cards.Effects
                 VFX = particleEffect
             };
 
-            unit.Damageable.OnExpireE += (IDamageable damagable) => OnEffectEnded(targetData);
+            damageable.OnExpireE += (IDamageable damagable) => OnEffectEnded(targetData);
 
             if (targets.Count == 0)
                 TimeTickSystem.OnTick += OnTick;
