@@ -1,5 +1,6 @@
 using BlueRacconGames.Pool;
 using Game.Difficulty;
+using Game.Map;
 using System;
 using Timers;
 using Units;
@@ -22,7 +23,7 @@ namespace EnemyWaves
         event Action<IEnemyWave> OnUpdatedE;
         event Action<IEnemyWave> OnCompletedE;
 
-        void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds, IDifficulty difficulty, ICountdownPresentation timerPresentation);
+        void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, MapData mapData, IDifficulty difficulty, ICountdownPresentation timerPresentation);
         void StartWave();
         void UpdateWave(IUnit unit);
         void CompleteWave();

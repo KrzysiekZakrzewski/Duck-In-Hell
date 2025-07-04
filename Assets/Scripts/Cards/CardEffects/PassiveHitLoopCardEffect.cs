@@ -65,11 +65,7 @@ namespace BlueRacconGames.Cards.Effects
 
         private void OnTick(object sender, OnTickEventArgs e)
         {
-            Debug.Log("Czy Tick?");
-
             if (targets.Count <= 0) return;
-
-            Debug.Log("Czy Tick2?");
 
             foreach (var targetToRemove in targetsToRemove)
             {
@@ -90,8 +86,6 @@ namespace BlueRacconGames.Cards.Effects
                 return;
             }
 
-            Debug.Log("Czy Tick3?");
-
             foreach (var target in targets.Values)
             {
                 int tickDifference = tick - target.StartTick;
@@ -108,8 +102,6 @@ namespace BlueRacconGames.Cards.Effects
 
                 damagable.TakeDamage(damageAmount);     
             }
-
-            Debug.Log("Czy Tick4?");
 
             tick++;
         }

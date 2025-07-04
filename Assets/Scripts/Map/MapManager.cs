@@ -6,9 +6,14 @@ namespace Game.Map
     {
         [SerializeField] private MapBounds bounds;
 
-        public Vector2 GetMapBounds()
+        private void Awake()
         {
-            return bounds.GetMapBounds();
+            bounds.SetupMapBounds();
+        }
+
+        public MapData GetMapData()
+        {
+            return bounds.GetMapBoundsData();
         }
     }
 }

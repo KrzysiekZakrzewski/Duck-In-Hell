@@ -1,9 +1,11 @@
 using BlueRacconGames.Pool;
 using Game.Difficulty;
+using Game.Map;
 using RDG.Platforms;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Timers;
 using Units;
@@ -46,9 +48,9 @@ namespace EnemyWaves.Implementation
             this.initialData = initialData;
         }
 
-        public void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds, IDifficulty difficulty, ICountdownPresentation timerPresentation)
+        public void SetupWave(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, MapData mapData, IDifficulty difficulty, ICountdownPresentation timerPresentation)
         {
-            CorutineSystem.StartSequnce(SetupWaveSequnce(waveId, unitSpawner, enemyUnitPrefab, bounds, difficulty, timerPresentation));
+            CorutineSystem.StartSequnce(SetupWaveSequnce(waveId, unitSpawner, enemyUnitPrefab, mapData, difficulty, timerPresentation));
         }
         public void StartWave()
         {
@@ -121,13 +123,13 @@ namespace EnemyWaves.Implementation
         {
             return enemyUnitsLUT.Count <= 0;
         }
-        private IEnumerator SpawnEnemies(UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds)
+        private IEnumerator SpawnEnemies(UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, MapData mapData)
         {
             for (int i = 0; i < TotalEnemy; i++)
             {
                 var enemyData = GetRandomEnemyData();
 
-                var newEnemy = unitSpawner.SpawnUnit(enemyUnitPrefab, enemyData.LaunchVFX, GetRandomPoint(bounds), Vector3.zero);
+                var newEnemy = unitSpawner.SpawnUnit(enemyUnitPrefab, enemyData.LaunchVFX, GetSpawnPoint(mapData), Vector3.zero);
                 newEnemy.SetUnitData(enemyData); 
                 newEnemy.Damageable.OnDeadE += UpdateWave;
                 OnOffEnemy(newEnemy, false);
@@ -140,6 +142,36 @@ namespace EnemyWaves.Implementation
             }
 
             enemySpawned = true;
+        }
+        private Vector2 GetSpawnPoint(MapData mapData)
+        {
+            int iterationAmount = 100;
+
+            bool isValidPoint = false;
+
+            Vector2 point = Vector2.zero;
+
+            while (!isValidPoint)
+            {
+                if(iterationAmount <= 0) return Vector2.zero;
+
+                iterationAmount--;
+
+                point = GetRandomPoint(mapData.Bounds);
+
+                if (IsInBounds(point, mapData.BlockedSpawnPoosition)) continue;
+
+                isValidPoint = true;
+            }
+
+            return point;
+        }
+        private bool IsInBounds(Vector2 point, Bounds[] bounds)
+        {
+            foreach(var bound in bounds)
+                if (bound.Contains(point)) return true;
+
+            return false;
         }
         private Vector2 GetRandomPoint(Vector2 bounds)
         {
@@ -182,7 +214,7 @@ namespace EnemyWaves.Implementation
 
             return null;
         }
-        private IEnumerator SetupWaveSequnce(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, Vector2 bounds, IDifficulty difficulty, ICountdownPresentation timerPresentation)
+        private IEnumerator SetupWaveSequnce(int waveId, UnitPoolEmitter unitSpawner, PooledUnitBase enemyUnitPrefab, MapData mapData, IDifficulty difficulty, ICountdownPresentation timerPresentation)
         {
             IsCompleted = false;
             IsStarted = false;
@@ -190,7 +222,7 @@ namespace EnemyWaves.Implementation
 
             totalEnemy = difficulty.CalculateTotalEnemyAmount(waveId % 10);
 
-            CorutineSystem.StartSequnce(SpawnEnemies(unitSpawner, enemyUnitPrefab, bounds));
+            CorutineSystem.StartSequnce(SpawnEnemies(unitSpawner, enemyUnitPrefab, mapData));
 
             yield return new WaitUntil(() => enemySpawned);
 

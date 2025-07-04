@@ -63,13 +63,11 @@ namespace EnemyWaves
 
             var nextWaveData = wavesQueue.Dequeue();
 
-            Vector2 mapBounds = mapManager.GetMapBounds();
-
             currentWave = nextWaveData.CreateEnemyWave();
             currentWave.OnSetupedE += OnWaveSetupedE;
             currentWave.OnStartedE += (IEnemyWave enemyWave) => playerManager.OnOffPlayerMoveable(true); 
             currentWave.OnCompletedE += (IEnemyWave enemyWave) => playerManager.OnOffPlayerMoveable(false); 
-            currentWave.SetupWave(CurrentWavesId, unitSpawner, enemyUnitPrefab, mapBounds, difficulty, timerPresentation);
+            currentWave.SetupWave(CurrentWavesId, unitSpawner, enemyUnitPrefab, mapManager.GetMapData(), difficulty, timerPresentation);
         }
         public void StartWave()
         {
