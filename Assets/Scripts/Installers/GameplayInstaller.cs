@@ -23,6 +23,7 @@ namespace Game.Installer
         [SerializeField] private CardsController cardsController;
         [SerializeField] private MapManager mapManager;
         [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private GameManager gameManager;
 
         public override void InstallBindings()
         {
@@ -37,6 +38,7 @@ namespace Game.Installer
             Container.BindInstance(cardsController).AsSingle();
             Container.BindInstance(mapManager).AsSingle();
             Container.BindInstance(playerManager).AsSingle();
+            Container.BindInstance(gameManager).AsSingle();
 
             TimeTickSystem.Create();
         }

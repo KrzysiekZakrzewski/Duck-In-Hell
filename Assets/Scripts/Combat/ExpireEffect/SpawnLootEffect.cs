@@ -33,8 +33,6 @@ namespace BlueRacconGames.MeleeCombat
         {
             float randomValue = Random.value;
 
-            Debug.Log(randomValue + " " + lootData.PercentLootChance);
-
             if (randomValue > lootData.PercentLootChance) return default;
 
             float totalChance = 0f;
@@ -51,8 +49,6 @@ namespace BlueRacconGames.MeleeCombat
             foreach (LootData data in lootData.DropItems)
             {
                 cumulativeChance += data.PercentChanceToDrop;
-
-                Debug.Log(cumulativeChance + " " + randomValue);
 
                 if (randomValue > cumulativeChance || randomValue == 0) continue;
 

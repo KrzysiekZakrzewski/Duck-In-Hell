@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmallSlimeLoot
   m_EditorClassIdentifier: 
   <ItemPrefab>k__BackingField: {fileID: 875003526506949114, guid: daeca4eada8a7604e81770d7b7609b18, type: 3}
-  <PercentLootChance>k__BackingField: 0.1
+  <PercentLootChance>k__BackingField: 1
   <DropItems>k__BackingField:
   - lootAmountType: 0
     baseLootAmount: 1

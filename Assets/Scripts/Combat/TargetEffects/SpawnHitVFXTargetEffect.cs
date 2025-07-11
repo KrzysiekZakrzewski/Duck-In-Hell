@@ -23,6 +23,7 @@ namespace BlueRacconGames.MeleeCombat
             var vfxPosition = unit.GetOnSpritePosition(this.vfxPosition);
             var particleEffect = source.PooledEmitter.EmitItem<ParticlePoolItem>(vfxEffect, vfxPosition, Vector3.zero);
 
+            particleEffect.UpdateScale(source.GetDamageRadius());
             particleEffect.OnExpireE += unit.PopPoolItem;
 
             unit.PushPoolItem(particleEffect);

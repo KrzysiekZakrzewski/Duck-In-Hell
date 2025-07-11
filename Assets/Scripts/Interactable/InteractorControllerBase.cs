@@ -22,6 +22,8 @@ namespace Interactable
         protected virtual void LateUpdate()
         {
             CheckInteractable();
+
+            RemoveInteractable();
         }
 
         protected virtual void CheckInteractable()

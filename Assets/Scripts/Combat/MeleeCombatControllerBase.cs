@@ -1,6 +1,7 @@
 using BlueRacconGames.Animation;
 using BlueRacconGames.Cards;
 using BlueRacconGames.Pool;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -9,10 +10,12 @@ namespace BlueRacconGames.MeleeCombat
 {
     public abstract class MeleeCombatControllerBase : MonoBehaviour
     {
+        public event Action<bool> OnAttackEnableChanged;
+
         [SerializeField] protected bool canUseCardsEffect;
         [SerializeField] protected Transform attackPoint;
         [SerializeField] private LayerMask hitLayer;
-        [SerializeField] private float attackRange = 50f;
+        [SerializeField] private float baseAttackRange = 50f;
         [SerializeField] private Color debugGizmosColor = Color.yellow;
 
         protected CardsController cardController;
@@ -20,7 +23,9 @@ namespace BlueRacconGames.MeleeCombat
         protected UnitAnimationControllerBase animationController;
         protected List<GameObject> targetsGM = new();
         protected IMeleeWeapon weapon;
-        protected bool canAttack = true;
+        protected bool attackEnable = true;
+        protected float attackRange;
+        protected float attackRangeMultiplier = 1f;
 
         public Vector3 AttackPosition => attackPoint.position;
 
@@ -31,6 +36,8 @@ namespace BlueRacconGames.MeleeCombat
             animationController = GetComponent<UnitAnimationControllerBase>();
             this.pooledEmitter = pooledEmitter;
             this.cardController = cardController;
+            attackRange = baseAttackRange;
+            attackRangeMultiplier = 1f;
         }
         public virtual void Attack()
         {
@@ -43,7 +50,7 @@ namespace BlueRacconGames.MeleeCombat
         }
         public virtual void DamageDetected()
         {
-            Collider2D[] hitedObjects = Physics2D.OverlapCircleAll(attackPoint.position, attackRange * attackPoint.localScale.x, hitLayer);
+            Collider2D[] hitedObjects = Physics2D.OverlapCircleAll(attackPoint.position, GetDamageRadius(), hitLayer);
 
             if (hitedObjects.Length == 0)
                 return;
@@ -61,10 +68,6 @@ namespace BlueRacconGames.MeleeCombat
                 weapon.OnHit(this, target);
             }
         }
-        public virtual void Dizzy(float dizzyTime)
-        {
-
-        }
         public void ExecuteCards(IDamagableTarget target)
         {
             if(!CanExecuteCards()) return;
@@ -72,8 +75,25 @@ namespace BlueRacconGames.MeleeCombat
             cardController.ExecutePassiveHitEffects(target);
         }
         public bool CanExecuteCards() => cardController != null;
+        public void UpdateAttackEnable(bool value)
+        {
+            if (attackEnable == value) return;
 
-        protected virtual bool CanAttack() => weapon != null && canAttack;
+            attackEnable = value;
+
+            InternalUpdateAttackEnable();
+        }
+        public float GetDamageRadius() => attackRange * attackRangeMultiplier * attackPoint.localScale.x;
+        public void IncreaseAttackRange(float value) => attackRange += value;
+        public void DecreaseAttackRange(float value) => attackRange -= value;
+        public void IncreaseAttackRangeMultiplier(float value) => attackRangeMultiplier += value;
+        public void DecreaseAttackRangeMultiplier(float value) => attackRangeMultiplier -= value;
+
+        protected virtual void InternalUpdateAttackEnable()
+        {
+            OnAttackEnableChanged?.Invoke(attackEnable);
+        }
+        protected virtual bool CanAttack() => weapon != null && attackEnable;
         protected void ResetTargets()
         {
             targetsGM.Clear();
@@ -86,7 +106,7 @@ namespace BlueRacconGames.MeleeCombat
                 return;
 
             Gizmos.color = debugGizmosColor;
-            Gizmos.DrawWireSphere(attackPoint.position, attackRange * attackPoint.localScale.x);
+            Gizmos.DrawWireSphere(attackPoint.position, GetDamageRadius());
         }
     }
 }

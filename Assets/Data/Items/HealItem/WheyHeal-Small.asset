@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df6dff66654dc834d8c86e83eb3727cf, type: 3}
-  m_Name: SmallHeal
+  m_Name: WheyHeal-Small
   m_EditorClassIdentifier: 
   <Id>k__BackingField: 0
   <Name>k__BackingField: Whey
   <Description>k__BackingField: Simple whey
   <Icon>k__BackingField: {fileID: 7860516806514409981, guid: 56ec527f9303c064682768c9f6be16c9, type: 3}
   <PickUpVFX>k__BackingField: {fileID: 3269345711357019591, guid: 1a135f427b9592648b87987f214c79d6, type: 3}
+  <IsFullHealthTakes>k__BackingField: 1
   <HealValue>k__BackingField: 1
   <HealVFX>k__BackingField: {fileID: 3269345711357019591, guid: 1a135f427b9592648b87987f214c79d6, type: 3}

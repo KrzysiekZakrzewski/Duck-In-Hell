@@ -19,12 +19,20 @@ namespace BlueRacconGames.Cards.Effects
         protected Dictionary<IDamagableTarget, TargetData> targets;
         protected List<IDamagableTarget> targetsToRemove = new();
 
-        public override void ApplyEffect(CardsController cardsController)
+        public override void ApplyEffect(CardsController cardsController, IUnit source)
         {
+            base.ApplyEffect(cardsController, source);
+
             targets = new();
 
             cardsController.AddPassiveHitEffect(this);
         }
+
+        public override void DiscardEffect()
+        {
+
+        }
+
         public override void Execute(IDamagableTarget target, DefaultPooledEmitter pooledEmitter)
         {
             if (targets.ContainsKey(target)) return;

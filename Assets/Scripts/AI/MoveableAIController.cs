@@ -1,6 +1,7 @@
 using BlueRacconGames.AI.Data;
 using Game.CharacterController;
 using Pathfinding;
+using Units.Implementation;
 using UnityEngine;
 
 namespace BlueRacconGames.AI
@@ -18,9 +19,9 @@ namespace BlueRacconGames.AI
         public bool IsStoped { get; private set; }
 
 
-        public override void Initialize(BaseAIDataSO aIDataSO)
+        public override void Initialize(BaseAIDataSO aIDataSO, PlayerUnit playerUnit)
         {
-            base.Initialize(aIDataSO);
+            base.Initialize(aIDataSO, playerUnit);
 
             rb = GetComponent<Rigidbody2D>();
             agent = GetComponent<Seeker>();

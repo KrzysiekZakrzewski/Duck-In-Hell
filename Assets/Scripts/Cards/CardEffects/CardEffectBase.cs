@@ -1,14 +1,22 @@
-﻿using UnityEngine;
+﻿using Units;
+using UnityEngine;
+
 namespace BlueRacconGames.Cards.Effects
 {
-    [System.Serializable]
     public abstract class CardEffectBase
     {
-        [SerializeField] protected int level = 1;
-        public abstract void ApplyEffect(CardsController cardsController);
-        public void LevelUp()
+        [SerializeField] protected int baseLevel = 1;
+
+        public int Level { get; protected set; }
+
+        public abstract void DiscardEffect();
+        public virtual void ApplyEffect(CardsController cardsController, IUnit source)
         {
-            level++;
+            Level = baseLevel;
+        }
+        public virtual void LevelUp()
+        {
+            Level++;
         }
     }
 }

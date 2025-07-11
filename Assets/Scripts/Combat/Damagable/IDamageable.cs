@@ -13,13 +13,13 @@ namespace Damageable
         bool ExpireOnDead { get; }
 
         event Action<int, int> OnTakeDamageE;
-        event Action OnHealE;
+        event Action<int, int> OnHealE;
         event Action<IUnit> OnDeadE;
         event Action<IDamageable> OnExpireE;
 
         void Launch(DamagableDataSO damagableDataSO);
         void TakeDamage(int damageValue, DamageMode damageMode = DamageMode.Normal);
-        void Heal(int healValue);
+        bool Heal(int healValue);
         void IncreaseHealt(int increaseValue);
         void DecreaseHealt(int decreaseValue);
         void OnDead();

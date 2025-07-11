@@ -6,6 +6,7 @@ namespace Game.Item.Factory
     [CreateAssetMenu(fileName = nameof(HealItemBaseFactorySO), menuName = nameof(Game) + "/" + nameof(Item.Factory) + "/" + nameof(HealItemBaseFactorySO))]
     public class HealItemBaseFactorySO : ActionItemFactorySO
     {
+        [field: SerializeField] public bool IsFullHealthTakes { get; private set; }
         [field: SerializeField] public int HealValue {  get; private set; }
         [field: SerializeField] public ParticlePoolItem HealVFX { get; private set; }
 

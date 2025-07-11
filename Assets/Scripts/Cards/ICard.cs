@@ -1,4 +1,5 @@
 ﻿using System;
+using Units;
 
 namespace BlueRacconGames.Cards
 {
@@ -7,7 +8,7 @@ namespace BlueRacconGames.Cards
         int CardLevel { get; }
         event Action<int> OnLevelUpE;
 
-        void Execute(CardsController cardsController);
-        int LevelUp();
+        void Execute(CardsController cardsController, IUnit source);
+        void LevelUp();
     }
 }

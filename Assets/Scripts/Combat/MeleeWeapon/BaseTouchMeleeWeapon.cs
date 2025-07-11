@@ -9,7 +9,7 @@ namespace BlueRacconGames.MeleeCombat
         {
         }
 
-        protected override bool UseInternal(IUnit source)
+        public override bool Use(IUnit source)
         {
             throw new System.NotImplementedException();
         }

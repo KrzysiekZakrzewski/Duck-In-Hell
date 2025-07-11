@@ -1,6 +1,7 @@
 ﻿using BlueRacconGames.Cards.Effects;
 using BlueRacconGames.MeleeCombat;
 using BlueRacconGames.Pool;
+using System;
 using System.Collections.Generic;
 using TimeTickSystems;
 using UnityEngine;
@@ -13,12 +14,12 @@ namespace BlueRacconGames.Cards
         private readonly List<PassiveHitCardEffect> passiveHitCardEffects = new ();
         private readonly List<PassiveLoopCardEffect> passiveLoopCardEffect = new ();
 
-        private DefaultPooledEmitter poolEmiter;
+        public DefaultPooledEmitter PoolEmiter { get; private set; }
 
         [Inject]
         private void Inject(DefaultPooledEmitter poolEmiter)
         {
-            this.poolEmiter = poolEmiter;
+            this.PoolEmiter = poolEmiter;
         }
 
         public void AddPassiveHitEffect(PassiveHitCardEffect passiveHitEffect)
@@ -28,11 +29,15 @@ namespace BlueRacconGames.Cards
                 
             passiveHitCardEffects.Add(passiveHitEffect);
         }
+        public void ExecutePassiveHitEffects(IDamagableTarget target)
+        {
+            if (passiveHitCardEffects.Count <= 0) return;
+
+            foreach (var effect in passiveHitCardEffects)
+                effect.Execute(target, PoolEmiter);
+        }
         public void AddPassiveLoopEffect(PassiveLoopCardEffect passiveHitEffect)
         {
-            if (passiveLoopCardEffect.Count == 0)
-                TimeTickSystem.OnTick += OnTick;
-
             if (passiveLoopCardEffect.Contains(passiveHitEffect))
                 passiveLoopCardEffect.Remove(passiveHitEffect);
 
@@ -43,22 +48,15 @@ namespace BlueRacconGames.Cards
             if (!passiveLoopCardEffect.Contains(passiveHitEffect)) return;
 
             passiveLoopCardEffect.Remove(passiveHitEffect);
-
-            if(passiveLoopCardEffect.Count > 0) return;
-
-            TimeTickSystem.OnTick -= OnTick;
-        }
-        public void ExecutePassiveHitEffects(IDamagableTarget target)
-        {
-            if(passiveHitCardEffects.Count <= 0) return;
-
-            foreach (var effect in passiveHitCardEffects)
-                effect.Execute(target, poolEmiter);
         }
 
-        private void OnTick(object sender, OnTickEventArgs e)
+        [ContextMenu("Show Effects Level")]
+        private void ShowEffectsLevel()
         {
-            int tick = TimeTickSystem.GetTick();
+            foreach(PassiveHitCardEffect passiveHit in passiveHitCardEffects)
+            {
+                Debug.Log("Lvl: " + passiveHit.GetType() + " " + passiveHit.Level);
+            }
         }
     }
 }

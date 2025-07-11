@@ -22,6 +22,7 @@ namespace BlueRacconGames.MeleeCombat
             pulseSequenceDelay = initialData.PulseSequenceDelay;
             pulseAmountPerAction = initialData.PulseAmountPerAction;
         }
+
         public Sequence SetupAttackSequence(Transform attackPoint, Action completedPulseCallback, Action resetCallback)
         {
             Sequence pulseSequnce = SetupPulseAttackSequnce(attackPoint, completedPulseCallback, resetCallback);
@@ -35,7 +36,7 @@ namespace BlueRacconGames.MeleeCombat
             return attackSequnce;
         }
 
-        protected override bool UseInternal(IUnit source)
+        public override bool Use(IUnit source)
         {
             throw new NotImplementedException();
         }

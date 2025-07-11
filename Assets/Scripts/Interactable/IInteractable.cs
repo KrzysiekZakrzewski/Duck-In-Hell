@@ -10,7 +10,7 @@ namespace Interactable
         string InteractionPrompt { get; }
         Vector2 PromptPosition { get; }
         void SwitchInteractable(bool state);
-        bool Interact(InteractorControllerBase interactor);
+        void Interact(InteractorControllerBase interactor);
         void LeaveInteract(InteractorControllerBase interactor);
     }
 }

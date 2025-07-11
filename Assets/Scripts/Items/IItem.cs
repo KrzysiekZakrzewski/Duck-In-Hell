@@ -11,7 +11,6 @@ namespace Game.Item
         string Description { get; }
         Sprite Icon { get; }
 
-        bool CanUse();
         bool Use(IUnit source);
     }
 }

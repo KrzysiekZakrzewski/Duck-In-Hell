@@ -29,7 +29,7 @@ namespace Damageable.Implementation
         private List<IExpireEffect> expireEffectsLUT;
 
         public event Action<int, int> OnTakeDamageE;
-        public event Action OnHealE;
+        public event Action<int, int> OnHealE;
         public event Action<IUnit> OnDeadE;
         public event Action<IDamageable> OnExpireE;
 
@@ -72,12 +72,14 @@ namespace Damageable.Implementation
 
             TakeDamageInternal(damageValue, damageMode);
         }
-        public void Heal(int healValue)
+        public bool Heal(int healValue)
         {
             if (currentHealth >= MaxHealth)
-                return;
+                return false;
 
             HealInternal(healValue);
+
+            return true;
         }
         public void IncreaseHealt(int increaseValue)
         {
@@ -128,7 +130,7 @@ namespace Damageable.Implementation
         {
             currentHealth += healValue;
 
-            OnHealE?.Invoke();
+            OnHealE?.Invoke(currentHealth, maxHealth);
 
             currentHealth = currentHealth > MaxHealth ? MaxHealth : currentHealth;
         }

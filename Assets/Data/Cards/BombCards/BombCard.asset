@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
+  m_Name: BombCard
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Kabum
+  <Description>k__BackingField: Booom
+  <Icon>k__BackingField: {fileID: -8960637816712095807, guid: 56ec527f9303c064682768c9f6be16c9, type: 3}
+  <BasePercentChance>k__BackingField: 1
+  cardEffect:
+    rid: 7222817414086918258
+  references:
+    version: 2
+    RefIds:
+    - rid: 7222817414086918258
+      type: {class: BombPassiveLoopCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        baseLevel: 1
+        durationTick: 30
+        loopDurationTick: -1
+        itemBase: {fileID: 705446200534336911, guid: ca24813d49de5e84db2b090c847b4254, type: 3}
+        initialData: {fileID: 11400000, guid: 388287e825d381b4ba5b57a898a456b2, type: 2}

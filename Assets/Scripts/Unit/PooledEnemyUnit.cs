@@ -23,5 +23,10 @@ namespace Units.Implementation
             base.ExpireInternal();
             aiController.OnExpire();
         }
+
+        protected override void UpdateUnitAttackEnable(bool enableValue)
+        {
+
+        }
     }
 }

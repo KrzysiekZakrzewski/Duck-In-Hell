@@ -23,7 +23,7 @@ namespace EnemyWaves
         private IEnemyWave currentWave;
         private UnitPoolEmitter unitSpawner;
         private MapManager mapManager;
-        private PlayerManager playerManager;
+        private GameManager gameManager;
         private IDifficulty difficulty;
 
         public event Action<IEnemyWaveFactory> OnWaveAddedE;
@@ -34,11 +34,11 @@ namespace EnemyWaves
         public int EndedWavesCount { get; private set; }
 
         [Inject]
-        private void Inject(UnitPoolEmitter unitSpawner, MapManager mapManager, PlayerManager playerManager)
+        private void Inject(UnitPoolEmitter unitSpawner, MapManager mapManager, GameManager gameManager)
         {
             this.unitSpawner = unitSpawner;
             this.mapManager = mapManager;
-            this.playerManager = playerManager;
+            this.gameManager = gameManager;
         }
 
         public void InitializeGameMode(IDifficulty difficulty)
@@ -64,9 +64,9 @@ namespace EnemyWaves
             var nextWaveData = wavesQueue.Dequeue();
 
             currentWave = nextWaveData.CreateEnemyWave();
-            currentWave.OnSetupedE += OnWaveSetupedE;
-            currentWave.OnStartedE += (IEnemyWave enemyWave) => playerManager.OnOffPlayerMoveable(true); 
-            currentWave.OnCompletedE += (IEnemyWave enemyWave) => playerManager.OnOffPlayerMoveable(false); 
+            currentWave.OnSetupedE += EnemyWave_OnSetupedE;
+            currentWave.OnStartedE += EnemyWave_OnStartedE;
+            currentWave.OnCompletedE += EnemyWave_OnCompletedE;
             currentWave.SetupWave(CurrentWavesId, unitSpawner, enemyUnitPrefab, mapManager.GetMapData(), difficulty, timerPresentation);
         }
         public void StartWave()
@@ -90,6 +90,19 @@ namespace EnemyWaves
 
             StartWave();
         }
+        private void EnemyWave_OnSetupedE(IEnemyWave enemyWave)
+        {
+            OnWaveSetupedE?.Invoke(enemyWave);
+        }
+        private void EnemyWave_OnStartedE(IEnemyWave enemyWave)
+        {
+            gameManager.RunGame();
+        }
+        private void EnemyWave_OnCompletedE(IEnemyWave enemyWave)
+        {
+            gameManager.StopGame();
+        }
+
         private bool NextWaveIsReady() => currentWave != null && currentWave.IsReady;
 
         #region DebugMethods

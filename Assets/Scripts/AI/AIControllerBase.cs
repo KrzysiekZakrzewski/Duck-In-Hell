@@ -4,6 +4,7 @@ using BlueRacconGames.AI.Implementation;
 using UnityEngine;
 using Game.CharacterController;
 using TimeTickSystems;
+using Units.Implementation;
 
 namespace BlueRacconGames.AI
 {
@@ -42,13 +43,13 @@ namespace BlueRacconGames.AI
             aIMode.OnDestory();
         }
 
-        public virtual void Initialize(BaseAIDataSO initializeData)
+        public virtual void Initialize(BaseAIDataSO initializeData, PlayerUnit playerUnit)
         {
             this.aIDataSO = initializeData;
             simulationDistance = initializeData.SimulationDistance;
             isForcedSimulateStoped = true;
 
-            PlayerTransform = FindAnyObjectByType<PlayerController>().transform;// TO DO Change this 
+            PlayerTransform = playerUnit.transform;
 
             wonderAI = new WonderAIMode();
 

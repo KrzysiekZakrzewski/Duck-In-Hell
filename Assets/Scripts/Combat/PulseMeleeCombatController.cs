@@ -21,21 +21,26 @@ namespace BlueRacconGames.MeleeCombat
             BasePulseMeleeWeapon pulseWeapon = weapon as BasePulseMeleeWeapon;
 
             scaleSequence = pulseWeapon.SetupAttackSequence(attackPoint, Attack, ResetTargets);
+
+            UpdateAttackEnable(false);
         }
         public void DeInitialize()
         {
             scaleSequence?.Kill();
             scaleSequence = null;
         }
-        [ContextMenu("Pause Attack")]
-        public void PauseAttack()
+
+        protected override void InternalUpdateAttackEnable()
         {
+            base.InternalUpdateAttackEnable();
+
+            if (attackEnable)
+            {
+                scaleSequence?.Restart();
+                return;
+            }
+
             scaleSequence?.Pause();
-        }
-        [ContextMenu("Unpause Attack")]
-        public void UnPauseAttack()
-        {
-            scaleSequence?.Play();
         }
     }
 }

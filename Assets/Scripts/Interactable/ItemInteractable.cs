@@ -1,5 +1,4 @@
 using BlueRacconGames.Pool;
-using Game.Item;
 using Game.Item.Factory;
 using System.Collections;
 using Units;
@@ -12,7 +11,6 @@ namespace Interactable
     {
         private ItemFactorySO initialData;
 
-        private readonly float expireDelay = 0.1f;
         private DefaultPooledEmitter pooledEmitter;
 
         [Inject]
@@ -30,41 +28,39 @@ namespace Interactable
             MatchColliderToSprite();
         }
 
-        protected override bool InteractInternal(InteractorControllerBase interactor)
+        protected override void InteractInternal(InteractorControllerBase interactor)
         {
-            if(!IsInteractable) return false;
+            if(!ProcessItem(interactor)) return;
 
-            SwitchInteractable(false);
-
-            StartCoroutine(WaitForExpire(interactor));
-
-            return true;
-        }
-        private IEnumerator WaitForExpire(InteractorControllerBase interactor)
-        {
             pooledEmitter.EmitItem<ParticlePoolItem>(initialData.PickUpVFX, transform.position, Quaternion.identity.eulerAngles);
-
-            yield return null;
-
-            ProcessItem(interactor);
-
-            yield return new WaitForSeconds(expireDelay);
 
             Expire();
         }
-        private void ProcessItem(InteractorControllerBase interactor)
+
+        private bool ProcessItem(InteractorControllerBase interactor)
         {
+            bool result = false;
+
             switch (initialData)
             {
                 case ActionItemFactorySO:
                     var itemAction = initialData.CreateItem();
                     IUnit unit = interactor.GetComponent<IUnit>();
-                    itemAction.Use(unit);
+                    result = itemAction.Use(unit);
                     break;
                 case InventoryItemFactorySO:
                     //TO DO Add to Inventory 
+                    result = false;
+                    break;
+                default:
+                    result = false;
                     break;
             }
+
+            if(!result)
+                SwitchInteractable(true);
+
+            return result;
         }
     }
 }

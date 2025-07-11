@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 8801263464412299489}
-  collider2D: {fileID: 3898730579300387298}
+  itemCollider: {fileID: 3898730579300387298}
   autoInteractable: 1
   interactionPrompt: 
   promptPosition: {fileID: 0}

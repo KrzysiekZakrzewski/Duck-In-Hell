@@ -1,4 +1,5 @@
 ﻿using BlueRacconGames.Cards.Effects;
+using Units;
 
 namespace BlueRacconGames.Cards
 {
@@ -10,9 +11,16 @@ namespace BlueRacconGames.Cards
             this.cardEffectBase = cardEffectBase;
         }
 
-        public override void Execute(CardsController cardsController)
+        public override void Execute(CardsController cardsController, IUnit source)
         {
-            cardEffectBase.ApplyEffect(cardsController);
+            cardEffectBase.ApplyEffect(cardsController, source);
+        }
+
+        protected override void LevelUpInternal()
+        {
+            base.LevelUpInternal();
+
+            cardEffectBase.LevelUp();
         }
     }
 }

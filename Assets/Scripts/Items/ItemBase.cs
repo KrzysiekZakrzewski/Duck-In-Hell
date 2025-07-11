@@ -8,35 +8,16 @@ namespace Game.Item
     {
         protected ItemFactorySO initialData;
 
-        private int id;
-        private string name;
-        private string description;
-        private Sprite icon;
-
-        public int Id => id;
-        public string Name => name;
-        public string Description => description;
-        public Sprite Icon => icon;
+        public int Id => initialData.Id;
+        public string Name => initialData.Name;
+        public string Description => initialData.Description;
+        public Sprite Icon => initialData.Icon;
 
         protected ItemBase(ItemFactorySO initialData)
         {
-            id = initialData.Id;
-            name = initialData.Name;
-            description = initialData.Description;
-            icon = initialData.Icon;
+            this.initialData = initialData;
         }
 
-        public bool CanUse()
-        {
-            return true;
-        }
-        public bool Use(IUnit source)
-        {
-            if(CanUse()) return false;
-
-            return UseInternal(source);
-        }
-
-        protected abstract bool UseInternal(IUnit source);
+        public abstract bool Use(IUnit source);
     }
 }

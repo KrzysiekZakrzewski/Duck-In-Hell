@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TimeTickSystems;
 using UnityEngine;
 using Zenject;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Units.Implementation
 {
@@ -59,6 +60,7 @@ namespace Units.Implementation
             damageable?.Launch(unitDataSO.DamagableDataSO);
             damageable.OnExpireE += (IDamageable damageable) => Expire();
             damageable.OnTakeDamageE += unitHUD.HealthBar.UpdateBar;
+            damageable.OnHealE += unitHUD.HealthBar.UpdateBar;
 
             characterController.SetData(unitDataSO.CharacterControllerDataSO);
 
@@ -104,37 +106,48 @@ namespace Units.Implementation
 
             childPooledItem.Remove(poolItem);
         }
-        public void OnOffUnit(bool value, StopUnitType stopType = StopUnitType.Movement)
+        public void UpdateUnitEnable(bool enableValue, StopUnitType stopType = StopUnitType.Movement)
         {
             switch (stopType)
             {
                 case StopUnitType.Movement:
-                    characterController.SetCanMove(value, false);
+                    UpdateUnitMoveEnable(enableValue, false);
                     break;
                 case StopUnitType.MovementWithForces:
-                    characterController.SetCanMove(value, true);
+                    UpdateUnitMoveEnable(enableValue, true);
                     break;
                 case StopUnitType.Damage:
-                    damageable.SetDamagableOn(value);
+                    UpdateUnitDamageableEnable(enableValue);
                     break;
                 case StopUnitType.Attack:
-                    
+                    UpdateUnitAttackEnable(enableValue);
                     break;
                 case StopUnitType.Full:
-                    characterController.SetCanMove(value, true);
-                    damageable.SetDamagableOn(value);
+                    UpdateUnitMoveEnable(enableValue, true);
+                    UpdateUnitDamageableEnable(enableValue);
+                    UpdateUnitAttackEnable(enableValue);
                     break;
                 default:
                     break;
             }
         }
 
+        protected abstract void UpdateUnitAttackEnable(bool enableValue);
+        protected virtual void UpdateUnitMoveEnable(bool enableValue, bool stopForces)
+        {
+            characterController.SetCanMove(enableValue, stopForces);
+        }
+        protected virtual void UpdateUnitDamageableEnable(bool enableValue)
+        {
+            damageable.SetDamagableOn(enableValue);
+        }
         protected override void ExpireInternal()
         {
             base.ExpireInternal();
 
             damageable.OnExpireE -= (IDamageable damageable) => Expire();
             damageable.OnTakeDamageE -= unitHUD.HealthBar.UpdateBar;
+            damageable.OnHealE -= unitHUD.HealthBar.UpdateBar;
 
             TimeTickSystem.OnTick -= OnTick;
             TimeTickSystem.OnBigTick -= OnBigTick;

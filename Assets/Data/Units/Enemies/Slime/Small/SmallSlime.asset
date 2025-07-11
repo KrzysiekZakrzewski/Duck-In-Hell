@@ -17,5 +17,5 @@ MonoBehaviour:
   <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
   <DoNothingTickDuration>k__BackingField: 20
   <NoPlayAnimation>k__BackingField: {fileID: 0}
-  enemyDamagableDataSO: {fileID: 11400000, guid: d444541791ec90240af6b0396eff8ef9, type: 2}
+  enemyDamagableDataSO: {fileID: 11400000, guid: ee87651bb1ce5f44f96c9c62def528bd, type: 2}
   <AIDataSO>k__BackingField: {fileID: 11400000, guid: 97e9a4c1c620b2a4f8d59eba90691be7, type: 2}

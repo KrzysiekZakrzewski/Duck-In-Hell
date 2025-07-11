@@ -1,20 +1,53 @@
-﻿using BlueRacconGames.Pool;
-using TimeTickSystems;
+﻿using TimeTickSystems;
+using Units;
 using UnityEngine;
 
 namespace BlueRacconGames.Cards.Effects
 {
     public abstract class PassiveLoopCardEffect : CardEffectBase
     {
-        [SerializeField] protected int tickDuration;
-        [SerializeField] protected int tickLoopDuration;
+        [SerializeField] protected int durationTick;
+        [SerializeField] protected int loopDurationTick;
 
-        protected int tick;
-        public override void ApplyEffect(CardsController cardsController)
+        protected int startTick;
+        protected CardsController cardController;
+        protected IUnit source;
+
+        public override void ApplyEffect(CardsController cardsController, IUnit source)
         {
-            cardsController.AddPassiveLoopEffect(this);
-        }
+            base.ApplyEffect(cardsController, source);
 
-        public abstract void Execute(DefaultPooledEmitter pooledEmitter);
+            this.cardController = cardsController;
+            this.source = source;
+
+            cardsController.AddPassiveLoopEffect(this);
+
+            startTick = TimeTickSystem.GetTick();
+
+            TimeTickSystem.OnTick += OnTick;
+        }
+        public override void DiscardEffect()
+        {
+            cardController.RemovePassiveLoopEffect(this);
+
+            TimeTickSystem.OnTick -= OnTick;
+        }
+        public abstract void Execute();
+
+        private void OnTick(object sender, OnTickEventArgs e)
+        {
+            var tick = TimeTickSystem.GetTick();
+            var duration = tick - startTick;
+
+            if (loopDurationTick != -1 && duration >= loopDurationTick)
+            {
+                DiscardEffect();
+                return;
+            }
+
+            if (duration % durationTick != 0) return;
+
+            Execute();
+        }
     }
 }

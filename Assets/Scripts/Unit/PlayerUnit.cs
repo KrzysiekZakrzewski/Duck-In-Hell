@@ -14,5 +14,10 @@ namespace Units.Implementation
 
             SetUnitData(playerUnitDataSO);
         }
+
+        protected override void UpdateUnitAttackEnable(bool enableValue)
+        {
+            meleeCombatController.UpdateAttackEnable(enableValue);
+        }
     }
 }

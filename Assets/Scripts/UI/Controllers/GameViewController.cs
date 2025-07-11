@@ -11,32 +11,59 @@ namespace BlueRacconGames.View
 {
     public class GameViewController : SingleViewTypeStackController
     {
-        [SerializeField] private WaveUIManager waveUIManager;
         [SerializeField] private SelectCardView selectCardView;
+        [SerializeField] private GameOverView gameOverView;
 
+        private GameManager gameManager;
         private SelectCardManager selectCardManager;
 
         [Inject]
-        private void Inject(SelectCardManager selectCardManager)
+        private void Inject(SelectCardManager selectCardManager, GameManager gameManager)
         {
             this.selectCardManager = selectCardManager;
+            this.gameManager = gameManager;
+
+            gameManager.OnGameSetuped += GameManager_OnGameSetuped;
+            gameManager.OnGameEnded += GameManager_OnGameEnded;
         }
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            TryOpenSafe<GameHud>();
-
-            Initialize();
-        }
+        #region Unity methods
         protected override void OnDestroy()
         {
             base.OnDestroy();
 
+            gameManager.OnGameSetuped -= GameManager_OnGameSetuped;
+            gameManager.OnGameEnded -= GameManager_OnGameEnded;
+        }
+        #endregion
+
+        #region Private methods
+        #region Evennt calbacks methods
+        private void GameManager_OnGameSetuped()
+        {
+            Initialize();
+        }
+        private void GameManager_OnGameEnded()
+        {
+            ShowView(gameOverView);
+
             UnInitialize();
         }
+        #endregion
+        private void Initialize()
+        {
+            TryOpenSafe<GameHud>();
 
+            var openedViewParentStack = Peek();
+
+            selectCardManager.OnCardSetupedE += () => ShowView(selectCardView);
+            selectCardManager.OnCardSelectedE += CloseView;
+        }
+        private void UnInitialize()
+        {
+            selectCardManager.OnCardSetupedE -= () => ShowView(selectCardView);
+            selectCardManager.OnCardSelectedE -= CloseView;
+        }
         private void ShowView(IAmViewStackItem view)
         {
             var parentStack = Peek().ParentStack;
@@ -49,17 +76,9 @@ namespace BlueRacconGames.View
 
             parentStack.TryPopSafe();
         }
-        private void Initialize()
-        {
-            var openedViewParentStack = Peek();
+        #endregion
 
-            selectCardManager.OnCardSetupedE += () => ShowView(selectCardView);
-            selectCardManager.OnCardSelectedE += CloseView;
-        }
-        private void UnInitialize()
-        {
-            selectCardManager.OnCardSetupedE -= () => ShowView(selectCardView);
-            selectCardManager.OnCardSelectedE -= CloseView;
-        }
+        #region Public methods
+        #endregion
     }
 }

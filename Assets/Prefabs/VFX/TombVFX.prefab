@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2640202551536245672}
   - component: {fileID: 1607225076379669767}
   - component: {fileID: 7973805767225130453}
+  - component: {fileID: 6782920825839116508}
   m_Layer: 0
   m_Name: TombVFX
   m_TagString: Untagged
@@ -288,7 +289,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4858,7 +4859,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -823690607
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: -1
   m_RenderMode: 4
   m_MeshDistribution: 0
@@ -4904,3 +4905,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b1b249808f7ec4bb4891b4220d8709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6782920825839116508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802731454847050811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad3785a3b3b61749a50abc96034571e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleDatas:
+  - particleSystem: {fileID: 2640202551536245672}
+    radiusScale: 3

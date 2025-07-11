@@ -7,7 +7,7 @@ namespace Interactable
     public abstract class InteractableBase : PoolItemBase, IInteractable
     {
         [SerializeField] protected SpriteRenderer spriteRenderer;
-        [SerializeField] protected Collider2D collider2D;
+        [SerializeField] protected Collider2D itemCollider;
         [SerializeField] protected bool autoInteractable;
         [SerializeField, HideIf(nameof(autoInteractable), true)] protected string interactionPrompt;
         [SerializeField, HideIf(nameof(autoInteractable), true)] private Transform promptPosition;
@@ -24,13 +24,13 @@ namespace Interactable
         public event Action<InteractableBase> OnLeaveInteractableE;
         public event Action<bool> OnSwitchInteractableE;
 
-        public bool Interact(InteractorControllerBase interactor)
+        public void Interact(InteractorControllerBase interactor)
         {
-            if(!isInteractable || isExpired) return false;
+            if(!isInteractable || isExpired) return;
 
-            OnInteractableE?.Invoke(this);
+            SwitchInteractable(false);
 
-            return InteractInternal(interactor);
+            InteractInternal(interactor);
         }
         public void LeaveInteract(InteractorControllerBase interactor)
         {
@@ -42,35 +42,41 @@ namespace Interactable
 
             OnSwitchInteractableE?.Invoke(isInteractable);
         }
+        public override void ResetItem()
+        {
+            base.ResetItem();
 
-        protected abstract bool InteractInternal(InteractorControllerBase interactor);
+            SwitchInteractable(true);
+        }
+
+        protected abstract void InteractInternal(InteractorControllerBase interactor);
         protected virtual void LeaveInteractInternal(InteractorControllerBase interactor)
         {
             OnLeaveInteractableE?.Invoke(this);
         }
         protected void MatchColliderToSprite()
         {
-            if (collider2D == null || spriteRenderer == null) return;
+            if (itemCollider == null || spriteRenderer == null) return;
 
             float spriteWidth = spriteRenderer.sprite.bounds.size.x;
             float spriteHeight = spriteRenderer.sprite.bounds.size.y;
 
-            switch (collider2D)
+            switch (itemCollider)
             {
                 case CircleCollider2D:
                     float diameter = Mathf.Min(spriteWidth, spriteHeight);
                     float radius = diameter / 2f;
 
-                    CircleCollider2D circleCollider2D = collider2D as CircleCollider2D;
+                    CircleCollider2D circleCollider2D = itemCollider as CircleCollider2D;
                     circleCollider2D.radius = radius;
                     break;
                 case BoxCollider2D:
-                    BoxCollider2D boxCollider2D = collider2D as BoxCollider2D;
+                    BoxCollider2D boxCollider2D = itemCollider as BoxCollider2D;
                     boxCollider2D.size = new Vector2(spriteWidth, spriteHeight);
                     break;
             }
 
-            collider2D.isTrigger = true;
+            itemCollider.isTrigger = true;
         }
     }
 }
