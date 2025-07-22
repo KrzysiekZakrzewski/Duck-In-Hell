@@ -23,7 +23,8 @@ namespace EnemyWaves
         private IEnemyWave currentWave;
         private UnitPoolEmitter unitSpawner;
         private MapManager mapManager;
-        private GameManager gameManager;
+        private GameplayManager gameplayManager;
+        private SelectCardManager selectCardManager;
         private IDifficulty difficulty;
 
         public event Action<IEnemyWaveFactory> OnWaveAddedE;
@@ -34,16 +35,61 @@ namespace EnemyWaves
         public int EndedWavesCount { get; private set; }
 
         [Inject]
-        private void Inject(UnitPoolEmitter unitSpawner, MapManager mapManager, GameManager gameManager)
+        private void Inject(UnitPoolEmitter unitSpawner, MapManager mapManager, GameplayManager gameplayManager,
+            SelectCardManager selectCardManager)
         {
             this.unitSpawner = unitSpawner;
             this.mapManager = mapManager;
-            this.gameManager = gameManager;
+            this.gameplayManager = gameplayManager;
+            this.selectCardManager = selectCardManager;
+
+            gameplayManager.OnGameplaySetuped += GameplayManager_OnGameplaySetuped;
         }
 
-        public void InitializeGameMode(IDifficulty difficulty)
+        #region Events_Callbacks
+        private void GameplayManager_OnGameplayRestart()
         {
-            this.difficulty = difficulty;
+            currentWave?.TerminateWave();
+            currentWave = null;
+
+            CurrentWavesId = 0;
+
+            wavesQueue.Clear();
+
+            gameplayManager.OnGameplayRestart -= GameplayManager_OnGameplayRestart;
+            gameplayManager.OnGameplayEnded -= GameplayManager_OnGameplayEnded;
+        }
+        private void GameplayManager_OnGameOver()
+        {
+            gameplayManager.OnGameOver -= GameplayManager_OnGameOver;
+            selectCardManager.OnCardSelectedE -= SelectCardManager_OnCardSelected;
+
+            currentWave?.PauseWave();
+
+            gameplayManager.OnGameplayRestart += GameplayManager_OnGameplayRestart;
+        }
+        private void GameplayManager_OnGameplayEnded()
+        {
+            GameplayManager_OnGameplayRestart();
+            gameplayManager.OnGameplaySetuped -= GameplayManager_OnGameplaySetuped;
+        }
+        private void GameplayManager_OnGameplaySetuped()
+        {
+            InitializeGame();
+        }
+        private void SelectCardManager_OnCardSelected()
+        {
+            PrepeareNextWave();
+        }
+        #endregion
+
+        public void InitializeGame()
+        {
+            difficulty = gameplayManager.GetDifficulty();
+
+            gameplayManager.OnGameOver += GameplayManager_OnGameOver;
+
+            selectCardManager.OnCardSelectedE += SelectCardManager_OnCardSelected;
 
             PrepeareNextWave();
         }
@@ -96,11 +142,11 @@ namespace EnemyWaves
         }
         private void EnemyWave_OnStartedE(IEnemyWave enemyWave)
         {
-            gameManager.RunGame();
+            gameplayManager.GameplayRun();
         }
         private void EnemyWave_OnCompletedE(IEnemyWave enemyWave)
         {
-            gameManager.StopGame();
+            gameplayManager.GameplayStop();
         }
 
         private bool NextWaveIsReady() => currentWave != null && currentWave.IsReady;

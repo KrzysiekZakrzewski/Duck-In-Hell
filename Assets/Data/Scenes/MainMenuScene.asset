@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <SceneName>k__BackingField: MainMenu
   <RequireSceneNames>k__BackingField: []
-  <WaitForKey>k__BackingField: 1
+  <WaitForKey>k__BackingField: 0
   <ShowLoadingScreen>k__BackingField: 1

@@ -12,6 +12,8 @@ namespace BlueRacconGames.UI
         [SerializeField] private Color highlightedColor = new(0.9f, 0.9f, 0.9f);
         [SerializeField] private Color disabledColor = new(0.7843137f, 0.7843137f, 0.7843137f, 0.5019608f);
 
+        [field: SerializeReference, ReferencePicker] private IUIButtonStatePresentationModule[] presentationModule; 
+
         protected float duration = 0.15f;
         protected Vector3 baseScale;
         protected bool isHighlighted;
@@ -46,12 +48,22 @@ namespace BlueRacconGames.UI
         }
         public void OnClickPresentation()
         {
+            if(presentationModule == null ||  presentationModule.Length == 0) return;
 
+            foreach(var module in presentationModule)
+                module.UpdateStateAndIcon(buttonImage);
         }
         public void InteractableVisualize(bool isInteractable)
         {
             Color targetColor = isInteractable ? normalColor : disabledColor;
             buttonImage.DOColor(targetColor, duration);
+        }
+        public void ForceUpdatePresentationModule(bool moduleState)
+        {
+            if (presentationModule == null || presentationModule.Length == 0) return;
+
+            foreach (var module in presentationModule)
+                module.UpdateStateAndIcon(buttonImage, moduleState);
         }
     }
 }

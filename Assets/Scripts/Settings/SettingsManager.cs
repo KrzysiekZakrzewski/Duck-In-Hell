@@ -3,6 +3,7 @@ using UnityEngine;
 using Audio.Manager;
 using Zenject;
 using Saves.Object;
+using Engagement;
 
 namespace Settings
 {
@@ -29,40 +30,26 @@ namespace Settings
             InitializeFinished = true;
         }
 
-        private void GetSaveObject()
-        {
-            SaveManager.TryGetSaveObject(out settingsSaveObject);
-        }
-
-        private void SetSettingsValue(string key, object value)
-        {
-            settingsSaveObject.SetValue(key, value);
-        }
-
         public T GetSettingsValue<T>(string key)
         {
             return settingsSaveObject.GetValue<T>(key).Value;
         }
-
         public void SetMusicValue()
         {
             var isOn = audioManager.SetSoundGroupMuted(Audio.SoundsData.AudioTypes.Music);
 
             SetSettingsValue(SaveKeyUtilities.MusicSettingsKey, isOn);
         }
-
         public void SetSfxValue()
         {
             var isOn = audioManager.SetSoundGroupMuted(Audio.SoundsData.AudioTypes.SFX);
 
             SetSettingsValue(SaveKeyUtilities.SFXSettingsKey, isOn);
         }
-
         public void SetVibrationValue()
         {
 
         }
-
         public void ResetSetings()
         {
             SetSettingsValue(SaveKeyUtilities.MusicSettingsKey, true);
@@ -71,6 +58,15 @@ namespace Settings
 
             audioManager.SetSoundGroupMuted(Audio.SoundsData.AudioTypes.Music, GetSettingsValue<bool>(SaveKeyUtilities.MusicSettingsKey));
             audioManager.SetSoundGroupMuted(Audio.SoundsData.AudioTypes.SFX, GetSettingsValue<bool>(SaveKeyUtilities.SFXSettingsKey));
+        }
+
+        private void GetSaveObject()
+        {
+            SaveManager.TryGetSaveObject(out settingsSaveObject);
+        }
+        private void SetSettingsValue(string key, object value)
+        {
+            settingsSaveObject.SetValue(key, value);
         }
     }
 }

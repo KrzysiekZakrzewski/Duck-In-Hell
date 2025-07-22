@@ -1,3 +1,4 @@
+using Damageable;
 using UnityEngine;
 
 namespace Interactable
@@ -10,11 +11,17 @@ namespace Interactable
 
         private Collider2D cacheCollider;
 
-        protected Collider2D[] interactableCollider;
+        protected Collider2D[] interactableCollider = new Collider2D[0];
 
         protected IInteractable interactable;
         protected IInteractable lastInteractable;
 
+        protected virtual void Awake()
+        {
+            var damageable = GetComponent<IDamageable>();
+
+            damageable.OnExpireE += Damageable_OnExpire;
+        }
         protected virtual void FixedUpdate()
         {
             interactableCollider = Physics2D.OverlapCircleAll(interactionPoint.position, radius, interactableLayerMask);
@@ -25,7 +32,6 @@ namespace Interactable
 
             RemoveInteractable();
         }
-
         protected virtual void CheckInteractable()
         {
             if (interactableCollider.Length == 0) return;
@@ -40,7 +46,6 @@ namespace Interactable
 
             Interact();
         }
-
         protected virtual void Interact()
         {
             if (interactable == null || !interactable.IsInteractable || interactable.IsExpired)
@@ -48,7 +53,6 @@ namespace Interactable
 
             interactable.Interact(this);
         }
-
         protected virtual void RemoveInteractable()
         {
             if (interactable == null && interactableCollider.Length == 0) return;
@@ -70,6 +74,19 @@ namespace Interactable
 
                 lastInteractable = interactable;
             }
+        }
+
+        protected void ResetInteractor()
+        {
+            interactable = lastInteractable = null;
+            interactableCollider = null;
+            cacheCollider = null;
+        }
+        private void Damageable_OnExpire(IDamageable damageable)
+        {
+            damageable.OnExpireE -= Damageable_OnExpire;
+
+            ResetInteractor();
         }
 
         private void OnDrawGizmos()

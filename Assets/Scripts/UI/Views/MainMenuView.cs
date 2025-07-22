@@ -3,71 +3,101 @@ using ViewSystem.Implementation;
 using UnityEngine;
 using Game.Managers;
 using BlueRacconGames.UI;
+using Zenject;
+using Saves;
 
 namespace Game.View
 {
     public class MainMenuView : BasicView
     {
-        [SerializeField] private MainMenuManager mainMenuManager;
         [SerializeField] private UIButtonBase playButton;
-        [SerializeField] private UIButtonBase settingsButton;
-        [SerializeField] private UIButtonBase creditsButton;
         [SerializeField] private UIButtonBase quitButton;
-        [SerializeField] private SettingsView settingsView;
-        [SerializeField] private CreditsView creditsView;
+        [SerializeField] private UIButtonBase soundsButton;
+        [SerializeField] private UIButtonBase musicButton;
+
+        private MainMenuManager mainMenuManager;
 
         public override bool Absolute => false;
 
-        protected override void Awake()
+        [Inject]
+        private void Inject(MainMenuManager mainMenuManager)
         {
-            base.Awake();
+            this.mainMenuManager = mainMenuManager;
+
+            mainMenuManager.OnMainMenuLoaded += MainMenuManager_OnMainMenuLoaded;
+        }
+        public override void NavigateTo(IAmViewStackItem previousViewStackItem)
+        {
+            base.NavigateTo(previousViewStackItem);
+
+            UpdateButtonInteractableState(true);
+        }
+        public override void NavigateFrom(IAmViewStackItem previousViewStackItem)
+        {
+            base.NavigateFrom(previousViewStackItem);
+
+            UpdateButtonInteractableState(false);
+        }
+        private void MainMenuManager_OnMainMenuLoaded()
+        {
+            mainMenuManager.OnMainMenuLoaded -= MainMenuManager_OnMainMenuLoaded;
 
             SetupButtons();
-        }
 
-        protected override void OnDestroy()
+            mainMenuManager.OnNewGameStart += MainMenuManager_OnNewGameStart;
+            mainMenuManager.OnMainMenuLeaved += MainMenuManager_OnMainMenuLeaved;
+        }
+        private void MainMenuManager_OnNewGameStart()
         {
-            base.OnDestroy();
-            playButton.OnClickE -= PlayButton_OnPerformed;
-            settingsButton.OnClickE -= SettingsButton_OnPerformed;
-            creditsButton.OnClickE -= CreditsButton_OnPerformed;
-        }
 
+        }
+        private void MainMenuManager_OnMainMenuLeaved()
+        {
+            mainMenuManager.OnNewGameStart -= MainMenuManager_OnNewGameStart;
+            mainMenuManager.OnMainMenuLeaved -= MainMenuManager_OnMainMenuLeaved;
+
+            DeSetupButtons();
+        }
         private void SetupButtons()
         {
             playButton.OnClickE += PlayButton_OnPerformed;
-            settingsButton.OnClickE += SettingsButton_OnPerformed;
-            creditsButton.OnClickE += CreditsButton_OnPerformed;
+            quitButton.OnClickE += QuitButton_OnPerformed;
+            soundsButton.OnClickE += SoundsButton_OnPerformed;
+            musicButton.OnClickE += MusicButton_OnPerformed;
+
+            soundsButton.ForceUpdatePresentationModule(mainMenuManager.GetSettingsValue<bool>(SaveKeyUtilities.SFXSettingsKey));
+            musicButton.ForceUpdatePresentationModule(mainMenuManager.GetSettingsValue<bool>(SaveKeyUtilities.MusicSettingsKey));
+        }
+        private void DeSetupButtons()
+        {
+            playButton.OnClickE -= PlayButton_OnPerformed;
+            quitButton.OnClickE -= QuitButton_OnPerformed;
+            soundsButton.OnClickE -= SoundsButton_OnPerformed;
+            musicButton.OnClickE -= MusicButton_OnPerformed;
         }
 
         private void PlayButton_OnPerformed()
         {
-            mainMenuManager.Play();
+            mainMenuManager.StartNewGame();
         }
-
-        private void SettingsButton_OnPerformed()
+        private void QuitButton_OnPerformed()
         {
-            ParentStack.TryPushSafe(settingsView);
+            mainMenuManager.QuitGame();
         }
-
-        private void CreditsButton_OnPerformed()
+        private void SoundsButton_OnPerformed()
         {
-            ParentStack.TryPushSafe(creditsView);
+            mainMenuManager.UpdateSoundsEnable();
         }
-
-        protected override void Presentation_OnShowPresentationComplete(IAmViewPresentation presentation)
+        private void MusicButton_OnPerformed()
         {
-            base.Presentation_OnShowPresentationComplete(presentation);
+            mainMenuManager.UpdateMusicEnable();
         }
-
-        public override void NavigateTo(IAmViewStackItem previousViewStackItem)
+        private void UpdateButtonInteractableState(bool state)
         {
-            base.NavigateTo(previousViewStackItem);
-        }
-
-        public override void NavigateFrom(IAmViewStackItem nextViewStackItem)
-        {
-            base.NavigateFrom(nextViewStackItem);
+            playButton.SetInteractable(state);
+            quitButton.SetInteractable(state);
+            soundsButton.SetInteractable(state);
+            musicButton.SetInteractable(state);
         }
     }
 }

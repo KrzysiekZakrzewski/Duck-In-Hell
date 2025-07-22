@@ -27,6 +27,9 @@ namespace EnemyWaves
         void StartWave();
         void UpdateWave(IUnit unit);
         void CompleteWave();
+        void PauseWave();
+        void ResumeWave();
+        void TerminateWave();
     }
 
     [System.Serializable]

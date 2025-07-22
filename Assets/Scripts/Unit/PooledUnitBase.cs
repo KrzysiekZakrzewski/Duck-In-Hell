@@ -106,7 +106,7 @@ namespace Units.Implementation
 
             childPooledItem.Remove(poolItem);
         }
-        public void UpdateUnitEnable(bool enableValue, StopUnitType stopType = StopUnitType.Movement)
+        public virtual void UpdateUnitEnable(bool enableValue, StopUnitType stopType = StopUnitType.Movement)
         {
             switch (stopType)
             {
@@ -120,6 +120,10 @@ namespace Units.Implementation
                     UpdateUnitDamageableEnable(enableValue);
                     break;
                 case StopUnitType.Attack:
+                    UpdateUnitAttackEnable(enableValue);
+                    break;
+                case StopUnitType.Freeze:
+                    UpdateUnitMoveEnable(enableValue, true);
                     UpdateUnitAttackEnable(enableValue);
                     break;
                 case StopUnitType.Full:
@@ -151,6 +155,8 @@ namespace Units.Implementation
 
             TimeTickSystem.OnTick -= OnTick;
             TimeTickSystem.OnBigTick -= OnBigTick;
+
+            Debug.Log("Remove");
             ExpireChildPoolItem();
         }
 
@@ -226,6 +232,7 @@ namespace Units.Implementation
         MovementWithForces,
         Damage,
         Attack,
+        Freeze,
         Full
     }
 }

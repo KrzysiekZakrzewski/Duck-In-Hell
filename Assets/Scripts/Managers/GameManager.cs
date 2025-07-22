@@ -1,91 +1,85 @@
 using EnemyWaves;
-using Game.Difficulty;
+using Game.GameCursor;
 using Game.SceneLoader;
+using Settings;
 using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Game.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        #region Events
-        public event Action OnGameStartSetup;
-        public event Action OnGameSetuped;
-        public event Action OnGameStartRun;
-        public event Action OnGameRun;
+        public event Action OnGameStart;
         public event Action OnGameStoped;
-        public event Action OnGameEnded;
-        public event Action OnGameStartRestart;
-        public event Action OnGameRestarted;
+        public event Action OnBackToMenu;
         public event Action OnGamePaused;
-        public event Action OnGameUnPaused;
-        #endregion
+        public event Action OnGameResume;
+        public event Action OnGameSceneChanged;
+        public event Action OnGameSceneLoaded;
 
-        [SerializeField] private DefaultDifficultyFactorySO difficultyFactorySO;
+        [SerializeField] private SceneDataSo gameplayScene;
         [SerializeField] private SceneDataSo mainMenuScene;
 
-        private EnemyWavesManager wavesManager;
-        private SelectCardManager selectCardManager;
         private SceneLoadManagers sceneLoadManagers;
-        private IDifficulty difficulty;
+        private SettingsManager settingsManager;
+
+        public bool IsGamePaused { get; private set; }
 
         [Inject]
-        private void Inject(EnemyWavesManager wavesManager, SelectCardManager selectCardManager
-            )//SceneLoadManagers sceneLoadManagers
+        private void Inject(SceneLoadManagers sceneLoadManagers)
         {
-            this.wavesManager = wavesManager;
-            this.selectCardManager = selectCardManager;
-            //this.sceneLoadManagers = sceneLoadManagers;
+            this.sceneLoadManagers = sceneLoadManagers;
         }
 
-        private void Start()
+        private void Awake()
         {
-            SetupGame();
+            GameStart();
         }
 
-        public void GameOver()
+        private void SceneLoadManagers_OnSceneLoaded()
         {
-            OnGameEnded?.Invoke();
+            OnGameSceneLoaded?.Invoke();
         }
-        public void RunGame()
+        private void SceneLoadManagers_OnSceneChanged()
         {
-            OnGameRun?.Invoke();
+            OnGameSceneChanged?.Invoke();
         }
-        public void StopGame()
+
+        public void BackToMenu()
         {
-            OnGameStoped?.Invoke();
-        }
-        public void RestartGame()
-        {
-            OnGameStartRestart?.Invoke();
-        }
-        public void EndGame()
-        {
-            OnGameEnded?.Invoke();
+            OnBackToMenu?.Invoke();
 
             sceneLoadManagers.LoadLocation(mainMenuScene);
         }
-
-        private void SetupGame()
+        public void PauseGame()
         {
-            OnGameStartSetup?.Invoke();
+            CursorManager.UpdateCursorVisable(true);
 
-            difficulty = difficultyFactorySO.Create();
-
-            StartCoroutine(SetupEndlesGameMode());
-
-            OnGameSetuped?.Invoke();
+            OnGamePaused?.Invoke();
         }
-        private IEnumerator SetupEndlesGameMode()
+        public void GameResume()
         {
-            yield return new WaitForSeconds(2f);
+            CursorManager.UpdateCursorVisable(false);
 
-            selectCardManager.OnCardSelectedE += wavesManager.PrepeareNextWave;
+            OnGameResume?.Invoke();
+        }
+        public void LoadGameplayScene()
+        {
+            sceneLoadManagers.LoadLocation(gameplayScene);
+        }
+        public void GameStop()
+        {
+            OnGameStoped?.Invoke();
 
-            wavesManager.InitializeGameMode(difficulty);
+            Application.Quit();
+        }
+        private void GameStart()
+        {
+            sceneLoadManagers.OnSceneChanged += SceneLoadManagers_OnSceneChanged;
+            sceneLoadManagers.OnSceneLoaded += SceneLoadManagers_OnSceneLoaded;
+
+            OnGameStart?.Invoke();
         }
     }
 }

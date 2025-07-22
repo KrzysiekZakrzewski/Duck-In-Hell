@@ -15,7 +15,7 @@ namespace BlueRacconGames.MeleeCombat
 
         public void Execute(IDamageable damageable, DefaultPooledEmitter defaultPooledEmitter)
         {
-            PointsController.AddPoints(points);
+            GameplayPointsManager.AddPoints(points);
         }
     }
 }

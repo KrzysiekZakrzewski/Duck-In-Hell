@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 401652315
-  m_SortingLayer: 5
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 2161211097934087789, guid: 4e592040163ec91468466dbc2cc95d41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -390,6 +390,6 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 128
-  attackRange: 1
+  baseAttackRange: 0.86
   debugGizmosColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   basePulseTouchWeapon: {fileID: 11400000, guid: 0b40a35685a6a0346b64b36629f9d221, type: 2}

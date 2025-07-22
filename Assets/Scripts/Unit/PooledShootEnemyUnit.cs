@@ -19,6 +19,7 @@ namespace Units.Implementation
             this.projectilePoolEmitter = projectilePoolEmitter;
             this.playerManager = playerManager;
         }
+       
         public override void SetUnitData(UnitDataSO unitDataSO)
         {
             base.SetUnitData(unitDataSO);

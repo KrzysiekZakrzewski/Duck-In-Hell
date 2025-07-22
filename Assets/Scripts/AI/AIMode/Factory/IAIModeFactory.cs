@@ -4,6 +4,7 @@ namespace BlueRacconGames.AI.Factory
 {
     public interface IAIModeFactory
     {
+        IAIModule[] Modules { get; }
         IAIMode CreateAIMode(AIControllerBase aIController, BaseAIDataSO aIData);
         bool ChangeValidator(float distanceToPlayer);
     }

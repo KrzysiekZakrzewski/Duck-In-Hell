@@ -9,5 +9,12 @@ namespace Game.GameCursor
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
         }
+
+        public static void UpdateCursorVisable(bool value)
+        {
+#if UNITY_EDITOR || UNITY_STANDALONE
+            Cursor.visible = value;
+#endif
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Damageable.Implementation;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BlueRacconGames.AI.Data
 {

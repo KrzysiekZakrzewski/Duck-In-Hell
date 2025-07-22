@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8655061151124623541}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -147,7 +147,9 @@ GameObject:
   - component: {fileID: 7190422560722368349}
   - component: {fileID: 4364337538536226002}
   - component: {fileID: 1703812712936046676}
+  - component: {fileID: 7133636588813456507}
   - component: {fileID: 3140030991209477120}
+  - component: {fileID: 667135604519878951}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -203,7 +205,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5094145363789377628, guid: 7e0069aace12d834b9c5ed8c8a202837, type: 3}
+  m_Sprite: {fileID: 5868299425706158349, guid: 7e0069aace12d834b9c5ed8c8a202837, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -213,6 +215,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7133636588813456507
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117187904182022615}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &3140030991209477120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,8 +239,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c712448abdaddb45bf49d45bce47184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  presentation: {fileID: 667135604519878951}
+--- !u!114 &667135604519878951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9117187904182022615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55d5ca9f2c3cfd42b611b5ee23a5240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 7133636588813456507}
   buttonImage: {fileID: 1703812712936046676}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   disabledColor: {r: 0.7843137, g: 0.7843137, b: 0.7843137, a: 0.5019608}
-  clickAnimation: 1

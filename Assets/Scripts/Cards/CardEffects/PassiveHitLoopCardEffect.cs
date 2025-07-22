@@ -1,7 +1,6 @@
 ﻿using BlueRacconGames.MeleeCombat;
 using BlueRacconGames.Pool;
 using Damageable;
-using System.Collections.Generic;
 using TimeTickSystems;
 using Units;
 using UnityEngine;
@@ -12,59 +11,18 @@ namespace BlueRacconGames.Cards.Effects
     {
         [SerializeField] protected int tickDuration;
         [SerializeField] protected int tickLoopDuration;
-        [SerializeField] protected ParticlePoolItem passiveVFX;
-        [SerializeField] protected PositionOnSprite vfxPosition;
-
-        protected int tick;
-        protected Dictionary<IDamagableTarget, TargetData> targets;
-        protected List<IDamagableTarget> targetsToRemove = new();
-
-        public override void ApplyEffect(CardsController cardsController, IUnit source)
-        {
-            base.ApplyEffect(cardsController, source);
-
-            targets = new();
-
-            cardsController.AddPassiveHitEffect(this);
-        }
 
         public override void DiscardEffect()
         {
 
         }
 
-        public override void Execute(IDamagableTarget target, DefaultPooledEmitter pooledEmitter)
+        protected override void ExecuteInternal(TargetData targetData, ParticlePoolItem particleEffect)
         {
-            if (targets.ContainsKey(target)) return;
-    
-            if(!target.GameObject.TryGetComponent<IUnit>(out var unit)) return;
-
-            var damageable = unit.Damageable;
-
-            if (damageable == null || !damageable.DamagableIsOn || damageable.IsDead) return;
-
-            var vfxPosition = unit.GetOnSpritePosition(this.vfxPosition);
-            var particleEffect = pooledEmitter.EmitItem<ParticlePoolItem>(passiveVFX, vfxPosition, Vector3.zero);
-
-            unit.PushPoolItem(particleEffect);
-
-            TargetData targetData = new()
-            {
-                DamagableTarget = target,
-                Unit = unit,
-                StartTick = tick,
-                VFX = particleEffect
-            };
-
-            damageable.OnExpireE += (IDamageable damagable) => OnEffectEnded(targetData);
-
             if (targets.Count == 0)
                 TimeTickSystem.OnTick += OnTick;
-
-            targets.Add(target, targetData);
         }
-
-        protected void OnEffectEnded(TargetData target)
+        protected override void OnEffectEnded(TargetData target)
         {
             target.VFX.ForceExpire();
             target.Unit.PopPoolItem(target.VFX);
@@ -112,14 +70,6 @@ namespace BlueRacconGames.Cards.Effects
             }
 
             tick++;
-        }
-
-        protected struct TargetData
-        {
-            public IDamagableTarget DamagableTarget;
-            public IUnit Unit;
-            public int StartTick;
-            public ParticlePoolItem VFX;
         }
     }
 }

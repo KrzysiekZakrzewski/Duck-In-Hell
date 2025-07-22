@@ -22,10 +22,18 @@ namespace TimeTickSystems
             timeTickSystemGameObject = new GameObject("TimeTickSystemObject");
             timeTickSystemGameObject.AddComponent<TimeTickSystemObject>();
         }
-
+        public static float GetTimeInSeconds(float ticks) => ticks * TICK_TIMER_MAX;
         public static int GetTick()
         {
             return tick;
+        }
+        public static void ResetTickSystem()
+        {
+            if (timeTickSystemGameObject == null)
+                return;
+
+            OnTick = null;
+            OnBigTick = null;
         }
 
        private class TimeTickSystemObject : MonoBehaviour

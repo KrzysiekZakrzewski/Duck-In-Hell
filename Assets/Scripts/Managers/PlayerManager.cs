@@ -22,50 +22,63 @@ namespace Game.Managers
         private PlayerDamagable playerDamagable;
         private UnitPoolEmitter unitSpawner;
 
-        private GameManager gameManager;
+        private GameplayManager gameplayManager;
         private CardsController cardsController;
         private DefaultPooledEmitter pooledEmitter;
 
         [Inject]
         private void Inject(UnitPoolEmitter unitSpawner, DefaultPooledEmitter pooledEmitter, 
-            CardsController cardsController, GameManager gameManager)
+            CardsController cardsController, GameplayManager gameplayManager)
         {
             this.unitSpawner = unitSpawner;
             this.pooledEmitter = pooledEmitter;
             this.cardsController = cardsController;
-            this.gameManager = gameManager;
+            this.gameplayManager = gameplayManager;
+
+            gameplayManager.OnGameplaySetup += GameplayManager_OnGameplaySetup;
         }
 
-        private void Awake()
-        {
-            gameManager.OnGameStartSetup += GameManager_OnGameStartSetup;
-            gameManager.OnGameRun += GameManager_OnGameRun;
-            gameManager.OnGameStoped += GameManager_OnGameStoped;
-        }
-        private void OnDestroy()
-        {
-            gameManager.OnGameStartSetup -= GameManager_OnGameStartSetup;
-            gameManager.OnGameRun -= GameManager_OnGameRun;
-            gameManager.OnGameStoped -= GameManager_OnGameStoped;
-        }
-
-        private void GameManager_OnGameStartSetup()
+        private void GameplayManager_OnGameplaySetup()
         {
             SetupPlayer();
+
+            gameplayManager.OnGameplayRun += GameplayManager_OnGameplayRun;
+            gameplayManager.OnGameplayStop += GameplayManager_OnGameplayStop;
+            gameplayManager.OnGameOver += GameplayManager_OnGameOver;
         }
-        private void GameManager_OnGameRun()
+        private void GameplayManager_OnGameplayRun()
         {
             Debug.Log("GM Run");
             playerUnit.UpdateUnitEnable(true, StopUnitType.Full);
         }
-        private void GameManager_OnGameStoped()
+        private void GameplayManager_OnGameplayStop()
         {
             Debug.Log("GM Stop");
             playerUnit.UpdateUnitEnable(false, StopUnitType.Full);
         }
+        private void GameplayManager_OnGameOver()
+        {
+            gameplayManager.OnGameplayRun -= GameplayManager_OnGameplayRun;
+            gameplayManager.OnGameplayStop -= GameplayManager_OnGameplayStop;
+
+            gameplayManager.OnGameplayEnded += GameplayManager_OnGameplayEnded;
+            gameplayManager.OnGameplayRestart += GameManager_OnGameStartRestart;
+        }
+        private void GameManager_OnGameStartRestart()
+        {
+            gameplayManager.OnGameOver -= GameplayManager_OnGameOver;
+            gameplayManager.OnGameplayRestart -= GameManager_OnGameStartRestart;
+            gameplayManager.OnGameplayEnded -= GameplayManager_OnGameplayEnded;
+        }
+        private void GameplayManager_OnGameplayEnded()
+        {
+            GameManager_OnGameStartRestart();
+
+            gameplayManager.OnGameplaySetup -= GameplayManager_OnGameplaySetup;
+        }
         private void PlayerDamagable_OnDeadE(IUnit unit)
         {
-            gameManager.GameOver();
+            gameplayManager.GameOver();
             playerUnit.UpdateUnitEnable(false, StopUnitType.Full);
         }
 

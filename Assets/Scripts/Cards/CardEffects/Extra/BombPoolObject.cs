@@ -28,6 +28,16 @@ namespace Game.Item
             baseScale = transform.localScale;
         }
 
+        #region Event Callbacks
+        private void Countdown_OnCountdownE()
+        {
+            Explode();
+        }
+        private void Countdown_OnCountdownUpdatedE(float remaningTime)
+        {
+            CalculatePulseSpeed(remaningTime);
+        }
+        #endregion
         public void Setup(BombObjectBaseDataSO initialData, int level)
         {
             this.initialData = initialData;
@@ -40,8 +50,8 @@ namespace Game.Item
 
             SetupExplodeAnimation();
             countdown = new Countdown(countdownPresentation);
-            countdown.OnCountdownE += Explode;
-            countdown.OnCountdownUpdatedE += CalculatePulseSpeed;
+            countdown.OnCountdownE += Countdown_OnCountdownE;
+            countdown.OnCountdownUpdatedE += Countdown_OnCountdownUpdatedE;
 
             StartExplodeCountdown();
         }
@@ -50,10 +60,21 @@ namespace Game.Item
         {
             base.ExpireInternal();
 
-            sequence?.Kill();
-            sequence = null;
+            ResetBombObject();
         }
 
+        private void ResetBombObject()
+        {
+            sequence?.Kill();
+            sequence = null;
+
+            if(countdown == null) return;
+
+            countdown.OnCountdownE -= Countdown_OnCountdownE;
+            countdown.OnCountdownUpdatedE -= Countdown_OnCountdownUpdatedE;
+
+            countdown = null;
+        }
         private void StartExplodeCountdown()
         {
             countdown.StartCountdown(explodeDuration, 1f);
@@ -73,11 +94,7 @@ namespace Game.Item
         }
         private void Explode()
         {
-            countdown.OnCountdownE -= Explode;
-            countdown.OnCountdownUpdatedE -= CalculatePulseSpeed;
-
-            sequence?.Kill();
-            sequence = null;
+            ResetBombObject();
 
             var explodeVFX = sourceEmitter.EmitItem<ParticlePoolItem>(initialData.ExplodeVFX, transform.position, Vector3.zero);
 

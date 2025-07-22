@@ -16,6 +16,7 @@ namespace Units
         Vector2 GetOnSpritePosition(PositionOnSprite position);
         void PushPoolItem(PoolItemBase poolItem);
         void PopPoolItem(PoolItemBase poolItem);
+        void UpdateUnitEnable(bool enableValue, StopUnitType stopType = StopUnitType.Movement);
     }
 
     public enum PositionOnSprite

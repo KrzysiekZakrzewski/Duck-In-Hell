@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Managers;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,22 +11,51 @@ namespace BlueRacconGames.Pool
     public abstract class PooledEmitterBase : MonoBehaviour, IPoolItemEmitter
     {
         private DiContainer container;
+        private GameplayManager gameplayManager;
 
+        private readonly List<PoolItemBase> activePoolObjectItemLUT = new();
         private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> itemPrefabToPoolLut = new();
         private readonly Dictionary<PoolItemBase, ObjectPool<PoolItemBase>> itemInstanceToPoolLut = new();
 
         public GameObject GameObject => gameObject;
 
         [Inject]
-        private void Inject(DiContainer container)
+        private void Inject(DiContainer container, GameplayManager gameplayManager)
         {
             this.container = container;
+
+            this.gameplayManager = gameplayManager;
+
+            this.gameplayManager.OnGameplaySetup += GameplayManager_OnGameplaySetup;
         }
 
+        private void GameplayManager_OnGameplaySetup()
+        {
+            gameplayManager.OnGameplayRestart += GameplayManager_OnGameRestart;
+        }
+
+        private void GameplayManager_OnGameRestart()
+        {
+            gameplayManager.OnGameplayRestart -= GameplayManager_OnGameRestart;
+
+            Clear();
+        }
+
+        [ContextMenu("Clear")]
         public void Clear()
         {
-            itemPrefabToPoolLut.Clear();
-            itemInstanceToPoolLut.Clear();
+            for(int i = activePoolObjectItemLUT.Count - 1;  i >= 0; i--)
+            {
+                var item = activePoolObjectItemLUT[i];
+
+                itemInstanceToPoolLut[item].Release(item);
+            }
+
+            foreach (var item in itemPrefabToPoolLut.Values)
+                item.Clear();
+
+            foreach (var item in itemInstanceToPoolLut.Values)
+                item.Clear();
         }
 
         public T EmitItem<T>(PoolItemBase prefab, Vector3 startPosition, Vector3 direction) where T : class
@@ -40,7 +70,7 @@ namespace BlueRacconGames.Pool
         {
             if (!itemPrefabToPoolLut.TryGetValue(prefab, out ObjectPool<PoolItemBase> pool))
             {
-                pool = new ObjectPool<PoolItemBase>(() => CreateItem(prefab), OnGetItem, OnReleaseItem);
+                pool = new ObjectPool<PoolItemBase>(() => CreateItem(prefab), OnGetItem, OnReleaseItem, OnDestroyItem);
                 itemPrefabToPoolLut.Add(prefab, pool);
             }
 
@@ -52,13 +82,17 @@ namespace BlueRacconGames.Pool
         private void OnGetItem(PoolItemBase item)
         {
             item.OnExpireE += Item_OnExpireE;
+            activePoolObjectItemLUT.Add(item);
         }
 
         private void OnReleaseItem(PoolItemBase item)
         {
-
+            activePoolObjectItemLUT.Remove(item);
         }
-
+        private void OnDestroyItem(PoolItemBase item)
+        {
+            Destroy(item.gameObject);
+        }
         private void Item_OnExpireE(PoolItemBase item)
         {
             item.OnExpireE -= Item_OnExpireE;

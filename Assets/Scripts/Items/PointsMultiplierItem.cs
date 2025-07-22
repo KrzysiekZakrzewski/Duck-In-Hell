@@ -14,14 +14,14 @@ namespace Game.Item
         protected override void ApplyBuff()
         {
             base.ApplyBuff();
-            PointsController.AddMultiplier(this);
+            GameplayPointsManager.AddMultiplier(this);
         }
 
         protected override void RemoveBuff()
         {
             base.RemoveBuff();
 
-            PointsController.RemoveMultiplier(this);
+            GameplayPointsManager.RemoveMultiplier(this);
         }
     }
 }

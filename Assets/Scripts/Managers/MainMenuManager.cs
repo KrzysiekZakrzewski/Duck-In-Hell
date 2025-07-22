@@ -1,6 +1,5 @@
-using Game.SceneLoader;
-using Saves;
-using Saves.Object;
+using Settings;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,34 +7,55 @@ namespace Game.Managers
 {
     public class MainMenuManager : MonoBehaviour
     {
-        [SerializeField]
-        private SceneDataSo hubSceneData;
+        public event Action OnMainMenuLoaded;
+        public event Action OnNewGameStart;
+        public event Action OnMainMenuLeaved;
 
-        private bool gameStarted;
-
-        private SceneLoadManagers sceneLoadManagers;
+        private SettingsManager settingsManager;
+        private GameManager gameManager;
 
         [Inject]
-        private void Inject(SceneLoadManagers sceneLoadManagers)
+        private void Inject(GameManager gameManager, SettingsManager settingsManager)
         {
-            this.sceneLoadManagers = sceneLoadManagers;
+            this.gameManager = gameManager;
+            this.settingsManager = settingsManager;
         }
 
-        private void Awake()
+        private void Start()
         {
-            GetGameStartedValue();
+            OnMainMenuLoaded?.Invoke();
         }
 
-        public void Play()
+        public void StartNewGame()
         {
-            sceneLoadManagers.LoadLocation(hubSceneData);
+            OnNewGameStart?.Invoke();
+
+            gameManager.LoadGameplayScene();
+
+            LeaveFromMainMenu();
         }
 
-        private void GetGameStartedValue()
+        private void LeaveFromMainMenu()
         {
-            if (!SaveManager.TryGetSaveObject(out GameStartedSaveObject gameStartedSaveObject)) return;
+            OnMainMenuLeaved?.Invoke();
+        }
 
-            gameStarted = gameStartedSaveObject.GetValue<bool>(SaveKeyUtilities.GameStartedKey).Value;
+        public void UpdateSoundsEnable()
+        {
+            settingsManager.SetSfxValue();
+        }
+
+        public void UpdateMusicEnable()
+        {
+            settingsManager.SetMusicValue();
+        }
+        public void QuitGame()
+        {
+            gameManager.GameStop();
+        }
+        public T GetSettingsValue<T>(string key)
+        {
+            return settingsManager.GetSettingsValue<T>(key);
         }
     }
 }

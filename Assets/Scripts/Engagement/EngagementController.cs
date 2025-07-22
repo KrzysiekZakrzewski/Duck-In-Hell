@@ -1,7 +1,9 @@
 using Audio.Manager;
 using Engagement.UI;
+using Game.Managers;
 using Game.SceneLoader;
 using Settings;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
@@ -11,16 +13,17 @@ namespace Engagement
 {
     public class EngagementController : MonoBehaviour
     {
-        [SerializeField]
-        private EngagementUIController bootUIController;
-        [SerializeField]
-        private SceneDataSo sceneToLoadData;
+        public event Action OnEngagementStart;
+        public event Action OnEngagement;
+        public event Action OnEngagementCompleted;
 
-        [SerializeField]
-        private float delayTime;
+        [SerializeField] private EngagementUIController bootUIController;
+        [SerializeField] private SceneDataSo sceneToLoadData;
+        [SerializeField] private float delayTime;
 
         private SceneLoadManagers sceneLoadManagers;
         private SettingsManager settingsManager;
+        private ScoreSaveVersionManager scoreSaveVersionController;
         private AudioManager audioManager;
         private bool isInitialized;
 
@@ -64,13 +67,21 @@ namespace Engagement
             yield return new WaitForSeconds(delayTime + delayOffset);
 
             video.Play();
+
+            yield return null;
+
+            bootUIController.OpenFirstView();
         }
 
         private IEnumerator StartEngagement()
         {
+            OnEngagementStart?.Invoke();
+
             yield return null;
 
             StartCoroutine(PlayVideoWithDelay());
+
+            OnEngagement?.Invoke();
 
             settingsManager.LoadSettings();
 
@@ -79,6 +90,8 @@ namespace Engagement
             audioManager.PlayRandomMusic();
 
             var engagement = bootUIController.GetEngagementView();
+
+            OnEngagementCompleted?.Invoke();
 
             engagement.ShowContinueText();
 

@@ -22,6 +22,7 @@ namespace EnemyWaves.Implementation
         private int totalEnemy;
         private Countdown countdown;
         private bool enemySpawned = false;
+        private bool isPaused;
 
         protected readonly float countdownTime = 3;
         protected readonly int maxRandomizeIteration = 10;
@@ -40,6 +41,7 @@ namespace EnemyWaves.Implementation
         public event Action<IEnemyWave> OnEndedE;
         public event Action<IEnemyWave> OnCompletedE;
         public event Action<IEnemyWave> OnUpdatedE;
+        public event Action<IEnemyWave> OnStopedE;
 
         public EnemyWaveBase(WaveEnemyUnitData[] initialData)
         {
@@ -88,9 +90,32 @@ namespace EnemyWaves.Implementation
 
             Debug.Log("Wave Completed");
         }
+        public void PauseWave()
+        {
+            if (IsCompleted || !IsStarted || isPaused) return;
+
+            isPaused = true;
+
+            OnOffEnemies(false);
+        }
+        public void ResumeWave()
+        {
+            if (IsCompleted || !IsStarted || !isPaused) return;
+
+            isPaused = false;
+
+            OnOffEnemies(true);
+        }
+        public void TerminateWave()
+        {
+            ResetEvent();
+
+            Debug.Log("Wave Terminated");
+        }
 
         protected virtual void OnCountdownFinished()
         {
+            countdown.OnCountdownE -= OnCountdownFinished;
             countdown = null;
 
             OnOffEnemies(true);
@@ -105,10 +130,9 @@ namespace EnemyWaves.Implementation
         }
         protected virtual void OnOffEnemy(IUnit unit, bool value)
         {
-            unit.Damageable.SetDamagableOn(value);
-            var enemyUnit = unit as PooledEnemyUnit;
+            if(unit.Damageable.IsDead) return;
 
-            enemyUnit.AIController.ForceStartStopSimulate(value);
+            unit.UpdateUnitEnable(value, StopUnitType.Full);
         }
 
         private void ResetEvent()
@@ -135,8 +159,6 @@ namespace EnemyWaves.Implementation
                 OnOffEnemy(newEnemy, false);
 
                 enemyUnitsLUT.Add(newEnemy);
-
-                Debug.Log(enemyUnitsLUT.Count);
 
                 yield return new WaitForSeconds(spawnDelayDuration);
             }
@@ -221,6 +243,8 @@ namespace EnemyWaves.Implementation
             enemySpawned = false;
 
             totalEnemy = difficulty.CalculateTotalEnemyAmount(waveId % 10);
+
+            Debug.Log(totalEnemy + " " + waveId);
 
             CorutineSystem.StartSequnce(SpawnEnemies(unitSpawner, enemyUnitPrefab, mapData));
 

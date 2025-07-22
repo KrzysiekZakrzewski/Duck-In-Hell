@@ -20,7 +20,6 @@ namespace BlueRacconGames.UI
 
             presentation.InteractableVisualize(value);
         }
-
         public virtual void OnPointerEnter(PointerEventData eventData)
         {
             presentation.OnEnterPresentation(IsInteractable);
@@ -48,12 +47,17 @@ namespace BlueRacconGames.UI
         {
             presentation.OnUpPresentation();
         }
-
         public virtual void ResetButton()
         {
             OnClickE = null;
             OnEnterE = null;
             OnExitE = null;
+        }
+        public void ForceUpdatePresentationModule(bool state)
+        {
+            if(presentation == null) return;
+
+            presentation.ForceUpdatePresentationModule(state);
         }
     }
 }

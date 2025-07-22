@@ -6,11 +6,11 @@ namespace Game.Installer
 {
     public class MainMenuInstaller : MonoInstaller
     {
-        [SerializeField] private MainMenuViewController mainMenuViewController;
+        [SerializeField] private MainMenuManager mainMenuManager;
 
         public override void InstallBindings()
         {
-            Container.BindInstance(mainMenuViewController).AsSingle();
+            Container.BindInstance(mainMenuManager).AsSingle();
         }
     }
 }

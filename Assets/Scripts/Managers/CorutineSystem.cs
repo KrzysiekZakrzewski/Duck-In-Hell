@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RDG.Platforms
@@ -16,12 +17,28 @@ namespace RDG.Platforms
             corutineSystem = corutineSystemGameObject.AddComponent<CorutineSystemObject>();
         }
 
-        public static void StartSequnce(IEnumerator enumerator)
+        public static Coroutine StartSequnce(IEnumerator enumerator)
         {
             if (corutineSystemGameObject == null)
                 Create();
 
-            corutineSystem.StartCoroutine(enumerator);
+            return corutineSystem.StartCoroutine(enumerator);
+        }
+        public static void StopSequnce(IEnumerator enumerator)
+        {
+            if (corutineSystemGameObject == null) return;
+
+            corutineSystem.StopCoroutine(enumerator);
+        }
+        public static void StopSequnce(Coroutine coroutine)
+        {
+            if (corutineSystemGameObject == null) return;
+
+            corutineSystem.StopCoroutine(coroutine);
+        }
+        public static void ForceStopAllCorutines()
+        {
+            corutineSystem.StopAllCoroutines();
         }
 
         private class CorutineSystemObject : MonoBehaviour

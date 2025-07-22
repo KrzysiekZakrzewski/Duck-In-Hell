@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
+  m_Name: FreezeCard
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Freeeezeeee
+  <Description>k__BackingField: Freeeezeeee
+  <Icon>k__BackingField: {fileID: 4593625171341328509, guid: ede656ffb443bd64fafd9a1df10e9dc4, type: 3}
+  <BasePercentChance>k__BackingField: 0.1
+  cardEffect:
+    rid: 7222817551355215956
+  references:
+    version: 2
+    RefIds:
+    - rid: 7222817551355215956
+      type: {class: FreezeHitCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        baseLevel: 1
+        damageAmount: 1
+        vfxEffect: {fileID: 2093391257362755044, guid: 31a471212b89ff240b80e2034f1496f2, type: 3}
+        vfxPosition: 2
+        duration: 25
+        percentChance: 0.3
+        overrideParticle: 1
+        particleSetterDatas:
+        - Id: 2
+          DataType: 2
+          IsConstValue: 0
+          Value: 0
+        - Id: 3
+          DataType: 1
+          IsConstValue: 0
+          Value: 0

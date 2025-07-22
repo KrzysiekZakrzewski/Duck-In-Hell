@@ -15,6 +15,7 @@ MonoBehaviour:
   <InitializeAIModeData>k__BackingField:
     <ChangeAIModeOptions>k__BackingField:
     - rid: 4469732845325123733
+    <Modules>k__BackingField: []
   <SimulationDistance>k__BackingField: 6
   references:
     version: 2
@@ -23,11 +24,17 @@ MonoBehaviour:
       type: {class: ShootStateAIModeFactory, ns: BlueRacconGames.AI.Factory, asm: Assembly-CSharp}
       data:
         <ValidateDistance>k__BackingField: 3
+        <Modules>k__BackingField:
+        - rid: 7222817579356913746
         <ChangeAIModeOptions>k__BackingField:
         - rid: 4469732845325123734
-        <ShootTickCountdown>k__BackingField: 6
     - rid: 4469732845325123734
       type: {class: BackToIdleAIModeFactory, ns: BlueRacconGames.AI.Factory, asm: Assembly-CSharp}
       data:
         <ValidateDistance>k__BackingField: 4
+        <Modules>k__BackingField: []
         <Duration>k__BackingField: 1
+    - rid: 7222817579356913746
+      type: {class: ShootAIModule, ns: BlueRacconGames.AI, asm: Assembly-CSharp}
+      data:
+        shootTickCountdown: 6

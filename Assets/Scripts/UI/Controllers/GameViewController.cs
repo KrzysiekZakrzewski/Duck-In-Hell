@@ -14,40 +14,41 @@ namespace BlueRacconGames.View
         [SerializeField] private SelectCardView selectCardView;
         [SerializeField] private GameOverView gameOverView;
 
-        private GameManager gameManager;
+        private GameplayManager gameplayManager;
         private SelectCardManager selectCardManager;
 
         [Inject]
-        private void Inject(SelectCardManager selectCardManager, GameManager gameManager)
+        private void Inject(SelectCardManager selectCardManager, GameplayManager gameplayManager)
         {
             this.selectCardManager = selectCardManager;
-            this.gameManager = gameManager;
+            this.gameplayManager = gameplayManager;
 
-            gameManager.OnGameSetuped += GameManager_OnGameSetuped;
-            gameManager.OnGameEnded += GameManager_OnGameEnded;
+            gameplayManager.OnGameplaySetup += GameplayManager_OnGameplaySetup;
         }
 
-        #region Unity methods
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            gameManager.OnGameSetuped -= GameManager_OnGameSetuped;
-            gameManager.OnGameEnded -= GameManager_OnGameEnded;
-        }
+        #region Public methods
         #endregion
 
         #region Private methods
         #region Evennt calbacks methods
-        private void GameManager_OnGameSetuped()
+        private void GameplayManager_OnGameplaySetup()
         {
             Initialize();
+            gameplayManager.OnGameOver += GameplayManager_OnGameOver;
         }
-        private void GameManager_OnGameEnded()
+        private void GameplayManager_OnGameOver()
         {
+            gameplayManager.OnGameOver -= GameplayManager_OnGameOver;
+            gameplayManager.OnGameplayEnded += GameplayManager_OnGameplayEnded;
+
             ShowView(gameOverView);
 
             UnInitialize();
+        }
+        private void GameplayManager_OnGameplayEnded()
+        {
+            gameplayManager.OnGameplaySetup -= GameplayManager_OnGameplaySetup;
+            gameplayManager.OnGameplayEnded -= GameplayManager_OnGameplayEnded;
         }
         #endregion
         private void Initialize()
@@ -76,9 +77,6 @@ namespace BlueRacconGames.View
 
             parentStack.TryPopSafe();
         }
-        #endregion
-
-        #region Public methods
         #endregion
     }
 }

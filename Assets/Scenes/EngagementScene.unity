@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 34452320}
   - component: {fileID: 34452319}
   - component: {fileID: 34452318}
-  - component: {fileID: 34452317}
+  - component: {fileID: 34452324}
   - component: {fileID: 34452323}
   m_Layer: 5
   m_Name: EngagementViewController
@@ -141,21 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &34452317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 34452315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee98dccba950ce3418555cae39ceb7cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Presentation>k__BackingField: {fileID: 34452323}
-  engagementView: {fileID: 2061176931}
-  introMovieView: {fileID: 1947572240}
 --- !u!225 &34452318
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -264,6 +249,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92510394055627949b1d8ccfe4472de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &34452324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34452315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73739959d48724e4ab4df8d0823cec68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Presentation>k__BackingField: {fileID: 34452323}
+  engagementView: {fileID: 2061176938}
+  introMovieView: {fileID: 1947572243}
 --- !u!1 &36828412
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 87ac26971fd15a047bdfb6414179d334, type: 2}
+  m_Texture: {fileID: 8400000, guid: 5e7789a0104126847808b8e21d12bd5f, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 223444940}
   - component: {fileID: 223444942}
   - component: {fileID: 223444941}
+  - component: {fileID: 223444943}
   m_Layer: 0
   m_Name: EngagementManager
   m_TagString: Untagged
@@ -377,11 +378,11 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223444938}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 53cc6ac0e5476f84cba8536043d1dca8, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 46e5e732b88518a40b4af98b56125a76, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 645044254}
-  m_TargetTexture: {fileID: 8400000, guid: 87ac26971fd15a047bdfb6414179d334, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 5e7789a0104126847808b8e21d12bd5f, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -437,6 +438,21 @@ MonoBehaviour:
   _contractNames: []
   _parentContractNames:
   - Logic
+--- !u!114 &223444943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223444938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9652244487cd54c90256e612f03ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bootUIController: {fileID: 34452324}
+  sceneToLoadData: {fileID: 11400000, guid: 072b92d32c240b64283d5c0d2019a5b5, type: 2}
+  delayTime: 0
 --- !u!1 &645044251
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,8 +649,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tap to continue...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8b5481f64939ecb4d9f70b006d4ae7d2, type: 2}
-  m_sharedMaterial: {fileID: -3849241375164024234, guid: 8b5481f64939ecb4d9f70b006d4ae7d2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6cbeb4d0417bd2a4bb14066ae3e92e78, type: 2}
+  m_sharedMaterial: {fileID: 298745974962439199, guid: 6cbeb4d0417bd2a4bb14066ae3e92e78, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -658,7 +674,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 88.85
+  m_fontSize: 89.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -680,7 +696,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -799,7 +815,7 @@ GameObject:
   - component: {fileID: 1947572237}
   - component: {fileID: 1947572241}
   - component: {fileID: 1947572236}
-  - component: {fileID: 1947572240}
+  - component: {fileID: 1947572243}
   - component: {fileID: 1947572242}
   m_Layer: 5
   m_Name: IntroMovieView
@@ -903,21 +919,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1947572240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1947572232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeefcdcd11ec3ff4085dd8bc03d74d64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSelectedButton: {fileID: 0}
-  <CanvasGroup>k__BackingField: {fileID: 1947572236}
-  <Presentation>k__BackingField: {fileID: 1947572242}
 --- !u!222 &1947572241
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -938,6 +939,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92510394055627949b1d8ccfe4472de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1947572243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947572232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d755c4b2181a844a15f586d55b3cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSelectedButton: {fileID: 0}
+  <CanvasGroup>k__BackingField: {fileID: 1947572236}
+  <Presentation>k__BackingField: {fileID: 1947572242}
 --- !u!1 &2061176930
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +967,7 @@ GameObject:
   - component: {fileID: 2061176935}
   - component: {fileID: 2061176934}
   - component: {fileID: 2061176933}
-  - component: {fileID: 2061176931}
+  - component: {fileID: 2061176938}
   - component: {fileID: 2061176932}
   m_Layer: 5
   m_Name: EngagementView
@@ -960,26 +976,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &2061176931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061176930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad4d33485eff7764986771276698a235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultSelectedButton: {fileID: 0}
-  <CanvasGroup>k__BackingField: {fileID: 2061176933}
-  <Presentation>k__BackingField: {fileID: 2061176932}
-  backgroundImage: {fileID: 1427598690}
-  engagementController: {fileID: 0}
-  continueText: {fileID: 707556987}
-  loadingScreenDatabase: {fileID: 11400000, guid: 422586de17209ff499769e2e321f7322, type: 2}
-  ignoreContiniuePressed: 1
 --- !u!114 &2061176932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1091,6 +1087,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2061176938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061176930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4330c03e69cd7b34f9618a036e715576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSelectedButton: {fileID: 0}
+  <CanvasGroup>k__BackingField: {fileID: 2061176933}
+  <Presentation>k__BackingField: {fileID: 2061176932}
+  backgroundImage: {fileID: 1427598690}
+  engagementController: {fileID: 223444943}
+  continueText: {fileID: 707556987}
+  loadingScreenDatabase: {fileID: 11400000, guid: 9d9d8658af6969744953cb510601c289, type: 2}
+  ignoreContiniuePressed: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

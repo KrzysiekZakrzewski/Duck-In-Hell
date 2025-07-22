@@ -12,7 +12,7 @@ namespace Game.Item
 
         public override bool Use(IUnit source)
         {
-            PointsController.AddPoints(buffValue);
+            GameplayPointsManager.AddPoints(buffValue);
 
             return true;
         }

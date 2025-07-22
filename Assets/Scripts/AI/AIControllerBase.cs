@@ -5,13 +5,14 @@ using UnityEngine;
 using Game.CharacterController;
 using TimeTickSystems;
 using Units.Implementation;
+using System.Linq;
+using DG.Tweening;
 
 namespace BlueRacconGames.AI
 {
     [RequireComponent(typeof(CharacterController2D))]
     public abstract class AIControllerBase : MonoBehaviour
     {
-        protected IAIMode aIMode;
         protected bool isSimulating;
         protected bool isExpired;
 
@@ -20,15 +21,16 @@ namespace BlueRacconGames.AI
         private bool isForcedSimulateStoped;
         private float simulationDistance;
 
+        public IAIMode AIMode { protected set; get; }
         public Transform PlayerTransform { get; private set; }
         public bool IsWondering => wonderAI.IsWondering;
         public bool IsSimulating => isSimulating;
 
         protected virtual void Update()
         {
-            if (aIMode == null || wonderAI.IsWondering) return;
+            if (AIMode == null || wonderAI.IsWondering) return;
 
-            aIMode.Update();
+            AIMode.Update();
         }
         protected virtual void OnDestroy()
         {
@@ -38,9 +40,9 @@ namespace BlueRacconGames.AI
                 wonderAI.OnEndWonderE -= OnEndWonder;
             }
 
-            if (aIMode == null) return;
+            if (AIMode == null) return;
 
-            aIMode.OnDestory();
+            AIMode.OnDestory();
         }
 
         public virtual void Initialize(BaseAIDataSO initializeData, PlayerUnit playerUnit)
@@ -112,31 +114,31 @@ namespace BlueRacconGames.AI
         {
             isSimulating = true;
 
-            aIMode?.StartSimulate();
+            AIMode?.StartSimulate();
         }
         protected void OnStopSimulate()
         {
             isSimulating = false;
 
-            aIMode?.StopSimulate();
+            AIMode?.StopSimulate();
         }
         protected virtual void OnStartWonder()
         {
-            aIMode.OnStartWonder();
+            AIMode.OnStartWonder();
         }
         protected virtual void OnEndWonder()
         {
-            aIMode.OnEndWonder();
+            AIMode.OnEndWonder();
 
-            if (!aIMode.CanChangeMode(out var factory)) return;
+            if (!AIMode.CanChangeMode(out var factory)) return;
 
             ChangeState(factory);
         }
         protected virtual void OnExpireInternal()
         {
-            if(aIMode == null) return;
+            if(AIMode == null) return;
 
-            aIMode.OnDestory();
+            AIMode.OnDestory();
 
             UnInitialize();
         }
@@ -153,9 +155,9 @@ namespace BlueRacconGames.AI
 
         private void ChangeState(IAIModeFactory modeFactory)
         {
-            aIMode?.OnDestory();
+            AIMode?.OnDestory();
 
-            aIMode = modeFactory.CreateAIMode(this, aIDataSO);
+            AIMode = modeFactory.CreateAIMode(this, aIDataSO);
         }
         private void OnTickSimulateChecker(object sender, OnTickEventArgs e)
         {

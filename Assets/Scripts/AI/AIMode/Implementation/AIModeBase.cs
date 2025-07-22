@@ -1,7 +1,6 @@
 ﻿using BlueRacconGames.AI.Data;
 using BlueRacconGames.AI.Factory;
-using TimeTickSystems;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BlueRacconGames.AI.Implementation
@@ -10,14 +9,24 @@ namespace BlueRacconGames.AI.Implementation
     {
         private readonly AIControllerBase aIController;
 
+        protected HashSet<IAIModule> modules;
         protected Transform playerTransform;
 
         public AIControllerBase AIController => aIController;
+        public HashSet<IAIModule> Modules => modules;
 
         public AIModeBase(AIControllerBase aiController, BaseAIDataSO initializeData, IAIModeFactory factoryData)
         {
             this.aIController = aiController;
             playerTransform = aIController.PlayerTransform;
+            
+            modules = new HashSet<IAIModule>();
+
+            foreach(var module in factoryData.Modules)
+            {
+                module.Initialize(aiController);
+                modules.Add(module);
+            }
         }
 
         public void Update()
@@ -51,11 +60,6 @@ namespace BlueRacconGames.AI.Implementation
         protected float CalculateDistance(Vector2 destination)
         {
             var distance = Vector2.Distance(AIController.transform.position, destination);
-            /*
-            Gizmos.DrawLine(AIController.transform.position, destination);
-            Vector3 midpoint = (AIController.transform.position + new Vector3(destination.x, destination.y)) / 2f;
-            UnityEditor.Handles.Label(midpoint, $"Distance: {distance:F2}");
-            */
             return distance;
         }
         protected virtual void InternalUpdate()
