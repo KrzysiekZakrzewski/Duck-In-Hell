@@ -19,7 +19,7 @@ namespace BlueRacconGames.MeleeCombat
         [SerializeField, ShowIf(nameof(lootAmountType), LootAmountType.Base)] private int baseLootAmount;
         [SerializeField, ShowIf(nameof(lootAmountType), LootAmountType.Random)] private int minLootAmount;
         [SerializeField, ShowIf(nameof(lootAmountType), LootAmountType.Random)] private int maxLootAmount;
-        [field: SerializeField, Range(0f, 1f)] public float PercentChanceToDrop { get; private set; }
+        [field: SerializeField, Range(-1f, 1f)] public float PercentChanceToDropModifier { get; private set; }
         [field: SerializeField] public ItemFactorySO ItemFactorySO { get; private set; }
 
         public int GetAmount()
@@ -31,6 +31,8 @@ namespace BlueRacconGames.MeleeCombat
                 _ => 0,
             };
         }
+        public float PercentChanceToDrop 
+            => ItemFactorySO.BasePercentChance + (ItemFactorySO.BasePercentChance * PercentChanceToDropModifier);
 
         private enum LootAmountType
         {

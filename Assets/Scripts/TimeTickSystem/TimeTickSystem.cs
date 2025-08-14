@@ -14,6 +14,14 @@ namespace TimeTickSystems
         public static event EventHandler<OnTickEventArgs> OnTick;
         public static event EventHandler<OnTickEventArgs> OnBigTick;
 
+        [ContextMenu("GetSubscribers")]
+        public void GetSubscribers()
+        {
+            Delegate[] delegates = OnTick?.GetInvocationList();
+
+            foreach (var delegator in delegates) 
+                Debug.Log(delegator.Method.Name);
+        }
         public static void Create()
         {
             if (timeTickSystemGameObject != null)

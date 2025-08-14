@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f61f70c62e3c7c24a98d3ba916c00d02, type: 3}
   m_Name: DealDamageEffect
   m_EditorClassIdentifier: 
+  initialData: {fileID: 11400000, guid: 4ba90c4d204238f4f950b060bc1bc37e, type: 2}

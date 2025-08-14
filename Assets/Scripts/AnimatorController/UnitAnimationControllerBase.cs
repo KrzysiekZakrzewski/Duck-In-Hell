@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 namespace BlueRacconGames.Animation
@@ -64,6 +65,10 @@ namespace BlueRacconGames.Animation
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(animationData.Layer);
             return stateInfo.IsName(animationData.Name) && stateInfo.normalizedTime < 1.0f;
+        }
+        public void SetupAnimatorController(RuntimeAnimatorController animatorController)
+        {
+            animator.runtimeAnimatorController = animatorController;
         }
 
         protected virtual void AssignAnimationIDs()

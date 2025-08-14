@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087c1f20eb9ce47439b420a3c8cf2cd1, type: 3}
+  m_Name: BigSlimeLoot
+  m_EditorClassIdentifier: 
+  <ItemPrefab>k__BackingField: {fileID: 875003526506949114, guid: daeca4eada8a7604e81770d7b7609b18, type: 3}
+  <PercentLootChance>k__BackingField: 0.25
+  <DropItems>k__BackingField:
+  - lootAmountType: 0
+    baseLootAmount: 1
+    minLootAmount: 0
+    maxLootAmount: 0
+    <PercentChanceToDrop>k__BackingField: 0.3
+    <ItemFactorySO>k__BackingField: {fileID: 11400000, guid: 522e4416c1fd6c74d8e9786a7dcee89e, type: 2}
+  - lootAmountType: 0
+    baseLootAmount: 1
+    minLootAmount: 0
+    maxLootAmount: 0
+    <PercentChanceToDrop>k__BackingField: 0.55
+    <ItemFactorySO>k__BackingField: {fileID: 11400000, guid: b2a1733b34690174a8afb8b8e65526f0, type: 2}
+  - lootAmountType: 0
+    baseLootAmount: 1
+    minLootAmount: 0
+    maxLootAmount: 0
+    <PercentChanceToDrop>k__BackingField: 0.14
+    <ItemFactorySO>k__BackingField: {fileID: 11400000, guid: 26d09d177e406a34eb327dd62e0c6a1b, type: 2}
+  - lootAmountType: 0
+    baseLootAmount: 1
+    minLootAmount: 0
+    maxLootAmount: 0
+    <PercentChanceToDrop>k__BackingField: 0.18
+    <ItemFactorySO>k__BackingField: {fileID: 11400000, guid: 15dcfc84867d8ef45905415a14414e05, type: 2}
+  - lootAmountType: 0
+    baseLootAmount: 1
+    minLootAmount: 0
+    maxLootAmount: 0
+    <PercentChanceToDrop>k__BackingField: 0.2
+    <ItemFactorySO>k__BackingField: {fileID: 11400000, guid: ab87f004b6f822f4fb64db659f697eea, type: 2}

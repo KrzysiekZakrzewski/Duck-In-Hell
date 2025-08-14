@@ -330,6 +330,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 108089268}
   m_CullTransparentMesh: 1
+--- !u!1 &112120844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 112120846}
+  - component: {fileID: 112120845}
+  m_Layer: 0
+  m_Name: BuffsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &112120845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112120844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638fa489f9d0a9a4fa58aea186a18a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &112120846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112120844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984818716}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117990397
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +813,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: db3329f28b8c7614d912adbfa926ba96, type: 2}
   - {fileID: 11400000, guid: 043a012f0174e264398332e9ddb9debf, type: 2}
   - {fileID: 11400000, guid: 1972f57dfe8ced548b725192a29ad852, type: 2}
+  - {fileID: 11400000, guid: 17299c13551851843a3c888b243de083, type: 2}
+  - {fileID: 11400000, guid: 9e1b4e512d51ce74e8ae7e5ba7afa9e2, type: 2}
+  - {fileID: 11400000, guid: a41059e571246784f86adc95dcfc81df, type: 2}
+  - {fileID: 11400000, guid: ef827d33af5191e4681b77dd162d8db9, type: 2}
 --- !u!4 &308311982
 Transform:
   m_ObjectHideFlags: 0
@@ -1179,6 +1227,7 @@ GameObject:
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1336,6 +1385,18 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4b87107a3edd8941ba1d756f53dbd35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &546233358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1472,8 +1533,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7909275020952005145, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
+      propertyPath: decorationId
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6941060575099382136, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09f286cbebec8f54e9215519d5471b1a, type: 3}
@@ -1573,6 +1639,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a140c5688b7b181469e141bba471f120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buffIdLUT:
+  - {fileID: 11400000, guid: 40ad51858c4da7d4aa14fe2e132a6a23, type: 2}
+  - {fileID: 11400000, guid: ce8b13344116adc479bbd0f760aeda2d, type: 2}
+  - {fileID: 11400000, guid: 14588d2f6b81fbe458cb648834a6c6cf, type: 2}
+  - {fileID: 11400000, guid: 94da5089bb1579846855a490534aec0f, type: 2}
   playerDataSO: {fileID: 11400000, guid: 18d9baa6305392f42821b724ce188303, type: 2}
   playerSpawnPosition: {fileID: 1417280726}
   playerUnitPrefab: {fileID: 5350708351680768917, guid: 78f9602ebd37ced45abfe12069949998, type: 3}
@@ -2803,6 +2874,7 @@ MonoBehaviour:
   mapManager: {fileID: 793637639}
   playerManager: {fileID: 671198203}
   gameplayManager: {fileID: 1824150836}
+  buffsManager: {fileID: 112120845}
 --- !u!4 &984818716
 Transform:
   m_ObjectHideFlags: 0
@@ -2823,6 +2895,7 @@ Transform:
   - {fileID: 630014742}
   - {fileID: 671198202}
   - {fileID: 1203360683}
+  - {fileID: 112120846}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984818717

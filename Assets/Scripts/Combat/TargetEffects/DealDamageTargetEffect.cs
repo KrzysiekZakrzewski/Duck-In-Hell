@@ -18,5 +18,7 @@ namespace BlueRacconGames.MeleeCombat
 
             damageable?.TakeDamage(damageValue);
         }
+        public void IncreaseDamageValue(int value) => damageValue += value;
+        public void DecreaseDamageValue(int value) => damageValue -= value;
     }
 }

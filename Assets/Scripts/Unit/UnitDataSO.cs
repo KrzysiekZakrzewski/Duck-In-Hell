@@ -9,6 +9,7 @@ namespace Units.Implementation
     public abstract class UnitDataSO : ScriptableObject
     {
         [field: SerializeField] public Sprite UnitSprite { get; private set; }
+        [field: SerializeField] public RuntimeAnimatorController AnimatorController { get; private set; }
         [field: SerializeField] public CharacterControllerDataSO CharacterControllerDataSO { get; private set; }
         [field: SerializeField] public ParticlePoolItem LaunchVFX { get; private set; }
         [field: SerializeField] public int DoNothingTickDuration { get; private set; }

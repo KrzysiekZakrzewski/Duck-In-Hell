@@ -27,10 +27,16 @@ namespace BlueRacconGames.AI
 
             EnableAttack();
         }
+        public virtual void DeInitialize(AIControllerBase aIController)
+        {
+            DisableAttack();
+
+            var damageable = aIController.GetComponent<IDamageable>();
+
+            damageable.OnExpireE -= Damageable_OnExpireE;
+        }
         public void EnableAttack()
         {
-            Debug.Log("EnableAttack");
-
             if (attackEnabled) return;
 
             attackEnabled = true;

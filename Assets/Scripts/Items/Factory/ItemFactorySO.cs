@@ -8,6 +8,7 @@ namespace Game.Item.Factory
         [field : SerializeField] public int Id { get; private set; }
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public string Description { get; private set; }
+        [field: SerializeField, Range(0f, 1f)] public float BasePercentChance { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
         [field: SerializeField] public ParticlePoolItem PickUpVFX { get; private set; }
 

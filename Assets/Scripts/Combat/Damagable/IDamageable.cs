@@ -20,7 +20,7 @@ namespace Damageable
         void Launch(DamagableDataSO damagableDataSO);
         void TakeDamage(int damageValue, DamageMode damageMode = DamageMode.Normal);
         bool Heal(int healValue);
-        void IncreaseHealt(int increaseValue);
+        void IncreaseHealt(int increaseValue, bool instantHeal = false);
         void DecreaseHealt(int decreaseValue);
         void OnDead();
         void ResetDamagable();

@@ -16,7 +16,9 @@ namespace BlueRacconGames.AI.Factory
         }
         public override bool ChangeValidator(float distanceToPlayer)
         {
-            return distanceToPlayer < ValidateDistance;
+            float validateDistance = InfinityDistance ? Mathf.Infinity : ValidateDistance;
+
+            return distanceToPlayer < validateDistance;
         }
     }
 }

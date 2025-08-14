@@ -5,7 +5,7 @@ namespace BlueRacconGames.AI.Implementation
 {
     public class WonderAIMode
     {
-        private const int BASE_WONDER_TICK_COUNTDOWN = 10;
+        private const int BASE_WONDER_TICK_COUNTDOWN = 5;
         private bool countdownEnable = false;
         private int tickRemaning;
 

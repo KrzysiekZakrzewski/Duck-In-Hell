@@ -1,5 +1,4 @@
 using BlueRacconGames.Pool;
-using Game.HUD;
 using Game.Managers;
 using Projectiles.Implementation;
 using UnityEngine;

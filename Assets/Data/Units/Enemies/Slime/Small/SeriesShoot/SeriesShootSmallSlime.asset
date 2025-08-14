@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b2abd3b3f83ba4f90e2f2b6a90bdca, type: 3}
+  m_Name: SeriesShootSmallSlime
+  m_EditorClassIdentifier: 
+  <UnitSprite>k__BackingField: {fileID: 3889767076933404985, guid: 71fd120e88d3591408f26f02295cf4fc, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: 9884d973d740a024ba379761b5aead4e, type: 2}
+  <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 60960aa6ade603e4591df1342009f42c, type: 2}
+  <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
+  <DoNothingTickDuration>k__BackingField: 20
+  <NoPlayAnimation>k__BackingField: {fileID: 0}
+  enemyDamagableDataSO: {fileID: 11400000, guid: 680e9b03f3d4d1f459e747b0ca81b08e, type: 2}
+  <AIDataSO>k__BackingField: {fileID: 11400000, guid: f83f7fe3db4c17646bc7958dbe4e60e1, type: 2}

@@ -56,6 +56,7 @@ namespace Units.Implementation
         {
             this.initializeData = unitDataSO;
             spriteRenderer.sprite = unitDataSO.UnitSprite;
+            animationController.SetupAnimatorController(unitDataSO.AnimatorController);
 
             damageable?.Launch(unitDataSO.DamagableDataSO);
             damageable.OnExpireE += (IDamageable damageable) => Expire();

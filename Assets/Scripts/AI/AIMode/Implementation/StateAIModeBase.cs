@@ -1,5 +1,6 @@
 ﻿using BlueRacconGames.AI.Data;
 using BlueRacconGames.AI.Factory;
+using Saves;
 using UnityEngine;
 
 namespace BlueRacconGames.AI.Implementation
@@ -23,6 +24,8 @@ namespace BlueRacconGames.AI.Implementation
         protected override void InternalUpdate()
         {
             base.InternalUpdate();
+
+            Debug.Log("AIMode: " + AIController.gameObject.name);
 
             if (!TryChangeAIMode(out var modeFactory)) return;
 

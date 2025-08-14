@@ -24,6 +24,7 @@ namespace Game.Installer
         [SerializeField] private MapManager mapManager;
         [SerializeField] private PlayerManager playerManager;
         [SerializeField] private GameplayManager gameplayManager;
+        [SerializeField] private BuffsManager buffsManager;
 
         public override void InstallBindings()
         {
@@ -39,6 +40,7 @@ namespace Game.Installer
             Container.BindInstance(mapManager).AsSingle();
             Container.BindInstance(playerManager).AsSingle();
             Container.BindInstance(gameplayManager).AsSingle();
+            Container.BindInstance(buffsManager).AsSingle();
 
             TimeTickSystem.Create();
         }

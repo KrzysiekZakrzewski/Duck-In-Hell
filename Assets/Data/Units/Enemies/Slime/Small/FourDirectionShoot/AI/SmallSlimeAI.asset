@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c62fb1a933a75b448f1cdf9647ea223, type: 3}
+  m_Name: SmallSlimeAI
+  m_EditorClassIdentifier: 
+  <InitializeAIModeData>k__BackingField:
+    <ChangeAIModeOptions>k__BackingField:
+    - rid: 4469732845325123733
+    <FactoryModules>k__BackingField: []
+  <InfinitySimulate>k__BackingField: 1
+  <SimulationDistance>k__BackingField: 6
+  references:
+    version: 2
+    RefIds:
+    - rid: 4469732845325123733
+      type: {class: ShootStateAIModeFactory, ns: BlueRacconGames.AI.Factory, asm: Assembly-CSharp}
+      data:
+        <InfinityDistance>k__BackingField: 1
+        <ValidateDistance>k__BackingField: 3
+        <FactoryModules>k__BackingField:
+        - rid: 7222817755645346136
+        <ChangeAIModeOptions>k__BackingField:
+        - rid: 4469732845325123734
+    - rid: 4469732845325123734
+      type: {class: BackToIdleAIModeFactory, ns: BlueRacconGames.AI.Factory, asm: Assembly-CSharp}
+      data:
+        <InfinityDistance>k__BackingField: 1
+        <ValidateDistance>k__BackingField: 4
+        <FactoryModules>k__BackingField: []
+        <Duration>k__BackingField: 1
+    - rid: 7222817755645346136
+      type: {class: ShootAIModuleFactory, ns: BlueRacconGames.AI.Factory, asm: Assembly-CSharp}
+      data:
+        <ShootType>k__BackingField:
+          rid: 7222817755645346137
+        <ShootTickCountdown>k__BackingField: 16
+    - rid: 7222817755645346137
+      type: {class: FourDirectionShoot, ns: BlueRacconGames.AI, asm: Assembly-CSharp}
+      data: 

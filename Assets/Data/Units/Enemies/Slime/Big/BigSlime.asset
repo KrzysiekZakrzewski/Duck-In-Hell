@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b2abd3b3f83ba4f90e2f2b6a90bdca, type: 3}
+  m_Name: BigSlime
+  m_EditorClassIdentifier: 
+  <UnitSprite>k__BackingField: {fileID: 6281356557784789791, guid: d32204f4e510e4f4e9c37c666692084f, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: 2ab0d8c5d252df74ca999e93af4b0b90, type: 2}
+  <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 1f3178228a9d06746a6dda3f0bf9c3c3, type: 2}
+  <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
+  <DoNothingTickDuration>k__BackingField: 20
+  <NoPlayAnimation>k__BackingField: {fileID: 0}
+  enemyDamagableDataSO: {fileID: 11400000, guid: 0818797e399171d4dbb5825e55fa1382, type: 2}
+  <AIDataSO>k__BackingField: {fileID: 11400000, guid: 30b49b05380e5bd4693b0e3fe64c3a74, type: 2}

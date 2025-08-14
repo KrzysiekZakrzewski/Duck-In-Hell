@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerUnitData
   m_EditorClassIdentifier: 
   <UnitSprite>k__BackingField: {fileID: 2161211097934087789, guid: 4e592040163ec91468466dbc2cc95d41, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: efef93b7fc95c74488984fb093cabef6, type: 2}
   <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 360d1f916e2b86d49b5907262853b47e, type: 2}
   <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
   <DoNothingTickDuration>k__BackingField: 20

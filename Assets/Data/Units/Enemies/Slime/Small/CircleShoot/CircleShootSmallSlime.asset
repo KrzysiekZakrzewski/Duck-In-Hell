@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b2abd3b3f83ba4f90e2f2b6a90bdca, type: 3}
+  m_Name: CircleShootSmallSlime
+  m_EditorClassIdentifier: 
+  <UnitSprite>k__BackingField: {fileID: 43810669774899895, guid: 52e0e4190db5bc249a19658689159b38, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: fe9c7f402bb57cd4dbb20107a1ef6edb, type: 2}
+  <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: b9275a7c9f63853448e5e15f7a95d586, type: 2}
+  <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
+  <DoNothingTickDuration>k__BackingField: 20
+  <NoPlayAnimation>k__BackingField: {fileID: 0}
+  enemyDamagableDataSO: {fileID: 11400000, guid: 3f797d86e268ede4b9fdb901cc2ede83, type: 2}
+  <AIDataSO>k__BackingField: {fileID: 11400000, guid: 6b29551543217c640a6e125b655adb8a, type: 2}

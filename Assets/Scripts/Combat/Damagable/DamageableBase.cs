@@ -53,6 +53,8 @@ namespace Damageable.Implementation
             this.initialData = initialData;
             maxHealth = initialData.MaxHealth;
 
+            expireEffectsLUT.Clear();
+
             foreach (IExpireEffectFactory effectFactory in initialData.ExpireEffectFactorySO)
                 expireEffectsLUT.Add(effectFactory.CreateExpireEffect());
 
@@ -81,9 +83,9 @@ namespace Damageable.Implementation
 
             return true;
         }
-        public void IncreaseHealt(int increaseValue)
+        public void IncreaseHealt(int increaseValue, bool instantHeal = false)
         {
-            IncreaseHealtInternal(increaseValue);
+            IncreaseHealtInternal(increaseValue, instantHeal);
         }
         public void DecreaseHealt(int decreaseValue)
         {
@@ -134,11 +136,15 @@ namespace Damageable.Implementation
 
             currentHealth = currentHealth > MaxHealth ? MaxHealth : currentHealth;
         }
-        protected virtual void IncreaseHealtInternal(int increaseValue)
+        protected virtual void IncreaseHealtInternal(int increaseValue, bool instantHeal)
         {
             maxHealth += increaseValue;
 
-            currentHealth = maxHealth;
+            Debug.Log("Max Health" + maxHealth);
+
+            currentHealth = instantHeal ? maxHealth : currentHealth;
+
+            OnHealE?.Invoke(currentHealth, maxHealth);
         }
         protected virtual void DecreaseHealtInternal(int decreaseValue)
         {

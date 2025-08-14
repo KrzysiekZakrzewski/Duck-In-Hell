@@ -5,8 +5,6 @@ using UnityEngine;
 using Game.CharacterController;
 using TimeTickSystems;
 using Units.Implementation;
-using System.Linq;
-using DG.Tweening;
 
 namespace BlueRacconGames.AI
 {
@@ -23,12 +21,14 @@ namespace BlueRacconGames.AI
 
         public IAIMode AIMode { protected set; get; }
         public Transform PlayerTransform { get; private set; }
-        public bool IsWondering => wonderAI.IsWondering;
+        public bool IsWondering => wonderAI != null && wonderAI.IsWondering;
         public bool IsSimulating => isSimulating;
 
         protected virtual void Update()
         {
             if (AIMode == null || wonderAI.IsWondering) return;
+
+            Debug.Log(AIMode + " " + gameObject.name);
 
             AIMode.Update();
         }
@@ -42,13 +42,13 @@ namespace BlueRacconGames.AI
 
             if (AIMode == null) return;
 
-            AIMode.OnDestory();
+            AIMode?.OnDestory();
         }
 
         public virtual void Initialize(BaseAIDataSO initializeData, PlayerUnit playerUnit)
         {
             this.aIDataSO = initializeData;
-            simulationDistance = initializeData.SimulationDistance;
+            simulationDistance = initializeData.InfinitySimulate ? Mathf.Infinity : initializeData.SimulationDistance;
             isForcedSimulateStoped = true;
 
             PlayerTransform = playerUnit.transform;
@@ -68,12 +68,15 @@ namespace BlueRacconGames.AI
 
             TimeTickSystem.OnTick -= OnTickSimulateChecker;
 
+            aIDataSO = null;
+
+            if(wonderAI != null) return;
+
             wonderAI.ForceStop();
 
             wonderAI.OnStartWonderE -= OnStartWonder;
             wonderAI.OnEndWonderE -= OnEndWonder;
 
-            aIDataSO = null;
             wonderAI = null;
         }
         public void OnExpire()
@@ -86,7 +89,7 @@ namespace BlueRacconGames.AI
         }
         public void TryChangeAIMode()
         {
-            if (wonderAI.IsWondering) return;
+            if (wonderAI == null || wonderAI.IsWondering) return;
 
             wonderAI.InitializeWonder();
         }
@@ -136,11 +139,9 @@ namespace BlueRacconGames.AI
         }
         protected virtual void OnExpireInternal()
         {
-            if(AIMode == null) return;
-
-            AIMode.OnDestory();
-
             UnInitialize();
+
+            AIMode?.OnDestory();
         }
         protected float CalculateDistance(Vector2 destination)
         {

@@ -2,8 +2,7 @@ using Game.Item;
 using Game.Item.Factory.Implementation;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Random = UnityEngine.Random;
+using static Unity.VisualScripting.Member;
 
 namespace BlueRacconGames.MeleeCombat
 {
@@ -64,6 +63,22 @@ namespace BlueRacconGames.MeleeCombat
             {
                 meleeWeaponTargetHitEffect.Execute(source, target);
             }
+        }
+
+        public void IncreaseDamageValue(int value)
+        {
+            foreach (IMeleeTargetEffect meleeWeaponTargetHitEffect in MeleeWeaponTargetHitEffects)
+            {
+                if(meleeWeaponTargetHitEffect is DealDamageTargetEffect)
+                {
+                    DealDamageTargetEffect dealDamageTargetEffect = meleeWeaponTargetHitEffect as DealDamageTargetEffect;
+                }
+            }
+        }
+
+        public void DecreaseDamageValue(int value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

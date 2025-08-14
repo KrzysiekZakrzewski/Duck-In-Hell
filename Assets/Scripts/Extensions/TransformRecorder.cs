@@ -17,8 +17,9 @@ public class TransformRecorder : MonoBehaviour
         };
 
         string name = $"{transfromType}{gameObject.name}TransformDataContainer";
-
+#if UNITY_EDITOR
         AssetDatabase.CreateAsset(container, $"Assets/Data/TransformDataContainers/{name}.asset");
+#endif
     }
 }
 

@@ -19,8 +19,9 @@ namespace BlueRacconGames.Cards.Effects
 
         protected override void ExecuteInternal(TargetData targetData, ParticlePoolItem particleEffect)
         {
-            if (targets.Count == 0)
-                TimeTickSystem.OnTick += OnTick;
+            if (!IsFirstTarget()) return;
+
+            TimeTickSystem.OnTick += OnTick;
         }
         protected override void OnEffectEnded(TargetData target)
         {
@@ -31,8 +32,10 @@ namespace BlueRacconGames.Cards.Effects
 
         private void OnTick(object sender, OnTickEventArgs e)
         {
-            if (targets.Count <= 0) return;
+            Debug.Log("TickE");
 
+            if (targets.Count <= 0) return;
+            Debug.Log("TickE2");
             foreach (var targetToRemove in targetsToRemove)
             {
                 if(!targets.TryGetValue(targetToRemove, out TargetData targetData)) continue;
@@ -71,5 +74,6 @@ namespace BlueRacconGames.Cards.Effects
 
             tick++;
         }
+        private bool IsFirstTarget() => targets.Count == 1;
     }
 }

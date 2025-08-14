@@ -111,6 +111,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -259,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Water_Stone_Tile_3_Anim_0: 6993417730389578793
+      Water_Stone_Tile_3_Anim_1: -1203113325335605110
+      Water_Stone_Tile_3_Anim_2: -5057757806636071359
+      Water_Stone_Tile_3_Anim_3: 4036057823436610367
+      Water_Stone_Tile_3_Anim_4: -9196044554604904567
+      Water_Stone_Tile_3_Anim_5: 3116827596552111956
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

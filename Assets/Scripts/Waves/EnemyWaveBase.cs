@@ -1,3 +1,4 @@
+using BlueRacconGames.MeleeCombat;
 using BlueRacconGames.Pool;
 using Game.Difficulty;
 using Game.Map;
@@ -222,14 +223,19 @@ namespace EnemyWaves.Implementation
         }
         private PooledEnemyUnitDataSO RandomizeEnemyData()
         {
-            float roll = Random.value;
+            float totalChance = 0f;
+
+            foreach (WaveEnemyUnitData data in WaveEnemyUnitDatas)
+                totalChance += data.BasePercentChance;
+
+            float randomValue = Random.Range(0, totalChance);
             float cumulative = 0f;
 
             foreach (WaveEnemyUnitData data in WaveEnemyUnitDatas)
             {
                 cumulative += data.BasePercentChance;
 
-                if (roll > cumulative) continue;
+                if (randomValue > cumulative || randomValue == 0) continue;
 
                 return data.EnemyUnitDataSO;
             }

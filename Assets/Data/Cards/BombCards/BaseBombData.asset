@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 472c2bab6bdb7744baecd6a04e945daf, type: 3}
   m_Name: BaseBombData
   m_EditorClassIdentifier: 
+  <BaseSpawnChance>k__BackingField: 0.4
   <ExplodeDuration>k__BackingField: 5
   <ExplosionRadius>k__BackingField: 2
   <DamageableLayer>k__BackingField:

@@ -13,10 +13,16 @@ MonoBehaviour:
   m_Name: EnemyWavesContainerSO
   m_EditorClassIdentifier: 
   enemyWavesContainerDatas:
-  - StartRangeWaveId: 1
-    EndRangeWaveId: 5
+  - StartRangeWaveId: 0
+    EndRangeWaveId: 2
     DefaultEnemyWaveDataSO: {fileID: 11400000, guid: f223b69965a3ec74eb0131bf50db8478, type: 2}
-  - StartRangeWaveId: 6
-    EndRangeWaveId: 8
-    DefaultEnemyWaveDataSO: {fileID: 11400000, guid: f223b69965a3ec74eb0131bf50db8478, type: 2}
-  DefaultEnemyWave: {fileID: 11400000, guid: f223b69965a3ec74eb0131bf50db8478, type: 2}
+  - StartRangeWaveId: 3
+    EndRangeWaveId: 6
+    DefaultEnemyWaveDataSO: {fileID: 11400000, guid: a7626002d56d9794a92818cc94a0b05b, type: 2}
+  - StartRangeWaveId: 7
+    EndRangeWaveId: 10
+    DefaultEnemyWaveDataSO: {fileID: 11400000, guid: 73ebc56e32ae08e4bb3785cdffd4a13d, type: 2}
+  - StartRangeWaveId: 11
+    EndRangeWaveId: 15
+    DefaultEnemyWaveDataSO: {fileID: 11400000, guid: 03a346e44983d5d4299898784a6a415b, type: 2}
+  DefaultEnemyWave: {fileID: 11400000, guid: 78a10dcb40ff91a42a2d7d1acbc1afaa, type: 2}

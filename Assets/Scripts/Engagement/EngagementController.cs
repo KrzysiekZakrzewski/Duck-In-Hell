@@ -66,8 +66,12 @@ namespace Engagement
         {
             yield return new WaitForSeconds(delayTime + delayOffset);
 
+#if UNITY_WEBGL
+            EndVideoAction(null);
+            yield break;
+#else
             video.Play();
-
+#endif
             yield return null;
 
             bootUIController.OpenFirstView();
@@ -100,7 +104,7 @@ namespace Engagement
 
         private bool CheckEngagemntWasFinished()
         {
-            return videoEnded && settingsManager.InitializeFinished ;
+            return settingsManager.InitializeFinished; //videoEnded &&
         }
 
         public void FinishEngagement()

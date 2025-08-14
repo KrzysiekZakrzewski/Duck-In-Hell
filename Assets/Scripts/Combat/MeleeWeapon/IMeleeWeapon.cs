@@ -13,5 +13,7 @@ namespace BlueRacconGames.MeleeCombat
         void OnAttack(MeleeCombatControllerBase source);
         void ResetWeapon();
         void OnHit(MeleeCombatControllerBase source, IDamagableTarget target);
+        void IncreaseDamageValue(int value);
+        void DecreaseDamageValue(int value);
     }
 }

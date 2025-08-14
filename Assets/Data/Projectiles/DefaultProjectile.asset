@@ -15,8 +15,8 @@ MonoBehaviour:
   <TargetLayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 264
-  <Speed>k__BackingField: 0.8
-  <ExpireTime>k__BackingField: 2
+  <Speed>k__BackingField: 0.9
+  <ExpireTime>k__BackingField: 10
   <ExpireOnHit>k__BackingField: 1
   <HitTargetEffectFactories>k__BackingField:
   - {fileID: 11400000, guid: 6b382bfd1068ee74dab8c83c83103110, type: 2}

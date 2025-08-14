@@ -15,16 +15,17 @@ namespace BlueRacconGames.AI.Implementation
         public AIControllerBase AIController => aIController;
         public HashSet<IAIModule> Modules => modules;
 
-        public AIModeBase(AIControllerBase aiController, BaseAIDataSO initializeData, IAIModeFactory factoryData)
+        public AIModeBase(AIControllerBase aIController, BaseAIDataSO initializeData, IAIModeFactory factoryData)
         {
-            this.aIController = aiController;
-            playerTransform = aIController.PlayerTransform;
+            this.aIController = aIController;
+            playerTransform = this.aIController.PlayerTransform;
             
             modules = new HashSet<IAIModule>();
 
-            foreach(var module in factoryData.Modules)
+            foreach(var moduleFactory in factoryData.FactoryModules)
             {
-                module.Initialize(aiController);
+                var module = moduleFactory.Create();
+                module.Initialize(AIController);
                 modules.Add(module);
             }
         }
@@ -68,7 +69,12 @@ namespace BlueRacconGames.AI.Implementation
         }
         protected virtual void InternalOnDestory()
         {
+            foreach (var module in modules)
+                module.DeInitialize(aIController);
 
+            modules.Clear();
+
+            Debug.Log("Clear");
         }
     }
 }

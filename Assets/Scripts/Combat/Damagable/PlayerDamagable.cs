@@ -1,6 +1,3 @@
-using UnityEngine;
-using Zenject;
-
 namespace Damageable.Implementation
 {
     public class PlayerDamagable : DamageableBase

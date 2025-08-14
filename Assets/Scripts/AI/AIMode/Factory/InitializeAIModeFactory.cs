@@ -9,7 +9,7 @@ namespace BlueRacconGames.AI.Factory
     public class InitializeAIModeFactory : IAIModeFactory
     {
         [field: SerializeReference, ReferencePicker] public AIModeFactoryBase[] ChangeAIModeOptions { private set; get; }
-        [field: SerializeReference, ReferencePicker] public IAIModule[] Modules { private set; get; }
+        [field: SerializeReference, ReferencePicker] public IAIModuleFactory[] FactoryModules { private set; get; }
 
         public IAIMode CreateAIMode(AIControllerBase aIController, BaseAIDataSO aIData)
         {

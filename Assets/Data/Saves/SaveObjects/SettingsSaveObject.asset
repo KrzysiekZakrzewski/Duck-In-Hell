@@ -16,10 +16,10 @@ MonoBehaviour:
   saveKey: Settings
   MusicValue:
     key: MusicSettings
-    value: 0
+    value: 1
   SfxValue:
     key: SFXSettings
-    value: 0
+    value: 1
   VibrationValue:
     key: VibrationSettings
     value: 0

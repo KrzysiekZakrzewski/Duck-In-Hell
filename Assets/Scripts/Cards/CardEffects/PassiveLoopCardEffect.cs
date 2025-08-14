@@ -36,6 +36,8 @@ namespace BlueRacconGames.Cards.Effects
 
         private void OnTick(object sender, OnTickEventArgs e)
         {
+            Debug.Log("Tick");
+
             var tick = TimeTickSystem.GetTick();
             var duration = tick - startTick;
 

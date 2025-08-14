@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
+  m_Name: IncreaseHealthNoPermamentCard
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Health Up
+  <Description>k__BackingField: Increase health
+  <Icon>k__BackingField: {fileID: -421060367027953701, guid: ec1bf254e03f86343bff25feaafd1838, type: 3}
+  <BasePercentChance>k__BackingField: 0.1
+  cardEffect:
+    rid: 5569729267114967127
+  references:
+    version: 2
+    RefIds:
+    - rid: 5569729267114967127
+      type: {class: ModifyHealthCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        baseLevel: 1
+        <IsPermament>k__BackingField: 0
+        <WavesDuration>k__BackingField: 2
+        <Id>k__BackingField: {fileID: 11400000, guid: 94da5089bb1579846855a490534aec0f, type: 2}
+        value: 5

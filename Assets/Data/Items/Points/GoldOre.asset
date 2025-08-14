@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c403740f5047245b98a4154cd5744c, type: 3}
+  m_Name: GoldOre
+  m_EditorClassIdentifier: 
+  <Id>k__BackingField: 0
+  <Name>k__BackingField: Gold ore
+  <Description>k__BackingField: Give you 10 points.
+  <Icon>k__BackingField: {fileID: -7147966283506438970, guid: ede656ffb443bd64fafd9a1df10e9dc4, type: 3}
+  <PickUpVFX>k__BackingField: {fileID: 3269345711357019591, guid: 1a135f427b9592648b87987f214c79d6, type: 3}
+  <BuffValue>k__BackingField: 10

@@ -14,10 +14,13 @@ namespace Game.Map
         private void Awake()
         {
             SetupDecorationObject();
+
+            DetectCollider();
         }
-        [ContextMenu("SetupDecorationObject")]
         private void SetupDecorationObject()
         {
+            if (animator == null) return;
+
             int animationCount = animator.runtimeAnimatorController.animationClips.Length;
 
             int decorationId = this.decorationId == -1 ? Random.Range(0, animationCount) : this.decorationId;
@@ -25,8 +28,6 @@ namespace Game.Map
             var clip = animator.runtimeAnimatorController.animationClips[decorationId];
 
             animator.Play(clip.name);
-
-            DetectCollider();
         }
         private void DetectCollider()
         {

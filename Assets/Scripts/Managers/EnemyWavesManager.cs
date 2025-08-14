@@ -29,6 +29,7 @@ namespace EnemyWaves
 
         public event Action<IEnemyWaveFactory> OnWaveAddedE;
         public event Action<IEnemyWave> OnWaveSetupedE;
+        public event Action OnWaveCompletedE;
 
         public int TotalWaves { get; private set; }
         public int CurrentWavesId { get; private set; }
@@ -128,6 +129,8 @@ namespace EnemyWaves
 
         private IEnumerator PrepeareAutoNextWaveSequence()
         {
+            Debug.Log(CurrentWavesId);
+
             AddWaveToQueue(wavesContainer.GetNextWave(CurrentWavesId));
 
             SetupWave();
@@ -147,6 +150,8 @@ namespace EnemyWaves
         private void EnemyWave_OnCompletedE(IEnemyWave enemyWave)
         {
             gameplayManager.GameplayStop();
+
+            OnWaveCompletedE?.Invoke();
         }
 
         private bool NextWaveIsReady() => currentWave != null && currentWave.IsReady;

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f8bb28061971f45b6bc4a38442aa88, type: 3}
+  m_Name: IncreaseDamagePermamentCard
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Damage Up
+  <Description>k__BackingField: Increase damage
+  <Icon>k__BackingField: {fileID: 2601603839896418933, guid: d573fc5c576666b4eb5c94005414b30e, type: 3}
+  <BasePercentChance>k__BackingField: 0.3
+  cardEffect:
+    rid: 5569729282265055425
+  references:
+    version: 2
+    RefIds:
+    - rid: 5569729282265055425
+      type: {class: ModifyDamageCardEffect, ns: BlueRacconGames.Cards.Effects, asm: Assembly-CSharp}
+      data:
+        baseLevel: 1
+        <IsPermament>k__BackingField: 1
+        <WavesDuration>k__BackingField: 0
+        <Id>k__BackingField: {fileID: 11400000, guid: ce8b13344116adc479bbd0f760aeda2d, type: 2}
+        value: 1

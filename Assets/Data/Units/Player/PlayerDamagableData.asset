@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3f5d897b327a946bea42da008a545a, type: 3}
   m_Name: PlayerDamagableData
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 1
+  <MaxHealth>k__BackingField: 10
   <ExpireOnDead>k__BackingField: 1
   <GetHitAnimation>k__BackingField: {fileID: 11400000, guid: 09fea0fe84800fb418146f0a74ac53a5, type: 2}
   <ExpireEffectFactorySO>k__BackingField:
-  - {fileID: 11400000, guid: c631d8dd3c8dc3f42b95e68fabb87e8d, type: 2}
+  - {fileID: 11400000, guid: febcabc23b11ca04cb384f6f6bdf2f49, type: 2}

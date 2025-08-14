@@ -7,6 +7,7 @@ namespace Game.Item
     [CreateAssetMenu(fileName = nameof(BombObjectBaseDataSO), menuName = nameof(Game) + "/" + nameof(Item) + "/" + nameof(BombObjectBaseDataSO))]
     public class BombObjectBaseDataSO : ScriptableObject
     {
+        [field: SerializeField] public float BaseSpawnChance { get; private set; }
         [field: SerializeField] public float ExplodeDuration { get; private set; } = 5f;
         [field: SerializeField] public float ExplosionRadius { get; private set; }
         [field: SerializeField] public LayerMask DamageableLayer { get; private set; }

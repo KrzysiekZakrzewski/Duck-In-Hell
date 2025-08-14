@@ -17,6 +17,8 @@ namespace BlueRacconGames.MeleeCombat
 
         public void Execute(IDamageable damageable, DefaultPooledEmitter defaultPooledEmitter)
         {
+            Debug.Log(damageable.GameObject + "Execute");
+
             DropData randomLootData = RandomizeLoot();
 
             if(randomLootData.Item == null) return;
@@ -53,6 +55,7 @@ namespace BlueRacconGames.MeleeCombat
                 if (randomValue > cumulativeChance || randomValue == 0) continue;
 
                 lootItemData = data;
+                break;
             }
 
             if (lootItemData == null) return default;

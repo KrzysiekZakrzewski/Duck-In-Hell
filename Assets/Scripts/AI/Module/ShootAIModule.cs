@@ -1,6 +1,6 @@
-﻿using Damageable;
+﻿using BlueRacconGames.AI.Factory;
+using Damageable;
 using Projectiles.Implementation;
-using System.Data;
 using TimeTickSystems;
 using UnityEngine;
 
@@ -8,50 +8,59 @@ namespace BlueRacconGames.AI
 {
     public class ShootAIModule : AttackAIModule
     {
-        [SerializeField] private int shootTickCountdown = 10;
-
-        private ProjectileEmitterControllerBase projectileEmitterControllerBase;
+        private IShootType shootType;
+        private int shootTickCountdown;
+        private DefaultProjectileEmitterController projectileEmitterControllerBase;
         private bool countdownEnable = false;
 
         private int tickRemaning;
         private Transform target;
 
+        public ShootAIModule(ShootAIModuleFactory initialData)
+        {
+            shootType = initialData.ShootType;
+            shootTickCountdown = initialData.ShootTickCountdown;
+        }
+
         protected override void Damageable_OnExpireE(IDamageable damageable)
         {
             base.Damageable_OnExpireE(damageable);
 
-            TimeTickSystem.OnTick -= OnTick;
+            TimeTickSystem.OnTick -= ShootAIModule_OnTick;
+
+            Debug.Log("Damageable_OnExpireE");
         }
 
         public override void Initialize(AIControllerBase aIController)
         {
             base.Initialize(aIController);
 
-            projectileEmitterControllerBase = aIController.GetComponent<ProjectileEmitterControllerBase>();
+            projectileEmitterControllerBase = aIController.GetComponent<DefaultProjectileEmitterController>();
 
-            TimeTickSystem.OnTick += OnTick;
+            TimeTickSystem.OnTick += ShootAIModule_OnTick;
 
             ResetShootCountdown();
 
             target = aIController.PlayerTransform;
         }
+        public override void DeInitialize(AIControllerBase aIController)
+        {
+            base.DeInitialize(aIController);
 
+            TimeTickSystem.OnTick -= ShootAIModule_OnTick;
+        }
         private void Shoot()
         {
-            projectileEmitterControllerBase.EmitProjectile(TargetAngle(target.position));
-
+            shootType?.Shoot(projectileEmitterControllerBase, target);
+            Debug.Log("Shoot" + projectileEmitterControllerBase.gameObject.name);
             ResetShootCountdown();
-        }
-        private Vector2 TargetAngle(Vector3 targetPoint)
-        {
-            return (targetPoint - projectileEmitterControllerBase.ProjectileSpawnPoint.position).normalized;
         }
         private void ResetShootCountdown()
         {
             tickRemaning = shootTickCountdown;
             countdownEnable = true;
         }
-        private void OnTick(object sender, OnTickEventArgs e)
+        private void ShootAIModule_OnTick(object sender, OnTickEventArgs e)
         {
             if (!countdownEnable || aIController.IsWondering || !aIController.IsSimulating || !attackEnabled) return;
 

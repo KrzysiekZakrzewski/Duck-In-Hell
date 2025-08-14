@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b2abd3b3f83ba4f90e2f2b6a90bdca, type: 3}
+  m_Name: FourDirectionSmallSlime
+  m_EditorClassIdentifier: 
+  <UnitSprite>k__BackingField: {fileID: -4205559767448164548, guid: bc1b0a24e8908b44ab572fc46987cfbd, type: 3}
+  <AnimatorController>k__BackingField: {fileID: 9100000, guid: 34186598a29c34e48818f6cf1f6d2db2, type: 2}
+  <CharacterControllerDataSO>k__BackingField: {fileID: 11400000, guid: 0db3145ebab40064b930a2b6c6ceab5c, type: 2}
+  <LaunchVFX>k__BackingField: {fileID: 7973805767225130453, guid: d45be530b2a6d304ea4f2f57f3cdfb67, type: 3}
+  <DoNothingTickDuration>k__BackingField: 20
+  <NoPlayAnimation>k__BackingField: {fileID: 0}
+  enemyDamagableDataSO: {fileID: 11400000, guid: ef30bb22cb1ddd9468e660097bf72f84, type: 2}
+  <AIDataSO>k__BackingField: {fileID: 11400000, guid: 877c91e444a347d479437fd619faa8e7, type: 2}

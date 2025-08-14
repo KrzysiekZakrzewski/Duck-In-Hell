@@ -1,6 +1,7 @@
 using BlueRacconGames.Animation;
 using BlueRacconGames.Cards;
 using BlueRacconGames.Pool;
+using Game.Managers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -88,6 +89,12 @@ namespace BlueRacconGames.MeleeCombat
         public void DecreaseAttackRange(float value) => attackRange -= value;
         public void IncreaseAttackRangeMultiplier(float value) => attackRangeMultiplier += value;
         public void DecreaseAttackRangeMultiplier(float value) => attackRangeMultiplier -= value;
+        public void IncreaseDamageValue(int value)
+        {
+            if(weapon == null) return;
+
+
+        }
 
         protected virtual void InternalUpdateAttackEnable()
         {

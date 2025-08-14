@@ -15,7 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: Kabum
   <Description>k__BackingField: Booom
   <Icon>k__BackingField: {fileID: -8960637816712095807, guid: 56ec527f9303c064682768c9f6be16c9, type: 3}
-  <BasePercentChance>k__BackingField: 1
+  <BasePercentChance>k__BackingField: 0.25
   cardEffect:
     rid: 7222817414086918258
   references:
